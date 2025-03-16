@@ -5,12 +5,12 @@ import Image from "next/image";
 const fetchBanner = async () => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/webbanner/get`, {
-      cache: "no-cache", // Ensures fresh data on every request
+      cache: "no-cache",
     });
 
-    if (!res.ok) throw new Error("Failed to fetch banner");
-    
     const data = await res.json();
+    console.log("Banner API Response:", data); // Add this for debugging
+
     return data.length > 0 ? data[0] : null;
   } catch (error) {
     console.error("Error fetching banner:", error);

@@ -51,8 +51,8 @@ const WhyChooseUs = () => {
                 <Image
                   src={image}
                   alt={`Why Choose Us ${index + 1}`}
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{objectFit:"cover"}}
                   className="rounded-lg"
                 />
               </div>
