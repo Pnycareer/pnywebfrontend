@@ -1,12 +1,7 @@
 import React from "react";
 import { Check } from "lucide-react";
 import Image from "next/image";
-import one from "../../assets/whychooseus/1.png";
-import two from "../../assets/whychooseus/2.png";
-import three from "../../assets/whychooseus/3.png";
-import four from "../../assets/whychooseus/4.png";
-import five from "../../assets/whychooseus/5.png";
-import six from "../../assets/whychooseus/6.png";
+
 
 
 const benefits = [
@@ -20,13 +15,13 @@ const benefits = [
 ];
 
 const images = [
-  one,
-  two,
-  three,
-  four,
-  five,
-  six
-];
+  "/whychooseus/1.png",
+  "/whychooseus/2.png",
+  "/whychooseus/3.png",
+  "/whychooseus/4.png",
+  "/whychooseus/5.png",
+  "/whychooseus/6.png",
+];;
 
 const WhyChooseUs = () => {
   return (

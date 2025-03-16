@@ -1,6 +1,6 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["api.pnytrainings.com", "www.locklizard.com"],
     remotePatterns: [
       {
         protocol: "https",
@@ -20,7 +20,7 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "www.locklizard.com",
-        pathname: "/wp-content/uploads/2023/04/dmca-protected.png",
+        pathname: "/wp-content/uploads/2023/04/dmca-protected.png", // ✅ Allow DMCA Protected Image
       },
     ],
   },
