@@ -5,7 +5,7 @@ import CoursesDropdown from "@/components/Dropdown/CoursesDropdown";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import pnylogo from '@/assets/logo/pnylogo.png'
+import pnylogo from '@/assets/logo/Pnylogo.png'
 
 const CoursesNav = () => {
   const [menuOpen, setMenuOpen] = useState(false);

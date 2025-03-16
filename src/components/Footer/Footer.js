@@ -2,7 +2,7 @@ import Branches from "./Branches";
 import CityCourses from "./Citycourses";
 import Copyrights from "./Copyrights";
 import Image from "next/image";
-import logo from '@/assets/logo/pnylogo.png'
+import logo from '@/assets/logo/Pnylogo.png'
 
 export default function Footer() {
     return (
