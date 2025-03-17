@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Head Office */}
           <div>
-            <Image width={100} height={100} src={logo} alt="PNY Trainings" className="h-14 mb-4" />
+            <Image width={100} height={100} src={logo} alt="PNY Trainings" className="h-14 mb-4" unoptimized={true}/>
             <h3 className="text-lg font-bold">Head Office</h3>
             <p className="text-sm">
               Office # 1, Level # 14, Arfa Software Technology Park, Ferozepur Road, Lahore, Pakistan
