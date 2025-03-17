@@ -14,11 +14,12 @@ const InstructorCard = ({ name, photo, info }) => {
       {/* Card Content */}
       <div className="relative flex flex-col items-center text-center">
         <Image
-          src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${photo}`}
+          src={`${process.env.NEXT_PUBLIC_API_URL}/${photo}`}
           alt={name}
           width={100}
           height={100}
           style={{objectFit:"cover"}}
+          unoptimized={true}
           className="w-32 h-32 rounded-full border-4 border-gray-300 shadow-md"
         />
         <h3 className="text-lg font-semibold text-gray-900 mt-4">
