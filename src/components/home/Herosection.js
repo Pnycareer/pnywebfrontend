@@ -47,7 +47,7 @@ const HeroSection = () => {
         <DrizzleEffect height={400} />
 
         <div className="md:w-1/2 flex justify-center">
-          <Image src={girl} alt="Girl Illustration" className="w-80 md:w-96" />
+          <Image src={girl} alt="Girl Illustration" unoptimized={true}/>
         </div>
         <div className="md:w-5/6">
           <h2 className="text-3xl md:text-4xl font-bold text-white drop-shadow-md text-center">

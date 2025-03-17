@@ -44,6 +44,7 @@ const Copyrights = () => {
               height={100}
               src="https://www.locklizard.com/wp-content/uploads/2023/04/dmca-protected.png"
               alt=""
+              unoptimized={true}
             />
           </Link>
         </div>

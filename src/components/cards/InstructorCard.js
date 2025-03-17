@@ -18,7 +18,8 @@ const InstructorCard = ({ name, photo, info }) => {
           alt={name}
           width={100}
           height={100}
-          className="w-32 h-32 object-cover rounded-full border-4 border-gray-300 shadow-md"
+          style={{objectFit:"cover"}}
+          className="w-32 h-32 rounded-full border-4 border-gray-300 shadow-md"
         />
         <h3 className="text-lg font-semibold text-gray-900 mt-4">
           {name}

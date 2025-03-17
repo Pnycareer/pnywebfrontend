@@ -22,6 +22,7 @@ const CoursesNav = () => {
               alt="PNY Trainings"
               width={80}
               height={80}
+              unoptimized={true}
             />
           </Link>
 
