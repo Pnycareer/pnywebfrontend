@@ -30,9 +30,9 @@ const CourseCard = ({ name, image, description, urlslug }) => {
         <Image
           src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${image}`}
           alt={name}
-          width={100}
-          height={100}
-          className="w-full h-full object-cover"
+          fill
+          style={{objectFit:"cover"}}
+          unoptimized={true}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-gray-800/50 to-transparent"></div>
       </div>
