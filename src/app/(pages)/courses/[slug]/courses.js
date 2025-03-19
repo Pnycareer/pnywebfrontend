@@ -3,9 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import useSubCategory from "@/hooks/useSubCategory";
 import CourseCard from "@/components/cards/CourseCard";
-import InstructorCard, {
-  InstructorSection,
-} from "@/components/cards/InstructorCard";
+import InstructorCard, { InstructorSection } from "@/components/cards/InstructorCard";
 import Loader from "@/components/loader/Loader";
 
 const Courses = ({ params }) => {
@@ -52,30 +50,40 @@ const Courses = ({ params }) => {
               </h1>
             )}
 
-            {/* Display Courses */}
+            {/* Display Courses or Show "No Data Available" */}
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 relative">
-              {subcategory?.category_courses?.map((course) => (
-                <CourseCard
-                  key={course._id}
-                  name={course.name}
-                  image={course.course_image}
-                  description={`Instructor: ${course.teacher}, Fee: $${course.monthly_tution_fee}`}
-                  urlslug={course.url_slug}
-                />
-              ))}
+              {subcategory?.category_courses?.length > 0 ? (
+                subcategory.category_courses.map((course) => (
+                  <CourseCard
+                    key={course._id}
+                    name={course.course_id?.course_Name || "No Name"}
+                    image={course.course_id?.course_Image || "/default-course.jpg"}
+                    description={`Instructor: ${course.teacher || "N/A"}, Fee: $${course.monthly_tution_fee || "N/A"}`}
+                    urlslug={course.course_id?.url_Slug}
+                  />
+                ))
+              ) : (
+                <p className="text-xl text-gray-600">No courses available</p>
+              )}
             </div>
 
             {/* Category Instructors Section */}
             <InstructorSection />
             <div className="mt-4 grid grid-cols-1 md:grid-cols-5 gap-6 relative">
-              {subcategory?.category_instructors?.map((instructor) => (
-                <InstructorCard
-                  key={instructor._id}
-                  name={instructor.name}
-                  photo={instructor.photo}
-                  info={instructor.other_info}
-                />
-              ))}
+              {subcategory?.category_instructors?.length > 0 ? (
+                subcategory.category_instructors.map((instructor) => (
+                  instructor.instructor_id ? ( // Check if instructor_id exists
+                    <InstructorCard
+                      key={instructor.instructor_id._id}
+                      name={instructor.instructor_id.name || "No Name"}
+                      photo={instructor.instructor_id.photo || "/default-instructor.jpg"}
+                      info={instructor.instructor_id.other_info || "No additional info available"}
+                    />
+                  ) : null
+                ))
+              ) : (
+                <p className="text-xl text-gray-600">No instructors available</p>
+              )}
             </div>
           </section>
         </>

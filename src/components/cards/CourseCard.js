@@ -9,7 +9,7 @@ const poppins = Poppins({
 });
 
 const CourseCard = ({ name, image, urlslug }) => {
-  console.log(image)
+  console.log(urlslug)
   const router = useRouter();
 
   const handleDetailsClick = () => {
