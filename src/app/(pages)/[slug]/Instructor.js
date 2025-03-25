@@ -30,17 +30,9 @@ const InstructorOverview = () => {
                   Muhammad Nabeel
                 </h3>
                 <p>
-                  Mr. Muhammad Nabeel is a full-stack web developer and has two
-                  years of experience in full-stack web development at
-                  Pakistan's top-rated software company. In web development, his
-                  specialty is HTML, CSS, JS, AJAX, JQuery, AXIES, Bootstrap,
-                  React, and SASS. In backend MERN and MEAN Stack development,
-                  JS Full Stack (Express.js), Core PHP/Laravel 9.0 development,
-                  and many emerging technologies regarding web development. He
-                  is also an API developer for Build Restful and works with
-                  third-party APIs. His style of teaching is very professional
-                  and authentic, and he also motivates his students to be better
-                  people in society and future experts in their fields.
+                  {
+                    "Mr. Muhammad Nabeel is a full-stack web developer and has two years of experience in full-stack web development at Pakistan's top-rated software company. In web development, his specialty is HTML, CSS, JS, AJAX, JQuery, AXIES, Bootstrap, React, and SASS. In backend MERN and MEAN Stack development, JS Full Stack (Express.js), Core PHP/Laravel 9.0 development, and many emerging technologies regarding web development. He is also an API developer for Build Restful and works with third-party APIs. His style of teaching is very professional and authentic, and he also motivates his students to be better people in society and future experts in their fields."
+                  }
                 </p>
               </div>
             </div>
