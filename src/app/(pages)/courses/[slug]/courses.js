@@ -21,9 +21,8 @@ const Courses = ({ params }) => {
   return (
     <>
       {/* Show Loader When Fetching Data */}
-      {showLoader ? (
-        <Loader />
-      ) : (
+      {showLoader && <Loader />}  {/* Show top-bar loader only while loading */}
+      
         <>
           {/* Banner Section */}
           <section className="relative flex items-center justify-center h-[300px] md:h-[400px] lg:h-[500px] xl:h-[300px] w-full bg-gradient-to-r from-[#1B263B] via-[#475e5e] to-[#006d5f] -z-50">
@@ -40,9 +39,11 @@ const Courses = ({ params }) => {
               </p>
             </div>
           </section>
+          
 
+        
           {/* Main Content with White Background */}
-          <section className="relative flex flex-col items-center justify-center p-6 md:p-10 bg-gray-200">
+          <section className="flex flex-col items-center justify-center p-6 md:p-10 bg-gray-100 ">
             {/* Error Handling */}
             {error && (
               <h1 className="text-xl md:text-3xl font-semibold text-red-500 relative">
@@ -51,7 +52,7 @@ const Courses = ({ params }) => {
             )}
 
             {/* Display Courses or Show "No Data Available" */}
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 relative">
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
               {subcategory?.category_courses?.length > 0 ? (
                 subcategory.category_courses.map((course) => (
                   <CourseCard
@@ -87,7 +88,7 @@ const Courses = ({ params }) => {
             </div>
           </section>
         </>
-      )}
+      
     </>
   );
 };

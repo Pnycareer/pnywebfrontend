@@ -17,7 +17,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="sticky top-0 left-0 w-full z-50">
+    <nav className="sticky top-0 left-0 w-full" style={{ zIndex: 1000 }}>
       {/* Top Section (Navigation Links) */}
       <div
         className={`transition-all duration-300 px-6 lg:px-12 py-3 text-white text-sm font-medium

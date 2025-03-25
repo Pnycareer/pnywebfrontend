@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Book, Users, Briefcase, GraduationCap, Video, UserCheck } from "lucide-react";
 
 const benefits = [
-  { icon: <Book size={36} />, text: "Learning Management System Access" },
+  { icon: <Book size={36} />, text: "Learning Management" },
   { icon: <UserCheck size={36} />, text: "Instructor Support" },
   { icon: <Briefcase size={36} />, text: "Internship Opportunity" },
   { icon: <GraduationCap size={36} />, text: "Job Cell" },
@@ -20,7 +20,7 @@ const BenefitsSection = () => {
           initial={{ opacity: 0, y: -20 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.6 }}
-          className="text-2xl md:text-3xl font-bold text-gray-900"
+          className="md:text-3xl font-bold text-gray-900"
         >
           Access Complementary Benefits by Enrolling in this Course.
         </motion.h2>
@@ -29,7 +29,7 @@ const BenefitsSection = () => {
           initial={{ opacity: 0, y: -10 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-gray-700 mt-4 text-lg"
+          className="text-gray-700 mt-4 md:text-lg"
         >
           We discover your personal and professional growth, capitalizing on opportunities that will have a profound impact on your employment and career advancement.
         </motion.p>
@@ -50,7 +50,7 @@ const BenefitsSection = () => {
             className="flex flex-col items-center text-center text-blue-600"
           >
             <div className="p-4 bg-white shadow-md rounded-lg">{benefit.icon}</div>
-            <p className="text-gray-900 font-semibold mt-2">{benefit.text}</p>
+            <p className="text-gray-900  font-semibold mt-2">{benefit.text}</p>
           </motion.div>
         ))}
       </motion.div>

@@ -33,8 +33,6 @@ export default async function Page({ params }) {
 
   const data = await response.json();
 
- 
-
   const metadata = {
     metatitle: data.meta_title || "Course Not Found",
     metadescription: data.meta_description || "This course does not exist.",

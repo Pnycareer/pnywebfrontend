@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+.course-description a{
+  color: blue !important;
+  text-decoration: underline;
+}
+
+
+
+/* Optional: More elegant look */
+::-webkit-scrollbar {
+    width: 2px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #abc2e6; /* Blue-500 */
+    border-radius: 12px;
+  }
+  

@@ -1,0 +1,39 @@
+/* Container that sits at the top and holds the animated bar */
+.loaderWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;               /* Adjust thickness here */
+    background-color: transparent;
+    z-index: 9999;
+    overflow: hidden;
+  }
+  
+  /* The actual moving bar */
+  .loaderBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;    /* We'll animate its horizontal position */
+    height: 100%;
+    /* Replace these gradient colors with any you like */
+    background: linear-gradient(to right, #229bfe, #19d5ff);
+    animation: loading 1.5s linear forwards;
+  }
+  
+  /*
+    Keyframe animation that:
+      - Starts fully “off screen” to the left
+      - Ends fully on screen
+      - Runs exactly once (thanks to ‘forwards’ + no ‘infinite’)
+  */
+  @keyframes loading {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  

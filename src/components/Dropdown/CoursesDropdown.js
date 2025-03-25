@@ -10,7 +10,6 @@ const CoursesDropdown = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Fetch categories when component mounts
   useEffect(() => {
     const loadCategories = async () => {
       const data = await fetchCategories();
@@ -19,7 +18,6 @@ const CoursesDropdown = () => {
     loadCategories();
   }, []);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -34,42 +32,49 @@ const CoursesDropdown = () => {
     <div className="relative" ref={dropdownRef}>
       {/* Button */}
       <button
-        className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 md:px-10 rounded-md flex items-center space-x-2 hover:from-blue-600 hover:to-indigo-700 transition duration-200"
+        className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 md:px-6 rounded-xl flex items-center space-x-2 hover:from-blue-600 hover:to-indigo-700 transition duration-200 shadow-lg backdrop-blur-md"
         onClick={() => setDropdownOpen(!dropdownOpen)}
       >
         <span className="font-semibold">Courses</span>
         <motion.div
           animate={{ rotate: dropdownOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
+         
         >
-          <CgMenuGridO />
+          <CgMenuGridO size={18} />
         </motion.div>
       </button>
 
-      {/* Dropdown Menu with Animation */}
+      {/* Full-width animated dropdown */}
       <AnimatePresence>
         {dropdownOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="absolute top-full -left-8 mt-7 w-56 bg-white shadow-lg rounded-md overflow-hidden border border-gray-200 z-50"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="fixed top-20 left-0 w-full px-4 md:px-10"
+            
           >
-            {categories.length > 0 ? (
-              categories.map((category, index) => (
-                <Link
-                  key={index}
-                  href={`/courses/${category.url_Slug}`}
-                  className="block px-4 py-3 text-gray-800 hover:bg-blue-100 transition duration-200"
-                  onClick={() => setDropdownOpen(false)} // Close dropdown when clicked
-                >
-                  {category.Category_Name}
-                </Link>
-              ))
-            ) : (
-              <p className="px-4 py-3 text-gray-600">Loading categories...</p>
-            )}
+            <div className="backdrop-blur-xl bg-white border border-white/20 shadow-2xl rounded-3xl p-6 max-h-[70vh] overflow-y-auto mx-auto w-full md:w-[80%]">
+              <h3 className="text-lg font-bold mb-4 text-gray-800">Browse Courses</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {categories.length > 0 ? (
+                  categories.map((category, index) => (
+                    <Link
+                      key={index}
+                      href={`/courses/${category.url_Slug}`}
+                      onClick={() => setDropdownOpen(false)}
+                      className="block bg-white/40 text-gray-900 p-4 rounded-xl hover:bg-white/60 hover:text-blue-700 transition duration-300 shadow-sm"
+                    >
+                      {category.Category_Name}
+                    </Link>
+                  ))
+                ) : (
+                  <p className="text-gray-600">Loading categories...</p>
+                )}
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
