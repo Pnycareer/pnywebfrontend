@@ -11,7 +11,7 @@ export default function CourseFeature() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/coursemodel");
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/coursemodel`);
         if (response.data.length > 0) {
           setCourseFeatures(response.data);
           setSelectedLecture(response.data[0].lectures[0]); // Default first lecture
