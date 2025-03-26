@@ -105,9 +105,9 @@ const CourseSection = ({ params }) => {
           </motion.div>
         </div>
       </section>
-      <CourseFeature/>
-      <BenefitsSection/>
-      <InstructorOverview Instructor={course} />
+      <CourseFeature Modules={course.courseModule} />
+      <BenefitsSection />
+      <InstructorOverview Instructor={course.Instructor} />
       <Coursedescription coursedesc={course} />
     </>
   );

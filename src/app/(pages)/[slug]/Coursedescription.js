@@ -1,7 +1,6 @@
 import React from "react";
 
 const Coursedescription = ({ coursedesc }) => {
-  console.log(coursedesc);
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-blue-100 to-[#acb8d1] p-6">
       <div className="grid grid-cols-12 gap-6">
