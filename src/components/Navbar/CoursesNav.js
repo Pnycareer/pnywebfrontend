@@ -1,10 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import {
-  AiOutlineMenu,
-  AiOutlineClose,
-  AiOutlineSearch,
-} from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
 import { IoClose } from "react-icons/io5";
 import CoursesDropdown from "@/components/Dropdown/CoursesDropdown";
 import Link from "next/link";
@@ -15,6 +11,9 @@ import pnylogo from "@/assets/logo/Pnylogo.png";
 const CoursesNav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [courses, setCourses] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);  // Loader state
   const searchRef = useRef(null);
 
   // Close search when clicked outside
@@ -33,6 +32,40 @@ const CoursesNav = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [searchOpen]);
+
+  // Fetch the courses data when the search bar is open
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`);
+      const data = await response.json();
+      setCourses(data);
+    };
+
+    if (searchOpen) {
+      fetchCourses();
+    }
+  }, [searchOpen]);
+
+  // Filter courses based on search query
+  const filteredCourses = courses.filter((course) =>
+    course.course_Name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Handle course click
+  const handleCourseClick = (slug) => {
+    setIsLoading(true); // Show the loader
+    setSearchOpen(false); // Close the search dropdown
+
+    // Add a small delay before redirecting to the course page
+    setTimeout(() => {
+      window.location.href = slug; // Redirect to the course URL
+    }, 1000); // Wait 1 second before redirecting to simulate loader
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setSearchOpen(e.target.value.length > 0); // Show dropdown if search query is not empty
+  };
 
   return (
     <header className="w-full bg-gray-100 backdrop-blur-md sticky top-[104px]" style={{ zIndex: 1000 }}>
@@ -100,6 +133,8 @@ const CoursesNav = () => {
               type="text"
               placeholder="Search the skills you want to learn"
               className="w-full px-6 py-3 rounded-lg bg-white/40 text-black backdrop-blur-md border border-white/30 shadow-md outline-none placeholder-gray-700"
+              value={searchQuery}
+              onChange={handleSearchChange}
             />
             <button
               onClick={() => setSearchOpen(false)}
@@ -108,7 +143,31 @@ const CoursesNav = () => {
               <IoClose />
             </button>
           </div>
+
+          {/* Dropdown showing filtered courses */}
+          {searchQuery && filteredCourses.length > 0 && (
+            <div className="absolute top-full mt-2 w-full max-h-60 overflow-y-auto bg-white border rounded-lg shadow-lg z-10">
+              <ul className="space-y-2 p-4">
+                {filteredCourses.map((course) => (
+                  <li
+                    key={course._id}
+                    className="cursor-pointer hover:bg-yellow-200 p-2 rounded-md"
+                    onClick={() => handleCourseClick(course.url_Slug)}
+                  >
+                    {course.course_Name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </motion.div>
+      )}
+
+      {/* Loader when course is clicked */}
+      {isLoading && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center z-50">
+          <div className="text-white text-2xl">Loading...</div> {/* You can replace this with a spinner */}
+        </div>
       )}
 
       {/* Mobile Dropdown Menu */}

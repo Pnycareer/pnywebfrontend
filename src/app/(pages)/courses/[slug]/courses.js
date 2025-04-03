@@ -52,7 +52,7 @@ const Courses = ({ params }) => {
             )}
 
             {/* Display Courses or Show "No Data Available" */}
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {subcategory?.category_courses?.length > 0 ? (
                 subcategory.category_courses.map((course) => (
                   <CourseCard

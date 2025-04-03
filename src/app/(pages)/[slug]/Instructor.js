@@ -19,7 +19,7 @@ const InstructorOverview = ({ Instructor }) => {
               <div className="flex flex-col items-center">
                 {Instructor.photo ? (
                   <Image
-                    src={`http://localhost:8080/${Instructor.photo}`}
+                    src={`${process.env.NEXT_PUBLIC_API_URL}/${Instructor.photo}`}
                     alt="User Avatar"
                     width={112}
                     height={112}

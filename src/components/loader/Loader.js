@@ -1,11 +1,9 @@
-"use client";
-import React from "react";
-import styles from "./Loader.module.css";
+import React from 'react';
 
 const Loader = () => {
   return (
-    <div className={styles.loaderWrapper}>
-      <div className={styles.loaderBar} />
+    <div className="loader-container">
+      <div className="spinner"></div>
     </div>
   );
 };

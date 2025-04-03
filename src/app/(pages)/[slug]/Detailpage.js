@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import { motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import useCourseDetail from "@/hooks/useCourseDetail"; // adjust path as needed
@@ -21,6 +21,18 @@ const CourseSection = ({ params }) => {
 
   if (error) return <p className="text-red-500 p-10">{error}</p>;
   if (!course) return null;
+
+  // Construct the full path for the brochure
+  const brochurePath = course.Brochure
+    ? `${process.env.NEXT_PUBLIC_API_URL}/${course.Brochure.replace("\\", "/")}`
+    : "";
+
+  // Function to handle opening the brochure in a new window
+  const handleOpenBrochure = () => {
+    if (brochurePath) {
+      window.open(brochurePath, "_blank"); // Open the brochure in a new tab
+    }
+  };
 
   return (
     <>
@@ -69,9 +81,10 @@ const CourseSection = ({ params }) => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={handleOpenBrochure} // Update to open brochure in a new tab
                 className="bg-white/10 border border-white/20 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-white/20 transition"
               >
-                Download Course Brochure
+                View Course Brochure
               </motion.button>
 
               <motion.button
