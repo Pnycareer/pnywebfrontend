@@ -1,42 +1,26 @@
-'use client'
+"use client";
 import { motion } from "framer-motion";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import useCourseDetail from "@/hooks/useCourseDetail"; // adjust path as needed
-import CourseFeature from "./Module";
-import Coursedescription from "./Coursedescription";
-import Loader from "@/components/loader/Loader";
-import InstructorOverview from "./Instructor";
-import BenefitsSection from "./Benefits";
+import CourseFeature from "@/components/Detailpage/Module";
+import Coursedescription from "@/components/Detailpage/Coursedescription";
+import InstructorOverview from "@/components/Detailpage/Instructor";
+import BenefitsSection from "@/components/Detailpage/Benefits";
+import AdmissionSection from "@/components/Detailpage/Admission";
 
 const CourseSection = ({ params }) => {
-  const [showLoader, setShowLoader] = useState(true);
   const slug = params.slug;
-
   const { course, loading, error } = useCourseDetail(slug);
-  useEffect(() => {
-    if (!loading) {
-      setTimeout(() => setShowLoader(false), 1000); // Add a smooth transition
-    }
-  }, [loading]);
 
   if (error) return <p className="text-red-500 p-10">{error}</p>;
   if (!course) return null;
 
-  // Construct the full path for the brochure
   const brochurePath = course.Brochure
     ? `${process.env.NEXT_PUBLIC_API_URL}/${course.Brochure.replace("\\", "/")}`
     : "";
 
-  // Function to handle opening the brochure in a new window
-  const handleOpenBrochure = () => {
-    if (brochurePath) {
-      window.open(brochurePath, "_blank"); // Open the brochure in a new tab
-    }
-  };
-
   return (
     <>
-      {showLoader && <Loader />}
       <section className="relative bg-gradient-to-br from-black via-blue-500/85 to-black text-white py-16 px-6 md:px-12 lg:px-20">
         <div className="absolute inset-0 bg-gradient-to-t from-white/5 to-transparent backdrop-blur-xl z-0 pointer-events-none"></div>
 
@@ -58,7 +42,7 @@ const CourseSection = ({ params }) => {
               {course.Short_Description}
             </p>
 
-            <div className="text-white font-medium space-y-2">
+            <div className="text-white font-medium space-y-2 flex gap-4">
               <p>
                 <span className="font-bold">Course Fee:</span> Rs{" "}
                 {course.Monthly_Fee}
@@ -72,28 +56,36 @@ const CourseSection = ({ params }) => {
                 {course.Duration_Months} - Months
               </p>
             </div>
-
+            {/* 
             <p className="text-white underline cursor-pointer hover:text-blue-300 transition">
               View Schedule | Click here
-            </p>
+            </p> */}
 
             <div className="flex flex-wrap gap-4 mt-4">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleOpenBrochure} // Update to open brochure in a new tab
-                className="bg-white/10 border border-white/20 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-white/20 transition"
+              <a
+                aria-label="Download the Course Brochure"
+                href={brochurePath}
+                download // <-- ADD THIS
+                target="_blank" // still opens in new tab if browser doesn't auto-download
+                rel="noopener noreferrer"
+                className="bg-white/10 border border-white/20 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-white/20 transition flex items-center justify-center"
               >
-                View Course Brochure
-              </motion.button>
+                Download Course Brochure
+              </a>
 
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-red-500 px-6 py-3 rounded-lg shadow-lg hover:bg-red-400 transition"
+              <a
+                href="https://lms.pnytraining.com"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Enroll Now
-              </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-red-500 px-6 py-3 rounded-lg shadow-lg hover:bg-red-400 transition text-white max-sm:w-36 max-sm:h-10 cursor-pointer"
+                >
+                  Enroll Now!
+                </motion.button>
+              </a>
             </div>
           </motion.div>
 
@@ -105,12 +97,13 @@ const CourseSection = ({ params }) => {
             className="relative w-full h-56 md:h-64 lg:h-80"
           >
             <iframe
+              loading="lazy"
               className="w-full h-full rounded-xl shadow-lg border-4 border-white/20"
               src={
                 `https://www.youtube.com/embed/${course?.video_Id}` ||
                 "https://www.youtube.com/embed/YOUR_VIDEO_ID"
               }
-              title="Course Video"
+              title="Course Introduction Video" // <-- good for SEO
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
@@ -118,10 +111,13 @@ const CourseSection = ({ params }) => {
           </motion.div>
         </div>
       </section>
+
+      {/* Other Sections */}
       <CourseFeature Modules={course.courseModule} />
       <BenefitsSection />
       <InstructorOverview Instructor={course.Instructor} />
       <Coursedescription coursedesc={course} />
+      <AdmissionSection />
     </>
   );
 };

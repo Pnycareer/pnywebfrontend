@@ -13,7 +13,7 @@ const CoursesNav = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [courses, setCourses] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);  // Loader state
+  const [isLoading, setIsLoading] = useState(false); // Loader state
   const searchRef = useRef(null);
 
   // Close search when clicked outside
@@ -36,7 +36,9 @@ const CoursesNav = () => {
   // Fetch the courses data when the search bar is open
   useEffect(() => {
     const fetchCourses = async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`
+      );
       const data = await response.json();
       setCourses(data);
     };
@@ -68,7 +70,10 @@ const CoursesNav = () => {
   };
 
   return (
-    <header className="w-full bg-gray-100 backdrop-blur-md sticky top-[104px]" style={{ zIndex: 1000 }}>
+    <header
+      className="w-full bg-gray-100 backdrop-blur-md sticky top-[104px]"
+      style={{ zIndex: 1000 }}
+    >
       <div className="mx-auto flex justify-between items-center px-6 lg:px-12 py-4">
         {/* Left: Logo, Courses Dropdown, Search Icon */}
         <div className="flex items-center space-x-4">
@@ -166,7 +171,8 @@ const CoursesNav = () => {
       {/* Loader when course is clicked */}
       {isLoading && (
         <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center z-50">
-          <div className="text-white text-2xl">Loading...</div> {/* You can replace this with a spinner */}
+          <div className="text-white text-2xl">Loading...</div>{" "}
+          {/* You can replace this with a spinner */}
         </div>
       )}
 

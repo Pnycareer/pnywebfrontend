@@ -19,7 +19,7 @@ export default function Particle() {
 
     // Particle setup
     const particles = [];
-    const numParticles = 100;
+    const numParticles = 10;
 
     class Particle {
       constructor() {

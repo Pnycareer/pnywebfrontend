@@ -1,16 +1,17 @@
-'use client';
-import React from 'react';
-// import Image from 'next/image';
+"use client";
+import React, { lazy } from "react";
+import Image from "next/image";
 
 const OurWorth = () => {
   return (
     <section className="w-full px-4 py-16 sm:px-8 md:px-16 lg:px-24 text-white overflow-hidden">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center bg-white backdrop-blur-md border border-white/20 rounded-3xl p-8 md:p-12 shadow-xl">
-        
         {/* Left - Circular Image */}
         <div className="relative flex justify-center items-center">
           <div className="rounded-full border-4 border-blue-400 p-2 relative w-72 h-72 bg-slate-800">
-            <img
+            <Image
+              unoptimized={true}
+              loading={lazy}
               src="https://www.pnytrainings.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fladymobile.7382ad0a.png&w=640&q=75" // Make sure this file is in /public
               alt="Achievement"
               fill
