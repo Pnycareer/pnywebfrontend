@@ -28,9 +28,9 @@ export default function CourseFeature({ Modules }) {
           Course Module
         </h1>
         <p className="max-w-3xl mx-auto text-lg md:text-xl text-gray-300 px-4">
-          Our course modules offer a well-rounded curriculum, combining theoretical foundations
-          with hands-on training, ensuring students acquire industry-relevant skills and knowledge
-          for future endeavors.
+          Our course modules offer a well-rounded curriculum, combining
+          theoretical foundations with hands-on training, ensuring students
+          acquire industry-relevant skills and knowledge for future endeavors.
         </p>
       </div>
 
@@ -73,14 +73,16 @@ export default function CourseFeature({ Modules }) {
                   {selectedLecture.content}
                 </p>
                 <div className="mt-5">
-                  <h3 className="md:text-xl font-semibold text-blue-400">Key Topics:</h3>
-                  <ul className="mt-3 list-disc pl-6 space-y-2 text-gray-300">
-                    {selectedLecture.topics.map((topic, index) => (
-                      <li key={index} className="md:text-lg break-words">
-                        {topic}
-                      </li>
-                    ))}
-                  </ul>
+                  <h3 className="md:text-xl font-semibold text-blue-400">
+                    Key Topics:
+                  </h3>
+                  <div className="mt-3 text-gray-300 prose prose-invert max-w-none">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: selectedLecture.topics,
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             ) : (

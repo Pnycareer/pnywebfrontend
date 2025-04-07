@@ -11,7 +11,6 @@ const OurWorth = () => {
           <div className="rounded-full border-4 border-blue-400 p-2 relative w-72 h-72 bg-slate-800">
             <Image
               unoptimized={true}
-              loading={lazy}
               src="https://www.pnytrainings.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fladymobile.7382ad0a.png&w=640&q=75" // Make sure this file is in /public
               alt="Achievement"
               fill

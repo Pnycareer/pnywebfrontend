@@ -19,6 +19,8 @@ const CourseSection = ({ params }) => {
     ? `${process.env.NEXT_PUBLIC_API_URL}/${course.Brochure.replace("\\", "/")}`
     : "";
 
+  console.log(course);
+
   return (
     <>
       <section className="relative bg-gradient-to-br from-black via-blue-500/85 to-black text-white py-16 px-6 md:px-12 lg:px-20">
@@ -38,40 +40,47 @@ const CourseSection = ({ params }) => {
                 <span className="text-blue-300">({course.duration})</span>
               )}
             </h1>
-            <p className="text-white/80 md:text-lg">
-              {course.Short_Description}
-            </p>
 
-            <div className="text-white font-medium space-y-2 flex gap-4">
-              <p>
-                <span className="font-bold">Course Fee:</span> Rs{" "}
-                {course.Monthly_Fee}
+            {course.Short_Description && (
+              <p className="text-white/80 md:text-lg">
+                {course.Short_Description}
               </p>
-              <p>
-                <span className="font-bold">Skill Level:</span>{" "}
-                {course.Skill_Level}
-              </p>
-              <p>
-                <span className="font-bold">Duration:</span>{" "}
-                {course.Duration_Months} - Months
-              </p>
+            )}
+
+            <div className="text-white font-medium space-y-2 flex gap-4 flex-wrap">
+              {course.Monthly_Fee && (
+                <p>
+                  <span className="font-bold">Course Fee:</span> Rs{" "}
+                  {course.Monthly_Fee}
+                </p>
+              )}
+              {course.Skill_Level && (
+                <p>
+                  <span className="font-bold">Skill Level:</span>{" "}
+                  {course.Skill_Level}
+                </p>
+              )}
+              {course.Duration_Months && (
+                <p>
+                  <span className="font-bold">Duration:</span>{" "}
+                  {course.Duration_Months} Months
+                </p>
+              )}
             </div>
-            {/* 
-            <p className="text-white underline cursor-pointer hover:text-blue-300 transition">
-              View Schedule | Click here
-            </p> */}
 
             <div className="flex flex-wrap gap-4 mt-4">
-              <a
-                aria-label="Download the Course Brochure"
-                href={brochurePath}
-                download // <-- ADD THIS
-                target="_blank" // still opens in new tab if browser doesn't auto-download
-                rel="noopener noreferrer"
-                className="bg-white/10 border border-white/20 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-white/20 transition flex items-center justify-center"
-              >
-                Download Course Brochure
-              </a>
+              {brochurePath && (
+                <a
+                  aria-label="Download the Course Brochure"
+                  href={brochurePath}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white/10 border border-white/20 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-white/20 transition flex items-center justify-center"
+                >
+                  Download Course Brochure
+                </a>
+              )}
 
               <a
                 href="https://lms.pnytraining.com"
@@ -89,34 +98,47 @@ const CourseSection = ({ params }) => {
             </div>
           </motion.div>
 
-          {/* Video Section */}
+          {/* Video/Image Section */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             className="relative w-full h-56 md:h-64 lg:h-80"
           >
-            <iframe
-              loading="lazy"
-              className="w-full h-full rounded-xl shadow-lg border-4 border-white/20"
-              src={
-                `https://www.youtube.com/embed/${course?.video_Id}` ||
-                "https://www.youtube.com/embed/YOUR_VIDEO_ID"
-              }
-              title="Course Introduction Video" // <-- good for SEO
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+            {course?.video_Id ? (
+              <iframe
+                className="w-full h-full rounded-xl shadow-lg border-4 border-white/20"
+                src={`https://www.youtube.com/embed/${course.video_Id}`}
+                title="Course Introduction Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            ) : (
+              <img
+                src={`${process.env.NEXT_PUBLIC_API_URL}/${course.course_Image}`}
+                alt={course.course_Name}
+                className="w-full h-full object-cover rounded-xl shadow-lg border-4 border-white/20"
+              />
+            )}
           </motion.div>
         </div>
       </section>
 
       {/* Other Sections */}
-      <CourseFeature Modules={course.courseModule} />
+      {/* Other Sections */}
+      {course?.courseModule?.lectures?.length > 0 && (
+        <CourseFeature Modules={course.courseModule} />
+      )}
+
       <BenefitsSection />
-      <InstructorOverview Instructor={course.Instructor} />
-      <Coursedescription coursedesc={course} />
+
+      {course?.Instructor && (
+        <InstructorOverview Instructor={course.Instructor} />
+      )}
+
+      {course && <Coursedescription coursedesc={course} />}
+
       <AdmissionSection />
     </>
   );

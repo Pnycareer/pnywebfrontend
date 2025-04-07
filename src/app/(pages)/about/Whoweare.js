@@ -32,7 +32,6 @@ const Whoweare = () => {
         <div className="relative w-full h-80 md:h-[400px] rounded-xl overflow-hidden shadow-2xl border-2 border-white/20">
           <Image
             unoptimized={true}
-            loading={lazy}
             src="https://www.pnytrainings.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fresponsive.d59cdc6d.png&w=1920&q=75" // Make sure this file is in your /public folder
             alt="PNY Training Award"
             fill

@@ -34,7 +34,6 @@ const VisionMission = () => {
           <div className="relative w-full h-[450px]">
             <Image
               unoptimized={true}
-              loader={lazy}
               src="https://www.pnytrainings.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnoun-pakistan-264183%201.dea9c651.jpg&w=3840&q=75" // Make sure to move this image to your /public folder
               alt="Digital Pakistan"
               fill
