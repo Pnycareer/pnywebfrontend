@@ -110,7 +110,7 @@ const CoursesNav = () => {
               About
             </motion.li>
           </Link>
-          <li className="hover:text-yellow-400 cursor-pointer">Blog</li>
+          <Link href="/blog" className="hover:text-yellow-400 cursor-pointer">Blog</Link>
           <li className="hover:text-yellow-400 cursor-pointer">Contact</li>
         </ul>
 
