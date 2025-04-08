@@ -14,7 +14,7 @@ export default function BlogPage() {
           </h1>
           <p className="text-lg mb-6">
             Take your career as a web developer to the next level with this
-            Full-Stack Web Developer Master's Program, where you’ll become an
+            Full-Stack Web Developer Master&apos;s Program, where you’   ll become an
             expert at the front and back-end JavaScript technologies of the most
             popular MEAN Stack.
           </p>
@@ -57,7 +57,7 @@ export default function BlogPage() {
           <p className="text-gray-700 mb-4">
             This guide will help you through some of the best courses for online
             earning in Pakistan and also help you choose the right course based
-            on your interests and goals. Let's discover the top courses that can
+            on your interests and goals. Let&apos;s discover the top courses that can
             help you start earning from the comfort of your home.
           </p>
           <p className="text-gray-700 mb-6">
