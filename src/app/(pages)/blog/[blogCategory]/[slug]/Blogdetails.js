@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import Image from "next/image";
 
@@ -6,6 +6,7 @@ const Blogdetails = ({ blog }) => {
   const {
     blogName,
     blogDescription,
+    shortDescription,
     publishDate,
     blogImage,
     author,
@@ -22,11 +23,7 @@ const Blogdetails = ({ blog }) => {
             <h1 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
               {blogName}
             </h1>
-            <p
-              className="text-lg mb-6"
-              dangerouslySetInnerHTML={{ __html: blogDescription }}
-            ></p>
-
+            <p className="text-lg mb-6">{shortDescription}</p>
             <p className="text-sm text-gray-400">
               Publish date: {new Date(publishDate).toLocaleDateString()}
             </p>
@@ -50,8 +47,14 @@ const Blogdetails = ({ blog }) => {
         <div className="flex flex-col lg:flex-row gap-10 mt-10 md:px-5">
           {/* Blog Main Content */}
           <div className="flex-1">
+            {/* Blog Description */}
+            <div
+              className="prose prose-lg max-w-full mb-10 text-justify"
+              dangerouslySetInnerHTML={{ __html: blogDescription }}
+            ></div>
+
             {/* Tags Section */}
-            <div className="flex flex-wrap gap-2 mb-10">
+            <div className="flex flex-wrap gap-2 mb-6">
               {tags.map((tag, index) => (
                 <span
                   key={index}
@@ -62,8 +65,19 @@ const Blogdetails = ({ blog }) => {
               ))}
             </div>
 
+            {/* Social Links */}
+            <div className="flex gap-4 mt-6">
+              <a href="#" className="text-blue-600 hover:text-blue-800 text-2xl">
+                <i className="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" className="text-blue-400 hover:text-blue-600 text-2xl">
+                <i className="fab fa-twitter"></i>
+              </a>
+              {/* Add more social icons if needed */}
+            </div>
+
             {/* Author Section */}
-            <div className="flex items-center gap-4 p-4 bg-gray-100 rounded-lg">
+            <div className="flex items-center gap-4 p-4 mt-10 bg-gray-100 rounded-lg">
               <Image
                 src={`${process.env.NEXT_PUBLIC_API_URL}/${author?.profileImage.replace(/\\/g, "/")}`}
                 unoptimized={true}
@@ -82,7 +96,6 @@ const Blogdetails = ({ blog }) => {
           {/* Sidebar */}
           <aside className="w-full lg:w-1/3">
             <h3 className="text-xl font-semibold mb-4">Recent Posts</h3>
-            {/* You can later map real recent posts here */}
             <div className="flex flex-col gap-6">
               {/* Example Post */}
               <div className="flex gap-4 items-center">
@@ -95,8 +108,12 @@ const Blogdetails = ({ blog }) => {
                   className="rounded-md object-cover"
                 />
                 <div>
-                  <p className="text-sm text-gray-500">{new Date(publishDate).toLocaleDateString()}</p>
-                  <h4 className="text-md font-semibold leading-tight">{blogName}</h4>
+                  <p className="text-sm text-gray-500">
+                    {new Date(publishDate).toLocaleDateString()}
+                  </p>
+                  <h4 className="text-md font-semibold leading-tight">
+                    {blogName}
+                  </h4>
                 </div>
               </div>
             </div>

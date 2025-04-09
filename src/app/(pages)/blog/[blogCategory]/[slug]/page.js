@@ -1,24 +1,6 @@
 import React from "react";
 import Blogdetails from "./Blogdetails";
 
-export async function generateStaticParams() {
-  let res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/blogs`,
-    {
-      cache: "no-cache",
-    }
-  );
-  const result = await res.json();
-
-  if (!Array.isArray(result)) {
-    console.error("API response is not an array:", result);
-    return [];
-  }
-
-  return result.map((course) => ({
-    slug: course.url_slug,
-  }));
-}
 
 const page = async ({ params }) => {
   const { slug } = await params;
