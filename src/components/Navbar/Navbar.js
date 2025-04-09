@@ -18,14 +18,14 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="sticky top-0 left-0 w-full" style={{ zIndex: 1000 }}>
+    <nav className="left-0 w-full" style={{ zIndex: 1000 }}>
       {/* Top Section (Navigation Links) */}
       <div
         className={`transition-all duration-300 px-6 lg:px-12 py-3 text-white text-sm font-medium
         ${
           isScrolled
             ? "bg-black/80 backdrop-blur-md"
-            : "bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900/50 backdrop-blur-md"
+            : "bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 backdrop-blur-md"
         }
       `}
       >
@@ -106,7 +106,7 @@ const Navbar = () => {
       </div>
 
       {/* Bottom Section (Contact & Buttons) */}
-      <div className="bg-black/70 backdrop-blur-md px-6 lg:px-12 py-3">
+      <div className="bg-gradient-to-r from-gray-900/50 via-gray-800 to-gray-900/50 backdrop-blur-md px-6 lg:px-12 py-3">
         <div className="max-w-7xl mx-auto flex justify-between items-center text-white text-sm">
           {/* Left: "Pro Bootcamps 2025" */}
           <Link

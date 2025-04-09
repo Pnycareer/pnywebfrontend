@@ -7,7 +7,7 @@ import Coursedescription from "@/components/Detailpage/Coursedescription";
 import InstructorOverview from "@/components/Detailpage/Instructor";
 import BenefitsSection from "@/components/Detailpage/Benefits";
 import AdmissionSection from "@/components/Detailpage/Admission";
-
+import Image from "next/image";
 const CourseSection = ({ params }) => {
   const slug = params.slug;
   const { course, loading, error } = useCourseDetail(slug);
@@ -115,7 +115,10 @@ const CourseSection = ({ params }) => {
                 allowFullScreen
               ></iframe>
             ) : (
-              <img
+              <Image
+                unoptimized={true}
+                width={100}
+                height={100}
                 src={`${process.env.NEXT_PUBLIC_API_URL}/${course.course_Image}`}
                 alt={course.course_Name}
                 className="w-full h-full object-cover rounded-xl shadow-lg border-4 border-white/20"

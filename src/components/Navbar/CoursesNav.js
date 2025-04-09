@@ -71,7 +71,7 @@ const CoursesNav = () => {
 
   return (
     <header
-      className="w-full bg-gray-100 backdrop-blur-md sticky top-[104px]"
+      className="w-full bg-gray-100 backdrop-blur-md sticky top-0"
       style={{ zIndex: 1000 }}
     >
       <div className="mx-auto flex justify-between items-center px-6 lg:px-12 py-4">

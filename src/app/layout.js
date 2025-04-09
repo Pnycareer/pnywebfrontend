@@ -3,7 +3,6 @@ import "./globals.css";
 import CoursesNav from "@/components/Navbar/CoursesNav";
 import { Inter } from "next/font/google";
 import Footer from "@/components/Footer/Footer";
-import ScrollToTop from "@/components/ScrollToTop/ScrollToTop";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -20,9 +19,9 @@ export default function RootLayout({ children }) {
           content="xt9UQlTcyB46zJ1blAQyrgQvW-0AdlxqSsmkR8bUB4Y"
         />
         <link rel="icon" href="/favicon.ico" />
+        <script dangerouslySetInnerHTML={{ __html: "history.scrollRestoration='manual'" }} />
       </head>
       <body className={inter.className}>
-        <ScrollToTop />
         <Navbar />
         <CoursesNav />
         {children}
