@@ -1,18 +1,19 @@
 import React from "react";
+import { notFound } from "next/navigation";
 import Blogdetails from "./Blogdetails";
 
-
 const page = async ({ params }) => {
-  const { slug } = await params;
+  const { slug, blogCategory } = await params;
 
   // 🛜 Fetch blog data from your API
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/getonslug/${slug}`, { cache: "no-store" });
-  
-  if (!res.ok) {
-    throw new Error("Failed to fetch blog");
-  }
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/blogs/getonslug/${slug}`,
+    { cache: "no-store" }
+  );
 
-  
+  if (!res.ok) {
+    notFound();
+  }
 
   const blog = await res.json();
 
@@ -20,7 +21,6 @@ const page = async ({ params }) => {
     metatitle: blog.metaTitle || "Course Not Found",
     metadescription: blog.metaDescription || "This course does not exist.",
   };
-
 
   return (
     <>
