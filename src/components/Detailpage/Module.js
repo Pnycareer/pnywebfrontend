@@ -27,7 +27,7 @@ export default function CourseFeature({ Modules }) {
         <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
           Course Module
         </h1>
-        <p className="max-w-3xl mx-auto text-lg md:text-xl text-gray-300 px-4">
+        <p className="max-w-3xl mx-auto text-sm  md:text-xl text-gray-300 px-4">
           Our course modules offer a well-rounded curriculum, combining
           theoretical foundations with hands-on training, ensuring students
           acquire industry-relevant skills and knowledge for future endeavors.
@@ -38,7 +38,7 @@ export default function CourseFeature({ Modules }) {
       <Particle />
 
       {/* Main Card */}
-      <div className="relative w-full max-w-5xl bg-white/20 backdrop-blur-md rounded-2xl shadow-lg p-4 md:p-5 border border-gray-600 z-10 mt-40 md:mt-48">
+      <div className="relative w-full max-w-5xl bg-white/20 backdrop-blur-md rounded-2xl shadow-lg p-4 md:p-5 border border-gray-600 z-10 mt-52 md:mt-48">
         <div className="flex flex-col md:flex-row h-full max-h-[90vh] overflow-hidden gap-4">
           {/* Sidebar */}
           <div className="w-full md:w-1/3 p-4 bg-black/50 rounded-lg shadow-lg max-h-[300px] md:max-h-[500px] overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-transparent">
@@ -78,6 +78,15 @@ export default function CourseFeature({ Modules }) {
                   </h3>
                   <div className="mt-3 text-gray-300 prose prose-invert max-w-none">
                     <div
+                      className="[&>h1]:text-[34px] [&>h1]:font-semibold
+                [&>h2]:text-[30px] [&>h2]:font-medium
+                [&>h3]:text-[24px] [&>h3]:font-medium
+                [&>a]:cursor-pointer
+                [&>p]:mt-5 
+                [&>ul]:list-disc [&>ul]:pl-6
+                [&>ol]:list-decimal [&>ol]:pl-6
+                [&>ul>li]:mt-2
+                [&>ol>li]:mt-2"
                       dangerouslySetInnerHTML={{
                         __html: selectedLecture.topics,
                       }}

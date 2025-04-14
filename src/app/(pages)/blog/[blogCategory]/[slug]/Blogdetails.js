@@ -3,12 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ScrollToTop from "@/components/ScrollToTop/Scrolltotop";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaLinkedinIn,
-  FaInstagram,
-} from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from "react-icons/fa";
 import Loader from "@/components/loader/Loader";
 
 const Blogdetails = ({ blog }) => {
@@ -24,7 +19,7 @@ const Blogdetails = ({ blog }) => {
   } = blog;
 
   const [recentBlogs, setRecentBlogs] = useState([]);
-  const [loading, setLoading] = useState(true); // ✅ Add loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchRecentBlogs = async () => {
@@ -32,11 +27,10 @@ const Blogdetails = ({ blog }) => {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`);
         const data = await res.json();
 
-        // Flatten blogs with their category
         const allBlogs = data.flatMap((category) =>
           category.blogs.map((blog) => ({
             ...blog,
-            blogCategory: category.blogCategory, // 🛑 Attach blogCategory here
+            blogCategory: category.blogCategory,
           }))
         );
 
@@ -57,12 +51,10 @@ const Blogdetails = ({ blog }) => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <Loader /> {/* ✅ Show your loader component during loading */}
+        <Loader />
       </div>
     );
   }
-
-  console.log(recentBlogs, "ra");
 
   return (
     <>
@@ -84,16 +76,20 @@ const Blogdetails = ({ blog }) => {
           {/* Right Image */}
           <div className="flex-1">
             <div className="rounded-lg overflow-hidden shadow-lg">
-              <Image
-                src={`${process.env.NEXT_PUBLIC_API_URL}/${blogImage.replace(
-                  /\\/g,
-                  "/"
-                )}`}
-                unoptimized={true}
-                alt="Blog Main"
-                width={800}
-                height={500}
-              />
+              {blogImage ? (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_API_URL}/${blogImage.replace(/\\/g, "/")}`}
+                  unoptimized={true}
+                  alt="Blog Main"
+                  width={800}
+                  height={500}
+                  className="object-cover w-full h-auto"
+                />
+              ) : (
+                <div className="w-full h-[300px] flex items-center justify-center bg-gray-200 rounded-lg">
+                  <p className="text-gray-500">No Image Available</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -119,7 +115,7 @@ const Blogdetails = ({ blog }) => {
 
             {/* Tags Section */}
             <div className="flex flex-wrap gap-2 mb-6">
-              {tags.map((tag, index) => (
+              {tags?.map((tag, index) => (
                 <span
                   key={index}
                   className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full"
@@ -129,6 +125,7 @@ const Blogdetails = ({ blog }) => {
               ))}
             </div>
 
+            {/* Social Links */}
             {socialLinks && (
               <div className="flex gap-4 mt-6">
                 {socialLinks.facebook && (
@@ -176,16 +173,20 @@ const Blogdetails = ({ blog }) => {
 
             {/* Author Section */}
             <div className="flex items-center gap-4 p-4 mt-10 bg-gray-100 rounded-lg">
-              <Image
-                src={`${
-                  process.env.NEXT_PUBLIC_API_URL
-                }/${author?.profileImage.replace(/\\/g, "/")}`}
-                unoptimized={true}
-                alt="Author"
-                width={80}
-                height={80}
-                className="rounded-full object-cover"
-              />
+              {author?.profileImage ? (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_API_URL}/${author.profileImage.replace(/\\/g, "/")}`}
+                  unoptimized={true}
+                  alt="Author"
+                  width={80}
+                  height={80}
+                  className="rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-[80px] h-[80px] rounded-full bg-gray-300 flex items-center justify-center text-gray-600">
+                  No Image
+                </div>
+              )}
               <div>
                 <h3 className="text-lg font-semibold">About {author?.name}</h3>
                 <p className="text-gray-600 text-sm">{author?.bio}</p>
@@ -199,22 +200,24 @@ const Blogdetails = ({ blog }) => {
             <div className="flex flex-col gap-6">
               {recentBlogs.map((recent, index) => (
                 <Link
-                  href={`/blog/${recent.blogCategory.toLowerCase()}/${
-                    recent.url_slug
-                  }`}
+                  href={`/blog/${recent.blogCategory.toLowerCase()}/${recent.url_slug}`}
                   key={index}
                   className="flex gap-4 items-center hover:bg-gray-100 p-2 rounded-md transition"
                 >
-                  <Image
-                    src={`${
-                      process.env.NEXT_PUBLIC_API_URL
-                    }/${recent.blogImage.replace(/\\/g, "/")}`}
-                    unoptimized={true}
-                    alt="Post Thumbnail"
-                    width={80}
-                    height={60}
-                    className="rounded-md object-cover"
-                  />
+                  {recent.blogImage ? (
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_API_URL}/${recent.blogImage.replace(/\\/g, "/")}`}
+                      unoptimized={true}
+                      alt="Post Thumbnail"
+                      width={80}
+                      height={60}
+                      className="rounded-md object-cover"
+                    />
+                  ) : (
+                    <div className="w-[80px] h-[60px] rounded-md bg-gray-300 flex items-center justify-center text-gray-600 text-xs">
+                      No Image
+                    </div>
+                  )}
                   <div>
                     <p className="text-sm text-gray-500">
                       {new Date(recent.publishDate).toLocaleDateString()}

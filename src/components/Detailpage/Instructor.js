@@ -4,6 +4,11 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Image from "next/image";
 
 const InstructorOverview = ({ Instructor }) => {
+  // If the instructor is not supposed to be viewed, return null
+  if (!Instructor?.in_View) {
+    return null; // or you can return a message if you want
+  }
+
   return (
     <div className="p-4 md:p-8 text-gray-100">
       <div className="rounded-2xl shadow-md p-6 md:p-10 transition-all duration-300 ease-in-out">
