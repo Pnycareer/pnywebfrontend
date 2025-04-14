@@ -72,12 +72,12 @@ const Navbar = () => {
               </a>
             </li>
             <li>
-              <a
+              <Link
                 href="/flyers"
                 className="hover:text-yellow-400 cursor-pointer"
               >
                 E-Flyers
-              </a>
+              </Link>
             </li>
             <li>
               <a
