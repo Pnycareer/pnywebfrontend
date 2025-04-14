@@ -73,9 +73,7 @@ const Navbar = () => {
             </li>
             <li>
               <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/flyers"
                 className="hover:text-yellow-400 cursor-pointer"
               >
                 E-Flyers
