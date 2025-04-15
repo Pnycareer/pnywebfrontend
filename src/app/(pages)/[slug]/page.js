@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import Detailpage from "./Detailpage";
 
-
 export async function generateStaticParams() {
   let res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`,
@@ -31,26 +30,23 @@ export default async function Page({ params }) {
     }
   );
 
- 
   // If API response is not ok or the data is empty, redirect to the real 404 page
   if (!response.ok) {
     notFound();
   }
 
   const data = await response.json();
- 
-  
-  const metadata = {
-    metatitle: data[0].Meta_Title || "Course Not Found",
-    metadescription: data[0].Meta_Description || "This course does not exist.",
-  };
 
+  const metadata = {
+    metatitle: data.Meta_Title || "Course Not Found",
+    metadescription: data.Meta_Description || "This course does not exist.",
+  };
 
   return (
     <>
       <title>{metadata.metatitle}</title>
       <meta name="description" content={metadata.metadescription} />
-      <Detailpage params={{slug}} />
+      <Detailpage params={{ slug }} />
     </>
   );
 }

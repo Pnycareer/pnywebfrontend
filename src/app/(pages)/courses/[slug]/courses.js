@@ -11,56 +11,52 @@ const Courses = ({ params }) => {
   const { subcategory, loading, error } = useSubCategory(slug);
   const [showLoader, setShowLoader] = useState(true);
 
-  // Hide loader after fetching data
   useEffect(() => {
     if (!loading) {
-      setTimeout(() => setShowLoader(false), 1000); // Add a smooth transition
+      setTimeout(() => setShowLoader(false), 500); // smoother fade
     }
   }, [loading]);
 
+  const toURL = (path) =>
+    `${process.env.NEXT_PUBLIC_API_URL}/${path?.replace(/\\/g, "/")}`;
+
   return (
     <>
-      {/* Show Loader When Fetching Data */}
-      {showLoader && <Loader />}  {/* Show top-bar loader only while loading */}
-      
+      {showLoader && <Loader />}
+
+      {!showLoader && (
         <>
           {/* Banner Section */}
-          <section className="relative flex items-center justify-center h-[300px] md:h-[400px] lg:h-[500px] xl:h-[300px] w-full bg-gradient-to-r from-[#1B263B] via-[#475e5e] to-[#006d5f] -z-50">
+          <section className="relative flex items-center justify-center h-[300px] md:h-[400px] xl:h-[300px] w-full bg-gradient-to-r from-[#1B263B] via-[#475e5e] to-[#006d5f]">
             <div className="absolute inset-0 backdrop-blur-md rounded-xl w-11/12 md:w-10/12 lg:w-8/12 mx-auto flex flex-col items-center justify-center p-6 md:p-10">
-              <h1 className="text-2xl md:text-5xl lg:text-5xl font-bold text-white text-center">
-                Courses Offered in{" "}
-                {slug
-                  .split(" ")
-                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                  .join(" ")}
+              <h1 className="text-2xl md:text-5xl font-bold text-white text-center uppercase">
+                Courses in {subcategory?.category_Name || slug}
               </h1>
-              <p className="text-lg md:text-xl lg:text-xl text-gray-200 text-center mt-4 max-w-4xl">
-                {subcategory?.description || "No Description Found"}
+              <p className="text-lg md:text-xl text-gray-200 text-center mt-4 max-w-4xl">
+                {subcategory?.category_Description || "No description found."}
               </p>
             </div>
           </section>
-          
 
-        
-          {/* Main Content with White Background */}
-          <section className="flex flex-col items-center justify-center p-6 md:p-10 bg-gray-100 ">
-            {/* Error Handling */}
+          {/* Courses Section */}
+          <section className="flex flex-col items-center justify-center p-6 md:p-10 bg-gray-100 w-full">
+            {/* Error */}
             {error && (
-              <h1 className="text-xl md:text-3xl font-semibold text-red-500 relative">
+              <h1 className="text-xl md:text-3xl font-semibold text-red-500">
                 {error}
               </h1>
             )}
 
-            {/* Display Courses or Show "No Data Available" */}
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {subcategory?.category_courses?.length > 0 ? (
-                subcategory.category_courses.map((course) => (
+            {/* Courses Grid */}
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
+              {subcategory?.courses?.length > 0 ? (
+                subcategory.courses.map((course) => (
                   <CourseCard
                     key={course._id}
-                    name={course.course_id?.course_Name || "No Name"}
-                    image={course.course_id?.course_Image || "/default-course.jpg"}
-                    description={`Instructor: ${course.teacher || "N/A"}, Fee: $${course.monthly_tution_fee || "N/A"}`}
-                    urlslug={course.course_id?.url_Slug}
+                    name={course.course_Name}
+                    image={toURL(course.course_Image)}
+                    description={`Instructor: ${course.Instructor?.name || "N/A"}, Fee: Rs ${course.Monthly_Fee || "N/A"}`}
+                    urlslug={course.url_Slug}
                   />
                 ))
               ) : (
@@ -68,27 +64,29 @@ const Courses = ({ params }) => {
               )}
             </div>
 
-            {/* Category Instructors Section */}
-            <InstructorSection />
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-5 gap-6 relative">
-              {subcategory?.category_instructors?.length > 0 ? (
-                subcategory.category_instructors.map((instructor) => (
-                  instructor.instructor_id ? ( // Check if instructor_id exists
+            {/* Instructor Section Title */}
+            {subcategory?.courses?.some((c) => c.Instructor) && <InstructorSection />}
+
+            {/* Instructors Grid */}
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-5 gap-6 w-full">
+              {subcategory?.courses?.filter((c) => c.Instructor).length > 0 ? (
+                subcategory.courses
+                  .filter((course) => course.Instructor)
+                  .map((course) => (
                     <InstructorCard
-                      key={instructor.instructor_id._id}
-                      name={instructor.instructor_id.name || "No Name"}
-                      photo={instructor.instructor_id.photo || "/default-instructor.jpg"}
-                      info={instructor.instructor_id.other_info || "No additional info available"}
+                      key={course.Instructor._id}
+                      name={course.Instructor.name}
+                      photo={toURL(course.Instructor.photo)}
+                      info={course.Instructor.other_info || "No additional info"}
                     />
-                  ) : null
-                ))
+                  ))
               ) : (
-                <p className="text-xl text-gray-600">No instructors available</p>
+                <p className="text-xl text-gray-600">No instructors found</p>
               )}
             </div>
           </section>
         </>
-      
+      )}
     </>
   );
 };

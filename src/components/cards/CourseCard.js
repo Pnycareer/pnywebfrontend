@@ -9,7 +9,7 @@ const poppins = Poppins({
 });
 
 const CourseCard = ({ name, image, urlslug }) => {
-  console.log(urlslug)
+  console.log(image)
   const router = useRouter();
 
   const handleDetailsClick = () => {
@@ -29,7 +29,8 @@ const CourseCard = ({ name, image, urlslug }) => {
       {/* Image Section */}
       <div className="relative w-full h-40">
         <Image
-          src={`${process.env.NEXT_PUBLIC_API_URL}/${image}`}
+          // src={`${process.env.NEXT_PUBLIC_API_URL}/${image}`}
+          src={`${image}`}
           alt={name}
           fill
           style={{ objectFit: "cover" }}

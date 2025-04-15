@@ -22,7 +22,7 @@ export default async function Page({ params }) {
   const { slug } =  await params;
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/subCourse/getsubcourses/${slug}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/courses/getoncategory/${slug}`,
     { cache: "no-cache" }
   );
 

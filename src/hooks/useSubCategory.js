@@ -9,11 +9,10 @@ const useSubCategory = (slug) => {
     const fetchSubCategory = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/subCourse/getsubcourses/${slug}`
+          `${process.env.NEXT_PUBLIC_API_URL}/courses/getoncategory/${slug}`
         );
-        if (!response.ok) {
-          throw new Error("Subcategory not found");
-        }
+        if (!response.ok) throw new Error("Subcategory not found");
+
         const data = await response.json();
         setSubcategory(data);
       } catch (err) {

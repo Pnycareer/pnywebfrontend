@@ -1,25 +1,25 @@
 "use client";
 import { motion } from "framer-motion";
 import React from "react";
-import useCourseDetail from "@/hooks/useCourseDetail"; // adjust path as needed
+import useCourseDetail from "@/hooks/useCourseDetail";
 import CourseFeature from "@/components/Detailpage/Module";
 import Coursedescription from "@/components/Detailpage/Coursedescription";
 import InstructorOverview from "@/components/Detailpage/Instructor";
 import BenefitsSection from "@/components/Detailpage/Benefits";
 import AdmissionSection from "@/components/Detailpage/Admission";
 import Image from "next/image";
+
 const CourseSection = ({ params }) => {
   const slug = params.slug;
   const { course, loading, error } = useCourseDetail(slug);
 
-  if (error) return <p className="text-red-500 p-10">{error}</p>;
-  if (!course) return null;
+  if (loading) return <p className="text-white text-center p-10">Loading...</p>;
+  if (error) return <p className="text-red-500 text-center p-10">{error}</p>;
+  if (!course) return <p className="text-white p-10">Course not found</p>;
 
   const brochurePath = course.Brochure
-    ? `${process.env.NEXT_PUBLIC_API_URL}/${course.Brochure.replace("\\", "/")}`
+    ? `${process.env.NEXT_PUBLIC_API_URL}/${course.Brochure.replace(/\\/g, "/")}`
     : "";
-
-  console.log(course);
 
   return (
     <>
@@ -35,9 +35,11 @@ const CourseSection = ({ params }) => {
             className="space-y-6"
           >
             <h1 className="text-2xl md:text-4xl font-extrabold text-white leading-tight">
-              {course.course_Name}{" "}
-              {course.duration && (
-                <span className="text-blue-300">({course.duration})</span>
+              {course.course_Name}
+              {course.Duration_Months && (
+                <span className="text-blue-300 ml-2">
+                  ({course.Duration_Months} Months)
+                </span>
               )}
             </h1>
 
@@ -50,20 +52,17 @@ const CourseSection = ({ params }) => {
             <div className="text-white font-medium space-y-2 flex gap-4 flex-wrap">
               {course.Monthly_Fee && (
                 <p>
-                  <span className="font-bold">Course Fee:</span> Rs{" "}
-                  {course.Monthly_Fee}
+                  <span className="font-bold">Course Fee:</span> Rs {course.Monthly_Fee}
                 </p>
               )}
               {course.Skill_Level && (
                 <p>
-                  <span className="font-bold">Skill Level:</span>{" "}
-                  {course.Skill_Level}
+                  <span className="font-bold">Skill Level:</span> {course.Skill_Level}
                 </p>
               )}
-              {course.Duration_Months && (
+              {course.Duration_Day && (
                 <p>
-                  <span className="font-bold">Duration:</span>{" "}
-                  {course.Duration_Months} Months
+                  <span className="font-bold">Duration:</span> {course.Duration_Day} Days
                 </p>
               )}
             </div>
@@ -71,17 +70,15 @@ const CourseSection = ({ params }) => {
             <div className="flex flex-wrap gap-4 mt-4">
               {brochurePath && (
                 <a
-                  aria-label="Download the Course Brochure"
                   href={brochurePath}
                   download
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white/10 border border-white/20 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-white/20 transition flex items-center justify-center"
+                  className="bg-white/10 border border-white/20 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-white/20 transition"
                 >
                   Download Course Brochure
                 </a>
               )}
-
               <a
                 href="https://lms.pnytraining.com"
                 target="_blank"
@@ -90,7 +87,7 @@ const CourseSection = ({ params }) => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-red-500 px-6 py-3 rounded-lg shadow-lg hover:bg-red-400 transition text-white max-sm:w-36 max-sm:h-10 cursor-pointer"
+                  className="bg-red-500 px-6 py-3 rounded-lg shadow-lg hover:bg-red-400 transition text-white"
                 >
                   Enroll Now!
                 </motion.button>
@@ -98,28 +95,28 @@ const CourseSection = ({ params }) => {
             </div>
           </motion.div>
 
-          {/* Video/Image Section */}
+          {/* Video or Image */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             className="relative w-full h-56 md:h-64 lg:h-80"
           >
-            {course?.video_Id ? (
+            {course.video_Id ? (
               <iframe
                 className="w-full h-full rounded-xl shadow-lg border-4 border-white/20"
                 src={`https://www.youtube.com/embed/${course.video_Id}`}
-                title="Course Introduction Video"
+                title="Course Intro"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
             ) : (
               <Image
-                unoptimized={true}
-                width={100}
-                height={100}
-                src={`${process.env.NEXT_PUBLIC_API_URL}/${course.course_Image}`}
+                unoptimized
+                width={500}
+                height={300}
+                src={`${process.env.NEXT_PUBLIC_API_URL}/${course.course_Image.replace(/\\/g, "/")}`}
                 alt={course.course_Name}
                 className="w-full h-full object-cover rounded-xl shadow-lg border-4 border-white/20"
               />
@@ -128,19 +125,15 @@ const CourseSection = ({ params }) => {
         </div>
       </section>
 
-      {/* Other Sections */}
-      {/* Other Sections */}
       {course?.courseModule?.lectures?.length > 0 && (
         <CourseFeature Modules={course.courseModule} />
       )}
 
       <BenefitsSection />
 
-      {course?.Instructor && (
-        <InstructorOverview Instructor={course.Instructor} />
-      )}
+      {course.Instructor && <InstructorOverview Instructor={course.Instructor} />}
 
-      {course && <Coursedescription coursedesc={course} />}
+      <Coursedescription coursedesc={course} />
 
       <AdmissionSection />
     </>
