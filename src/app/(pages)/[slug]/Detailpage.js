@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import React from "react";
-import useCourseDetail from "@/hooks/useCourseDetail";
 import CourseFeature from "@/components/Detailpage/Module";
 import Coursedescription from "@/components/Detailpage/Coursedescription";
 import InstructorOverview from "@/components/Detailpage/Instructor";
@@ -9,12 +8,7 @@ import BenefitsSection from "@/components/Detailpage/Benefits";
 import AdmissionSection from "@/components/Detailpage/Admission";
 import Image from "next/image";
 
-const CourseSection = ({ params }) => {
-  const slug = params.slug;
-  const { course, loading, error } = useCourseDetail(slug);
-
-  if (loading) return <p className="text-white text-center p-10">Loading...</p>;
-  if (error) return <p className="text-red-500 text-center p-10">{error}</p>;
+const CourseSection = ({ course }) => {
   if (!course) return <p className="text-white p-10">Course not found</p>;
 
   const brochurePath = course.Brochure
@@ -27,7 +21,6 @@ const CourseSection = ({ params }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-white/5 to-transparent backdrop-blur-xl z-0 pointer-events-none"></div>
 
         <div className="relative max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          {/* Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -44,9 +37,7 @@ const CourseSection = ({ params }) => {
             </h1>
 
             {course.Short_Description && (
-              <p className="text-white/80 md:text-lg">
-                {course.Short_Description}
-              </p>
+              <p className="text-white/80 md:text-lg">{course.Short_Description}</p>
             )}
 
             <div className="text-white font-medium space-y-2 flex gap-4 flex-wrap">
@@ -95,7 +86,6 @@ const CourseSection = ({ params }) => {
             </div>
           </motion.div>
 
-          {/* Video or Image */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}

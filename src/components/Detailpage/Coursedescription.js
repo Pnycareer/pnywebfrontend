@@ -42,6 +42,7 @@ const Coursedescription = ({ coursedesc }) => {
                 backdrop-blur-md border border-gray-200
                 scrollbar-thin scrollbar-thumb-[#abc2e6] scrollbar-track-transparent
                 [&>h1]:text-[34px] [&>h1]:font-semibold
+                [&>h1]:leading-9
                 [&>h2]:text-[30px] [&>h2]:font-medium
                 [&>h3]:text-[24px] [&>h3]:font-medium
                 [&>a]:cursor-pointer

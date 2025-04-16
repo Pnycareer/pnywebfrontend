@@ -1,52 +1,35 @@
 import { notFound } from "next/navigation";
 import Detailpage from "./Detailpage";
 
-export async function generateStaticParams() {
-  let res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`,
-    {
-      cache: "no-cache",
-    }
-  );
-  const result = await res.json();
-
-  if (!Array.isArray(result)) {
-    console.error("API response is not an array:", result);
-    return [];
-  }
-
-  return result.map((course) => ({
-    slug: course.url_Slug,
-  }));
-}
-
 export default async function Page({ params }) {
   const { slug } = await params;
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/courses/getonslug/${slug}`,
-    {
-      cache: "no-cache",
-    }
+    { cache: "no-cache" } // SEO: no-cache ensures fresh data but still SSR
   );
 
-  // If API response is not ok or the data is empty, redirect to the real 404 page
   if (!response.ok) {
     notFound();
   }
 
-  const data = await response.json();
+  const course = await response.json();
 
+  if (!course || typeof course !== "object") {
+    notFound();
+  }
+
+  // Meta info
   const metadata = {
-    metatitle: data.Meta_Title || "Course Not Found",
-    metadescription: data.Meta_Description || "This course does not exist.",
+    metatitle: course.Meta_Title || "Course Not Found",
+    metadescription: course.Meta_Description || "This course does not exist.",
   };
 
   return (
     <>
       <title>{metadata.metatitle}</title>
       <meta name="description" content={metadata.metadescription} />
-      <Detailpage params={{ slug }} />
+      <Detailpage course={course} />
     </>
   );
 }

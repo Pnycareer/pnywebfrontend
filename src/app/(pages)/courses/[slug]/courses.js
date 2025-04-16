@@ -1,21 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
-
-import useSubCategory from "@/hooks/useSubCategory";
 import CourseCard from "@/components/cards/CourseCard";
 import InstructorCard, { InstructorSection } from "@/components/cards/InstructorCard";
 import Loader from "@/components/loader/Loader";
 
-const Courses = ({ params }) => {
-  const slug = params.slug;
-  const { subcategory, loading, error } = useSubCategory(slug);
+const Courses = ({ slug, subcategory }) => {
   const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
-    if (!loading) {
-      setTimeout(() => setShowLoader(false), 500); // smoother fade
-    }
-  }, [loading]);
+    setTimeout(() => setShowLoader(false), 500); // simple fade-in after server-render
+  }, []);
 
   const toURL = (path) =>
     `${process.env.NEXT_PUBLIC_API_URL}/${path?.replace(/\\/g, "/")}`;
@@ -29,7 +23,7 @@ const Courses = ({ params }) => {
           {/* Banner Section */}
           <section className="relative flex items-center justify-center h-[300px] md:h-[400px] xl:h-[300px] w-full bg-gradient-to-r from-[#1B263B] via-[#475e5e] to-[#006d5f]">
             <div className="absolute inset-0 backdrop-blur-md rounded-xl w-11/12 md:w-10/12 lg:w-8/12 mx-auto flex flex-col items-center justify-center p-6 md:p-10">
-              <h1 className="text-2xl md:text-5xl font-bold text-white text-center uppercase">
+              <h1 className="text-2xl md:text-5xl font-bold text-white text-center">
                 Courses in {subcategory?.category_Name || slug}
               </h1>
               <p className="text-lg md:text-xl text-gray-200 text-center mt-4 max-w-4xl">
@@ -40,13 +34,6 @@ const Courses = ({ params }) => {
 
           {/* Courses Section */}
           <section className="flex flex-col items-center justify-center p-6 md:p-10 bg-gray-100 w-full">
-            {/* Error */}
-            {error && (
-              <h1 className="text-xl md:text-3xl font-semibold text-red-500">
-                {error}
-              </h1>
-            )}
-
             {/* Courses Grid */}
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
               {subcategory?.courses?.length > 0 ? (
