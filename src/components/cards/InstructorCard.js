@@ -16,7 +16,7 @@ const InstructorCard = ({ name, photo, info }) => {
       {/* Card Content */}
       <div className="relative flex flex-col items-center text-center">
         <Image
-          src={`${process.env.NEXT_PUBLIC_API_URL}/${photo}`}
+          src={photo}
           alt={name}
           width={100}
           height={100}

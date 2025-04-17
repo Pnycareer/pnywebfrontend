@@ -9,7 +9,7 @@ const poppins = Poppins({
 });
 
 const CourseCard = ({ name, image, urlslug }) => {
-  console.log(image)
+  console.log(image);
   const router = useRouter();
 
   const handleDetailsClick = () => {
@@ -20,11 +20,12 @@ const CourseCard = ({ name, image, urlslug }) => {
 
   return (
     <motion.div
+      onClick={handleDetailsClick} // 👈 moved here
       initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       viewport={{ once: true }}
-      className="relative group bg-white rounded-xl shadow-lg overflow-hidden w-64 h-80 flex flex-col"
+      className="relative group bg-white rounded-xl shadow-lg overflow-hidden w-64 h-80 flex flex-col cursor-pointer"
     >
       {/* Image Section */}
       <div className="relative w-full h-40">
@@ -44,10 +45,12 @@ const CourseCard = ({ name, image, urlslug }) => {
         <h3 className="text-lg font-bold text-center mt-6">{name}</h3>
 
         <button
-          className="group relative overflow-hidden px-4 py-2 border border-blue-300 rounded-lg text-blue-500 transition-all duration-500 mx-auto"
-          onClick={handleDetailsClick}
+          type="button"
+          className="group relative overflow-hidden px-4 py-2 border border-blue-300 rounded-lg text-blue-500 transition-all duration-500 mx-auto pointer-events-none"
         >
-          <span className={`${poppins.className} relative z-10 text-black text-sm`}>
+          <span
+            className={`${poppins.className} relative z-10 text-black text-sm`}
+          >
             Details
           </span>
           <span className="absolute inset-0 w-0 bg-gradient-to-r from-blue-100 to-blue-300 transition-all duration-500 group-hover:w-full"></span>

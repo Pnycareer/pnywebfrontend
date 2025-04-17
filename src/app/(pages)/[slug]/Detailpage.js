@@ -12,7 +12,10 @@ const CourseSection = ({ course }) => {
   if (!course) return <p className="text-white p-10">Course not found</p>;
 
   const brochurePath = course.Brochure
-    ? `${process.env.NEXT_PUBLIC_API_URL}/${course.Brochure.replace(/\\/g, "/")}`
+    ? `${process.env.NEXT_PUBLIC_API_URL}/${course.Brochure.replace(
+        /\\/g,
+        "/"
+      )}`
     : "";
 
   return (
@@ -28,7 +31,9 @@ const CourseSection = ({ course }) => {
             className="space-y-6"
           >
             <h1 className="text-2xl md:text-4xl font-extrabold text-white leading-tight">
-              {course.course_Name}
+              {course.course_Name} <br />
+            </h1>
+            <h1 className="text-2xl md:text-2xl font-extrabold text-white leading-tight">
               {course.Duration_Months && (
                 <span className="text-blue-300 ml-2">
                   ({course.Duration_Months} Months)
@@ -37,23 +42,28 @@ const CourseSection = ({ course }) => {
             </h1>
 
             {course.Short_Description && (
-              <p className="text-white/80 md:text-lg">{course.Short_Description}</p>
+              <p className="text-white/80 md:text-lg">
+                {course.Short_Description}
+              </p>
             )}
 
             <div className="text-white font-medium space-y-2 flex gap-4 flex-wrap">
               {course.Monthly_Fee && (
                 <p>
-                  <span className="font-bold">Course Fee:</span> Rs {course.Monthly_Fee}
+                  <span className="font-bold">Course Fee:</span> Rs{" "}
+                  {course.Monthly_Fee}
                 </p>
               )}
               {course.Skill_Level && (
                 <p>
-                  <span className="font-bold">Skill Level:</span> {course.Skill_Level}
+                  <span className="font-bold">Skill Level:</span>{" "}
+                  {course.Skill_Level}
                 </p>
               )}
               {course.Duration_Day && (
                 <p>
-                  <span className="font-bold">Duration:</span> {course.Duration_Day} Days
+                  <span className="font-bold">Duration:</span>{" "}
+                  {course.Duration_Day} Days
                 </p>
               )}
             </div>
@@ -106,7 +116,9 @@ const CourseSection = ({ course }) => {
                 unoptimized
                 width={500}
                 height={300}
-                src={`${process.env.NEXT_PUBLIC_API_URL}/${course.course_Image.replace(/\\/g, "/")}`}
+                src={`${
+                  process.env.NEXT_PUBLIC_API_URL
+                }/${course.course_Image.replace(/\\/g, "/")}`}
                 alt={course.course_Name}
                 className="w-full h-full object-cover rounded-xl shadow-lg border-4 border-white/20"
               />
@@ -121,7 +133,9 @@ const CourseSection = ({ course }) => {
 
       <BenefitsSection />
 
-      {course.Instructor && <InstructorOverview Instructor={course.Instructor} />}
+      {course.Instructor && (
+        <InstructorOverview Instructor={course.Instructor} />
+      )}
 
       <Coursedescription coursedesc={course} />
 
