@@ -7,18 +7,18 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-grey-200 text-black py-10 px-5 md:px-20">
+    <footer className="bg-grey-200 text-black py-10 px-5 md:px-20 min-h-[400px]">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
         {/* Head Office */}
         <div>
           <Image
             width={100}
-            height={100}
+            height={56} // 16:9 aspect ratio
             src={logo}
             alt="PNY Trainings"
-            className="h-14 mb-4"
-            unoptimized={true}
+            className="w-[100px] h-[56px] mb-4 object-contain"
           />
+
           <h3 className="text-lg font-bold">Head Office</h3>
           <p className="text-sm">
             Office # 1, Level # 14, Arfa Software Technology Park, Ferozepur
@@ -50,9 +50,9 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <Link href="/terms-conditions" className="hover:underline">
                 Terms & Conditions
-              </a>
+              </Link>
             </li>
             <li>
               <a href="#" className="hover:underline">

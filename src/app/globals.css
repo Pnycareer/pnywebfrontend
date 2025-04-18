@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 .course-description a{
   color: blue !important;
   text-decoration: underline;
@@ -54,5 +55,14 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* * {
+  outline: 1px dashed red;
+} */
+
+
+
+
 
   

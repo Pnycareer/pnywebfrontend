@@ -80,14 +80,12 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/training-schedule"
                 className="hover:text-yellow-400 cursor-pointer"
               >
                 Training Schedule
-              </a>
+              </Link>
             </li>
             <li>
               <a
