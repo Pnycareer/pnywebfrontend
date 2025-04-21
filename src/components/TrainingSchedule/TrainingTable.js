@@ -15,9 +15,9 @@ const calcDuration = (start, end) => {
 
 const TrainingTable = ({ courses }) => {
   return (
-    <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200">
-      <table className="min-w-full divide-y divide-gray-200 text-sm">
-        <thead className="bg-gray-50 sticky top-0 z-10">
+    <div className="overflow-x-auto">
+      <table className="min-w-full border text-sm">
+        <thead className="bg-gray-100 sticky top-0 z-10 border border-black">
           <tr>
             <th className="px-4 py-3 text-left font-semibold text-gray-700">Course Name</th>
             <th className="px-4 py-3 text-left font-semibold text-gray-700">Start Date</th>
@@ -25,7 +25,7 @@ const TrainingTable = ({ courses }) => {
             <th className="px-4 py-3 text-left font-semibold text-gray-700">Duration</th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-100">
+        <tbody className="bg-white divide-y divide-black">
           <AnimatePresence>
             {courses.map((course) => (
               <motion.tr

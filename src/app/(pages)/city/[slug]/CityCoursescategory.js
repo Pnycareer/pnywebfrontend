@@ -1,24 +1,14 @@
 "use client";
-import React, { useState, useEffect } from "react";
 import CourseCard from "@/components/cards/CourseCard";
-import Loader from "@/components/loader/Loader";
-import ScrollToTop from "@/components/ScrollToTop/Scrolltotop";
 
-const CityCoursescategory = ({ slug, subcategory }) => {
-  const [showLoader, setShowLoader] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => setShowLoader(false), 1000);
-  }, []);
+const CityCoursescategory = ({ subcategory }) => {
+  
 
   const toURL = (path) =>
     `${process.env.NEXT_PUBLIC_API_URL}/${path?.replace(/\\/g, "/")}`;
 
   return (
     <>
-      <ScrollToTop />
-      {showLoader && <Loader />}
-
       <section className="relative flex items-center justify-center h-[300px] md:h-[400px] lg:h-[500px] xl:h-[300px] w-full bg-gradient-to-r from-[#1B263B] via-[#475e5e] to-[#006d5f] -z-50">
         <div className="absolute inset-0 backdrop-blur-md rounded-xl w-11/12 md:w-10/12 lg:w-8/12 mx-auto flex flex-col items-center justify-center p-6 md:p-10">
           <h1 className="text-2xl md:text-5xl lg:text-5xl font-bold text-white text-center">

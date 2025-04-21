@@ -1,8 +1,6 @@
 import Courses from "./courses";
 import { notFound } from "next/navigation";
 
-
-
 export default async function Page({ params }) {
   const { slug } = await params;
 

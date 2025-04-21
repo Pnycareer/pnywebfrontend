@@ -1,58 +1,32 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const BlogCategory = () => {
-  const [blogsData, setBlogsData] = useState([]);
-  const [loading, setLoading] = useState(true);
+const BlogCategory = ({ blogsData }) => {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/blogs`
-        );
-        setBlogsData(res.data);
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBlogs();
-  }, []);
-
-  if (loading) {
-    return <div className="text-center py-10">Loading blogs...</div>;
-  }
-
-  const categories = ["all", ...blogsData.map((cat) => cat.blogCategory)];
+  const categories = ["all", ...new Set(blogsData.map((cat) => cat.blogCategory))];
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
   };
 
-  // Flatten all blogs into one array
+  // Flatten blogs
   const allVisibleBlogs = blogsData.flatMap((category) =>
     category.blogs
-      .filter((blog) => blog.inviewweb) // Only blogs with inviewweb true
+      .filter((blog) => blog.inviewweb)
       .map((blog) => ({
         ...blog,
-        category: category.blogCategory, // Attach category info to blog
+        category: category.blogCategory,
       }))
   );
 
   const filteredBlogs =
     selectedCategory === "all"
       ? allVisibleBlogs
-      : allVisibleBlogs.filter(
-          (blog) => blog.category === selectedCategory
-        );
+      : allVisibleBlogs.filter((blog) => blog.category === selectedCategory);
 
   return (
     <div className="container mx-auto p-6">
@@ -67,11 +41,11 @@ const BlogCategory = () => {
             key={index}
             onClick={() => handleCategoryChange(category)}
             className={`px-4 py-2 rounded-full border transition-all duration-300 
-            ${
-              selectedCategory === category
-                ? "bg-blue-700 text-white shadow-lg scale-105"
-                : "bg-white text-blue-700 border-blue-700 hover:bg-blue-700 hover:text-white"
-            }`}
+              ${
+                selectedCategory === category
+                  ? "bg-blue-700 text-white shadow-lg scale-105"
+                  : "bg-white text-blue-700 border-blue-700 hover:bg-blue-700 hover:text-white"
+              }`}
           >
             {category.charAt(0).toUpperCase() + category.slice(1)}
           </button>
@@ -91,9 +65,7 @@ const BlogCategory = () => {
             >
               <div>
                 <Image
-                  src={`${
-                    process.env.NEXT_PUBLIC_API_URL
-                  }/${blog.blogImage.replace(/\\/g, "/")}`}
+                  src={`${process.env.NEXT_PUBLIC_API_URL}/${blog.blogImage.replace(/\\/g, "/")}`}
                   alt={blog.blogName}
                   width={400}
                   height={250}

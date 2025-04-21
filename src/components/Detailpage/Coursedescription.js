@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const Coursedescription = ({ coursedesc }) => {
+  console.log(coursedesc , 'checking')
   const [relatedCourses, setRelatedCourses] = useState([]);
   const router = useRouter();
 
@@ -11,25 +12,33 @@ const Coursedescription = ({ coursedesc }) => {
     const fetchRelatedCourses = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/courses/getoncategory/${coursedesc.course_Category}`
+          `${process.env.NEXT_PUBLIC_API_URL}/courses/getoncategory/${coursedesc.category_Name}`
         );
         const data = await response.json();
-        if (Array.isArray(data)) {
-          setRelatedCourses(data);
+    
+        if (data && Array.isArray(data.courses)) {
+          setRelatedCourses(data.courses);
+        } else {
+          setRelatedCourses([]);
         }
       } catch (error) {
         console.error("Error fetching related courses:", error);
       }
     };
-
-    if (coursedesc?.course_Category) {
+    
+  
+    
       fetchRelatedCourses();
-    }
-  }, [coursedesc.course_Category]);
+    
+  }, []);
+  
 
   const handleCourseClick = (slug) => {
     router.push(`/${slug}`);
   };
+
+
+  console.log(relatedCourses , 'related')
 
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-blue-100 to-[#acb8d1] p-6">

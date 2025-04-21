@@ -88,14 +88,12 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/pny-training-fee-structure"
                 className="hover:text-yellow-400 cursor-pointer"
               >
                 Fee Structure
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

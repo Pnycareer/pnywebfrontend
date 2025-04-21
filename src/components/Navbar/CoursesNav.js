@@ -36,11 +36,20 @@ const CoursesNav = () => {
   // Fetch the courses data when the search bar is open
   useEffect(() => {
     const fetchCourses = async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`
-      );
-      const data = await response.json();
-      setCourses(data);
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`
+        );
+        const result = await response.json();
+
+        // Flatten all courses from each category
+        const allCourses = result.data.flatMap(
+          (category) => category.courses || []
+        );
+        setCourses(allCourses);
+      } catch (error) {
+        console.error("Failed to fetch courses:", error);
+      }
     };
 
     if (searchOpen) {
@@ -110,7 +119,9 @@ const CoursesNav = () => {
               About
             </motion.li>
           </Link>
-          <Link href="/blog" className="hover:text-yellow-400 cursor-pointer">Blog</Link>
+          <Link href="/blog" className="hover:text-yellow-400 cursor-pointer">
+            Blog
+          </Link>
           <li className="hover:text-yellow-400 cursor-pointer">Contact</li>
         </ul>
 

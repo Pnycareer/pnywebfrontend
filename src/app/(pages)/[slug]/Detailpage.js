@@ -7,6 +7,8 @@ import InstructorOverview from "@/components/Detailpage/Instructor";
 import BenefitsSection from "@/components/Detailpage/Benefits";
 import AdmissionSection from "@/components/Detailpage/Admission";
 import Image from "next/image";
+import DownloadBrochureForm from "@/components/DownloadBrochureForm/DownloadBrochureForm";
+
 
 const CourseSection = ({ course }) => {
   if (!course) return <p className="text-white p-10">Course not found</p>;
@@ -70,15 +72,8 @@ const CourseSection = ({ course }) => {
 
             <div className="flex flex-wrap gap-4 mt-4">
               {brochurePath && (
-                <a
-                  href={brochurePath}
-                  download
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-white/10 border border-white/20 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-white/20 transition"
-                >
-                  Download Course Brochure
-                </a>
+               <DownloadBrochureForm brochureUrl={brochurePath} courseName={course.course_Name} />
+
               )}
               <a
                 href="https://lms.pnytraining.com"

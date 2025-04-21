@@ -1,25 +1,10 @@
-// app/Flyers.jsx
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import Image from "next/image";
 
-const Flyers = () => {
-  const [flyersData, setFlyersData] = useState([]);
+const Flyers = ({ flyersData }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
-
-  useEffect(() => {
-    const fetchFlyers = async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/eflyer`);
-        const data = await res.json();
-        setFlyersData(data);
-      } catch (error) {
-        console.error("Error fetching flyers:", error);
-      }
-    };
-
-    fetchFlyers();
-  }, []);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -39,10 +24,15 @@ const Flyers = () => {
               onClick={() => handleCategoryClick(category)}
               className="cursor-pointer rounded-lg overflow-hidden shadow-md hover:shadow-xl transition"
             >
-              <img
-                src={`${process.env.NEXT_PUBLIC_API_URL}/${category.imageUrl.replace("\\", "/")}`}
+              <Image
+                unoptimized={true}
+                src={`${
+                  process.env.NEXT_PUBLIC_API_URL
+                }/${category.imageUrl.replace("\\", "/")}`}
                 alt={category.name}
                 className="h-48 w-full object-cover"
+                width={100}
+                height={48}
               />
               <div className="p-4 bg-white">
                 <h2 className="text-lg font-bold">{category.name}</h2>
@@ -58,7 +48,9 @@ const Flyers = () => {
           >
             ← Back
           </button>
-          <h2 className="text-2xl font-bold mb-4">{selectedCategory.name} Flyers</h2>
+          <h2 className="text-2xl font-bold mb-4">
+            {selectedCategory.name} Flyers
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {selectedCategory.eflyers.map((flyer) => (
               <div
@@ -68,7 +60,9 @@ const Flyers = () => {
                 <h3 className="text-xl font-semibold mb-2">{flyer.title}</h3>
                 <p className="mb-4">{flyer.description}</p>
                 <a
-                  href={`${process.env.NEXT_PUBLIC_API_URL}/${flyer.brochureUrl.replace("\\", "/")}`}
+                  href={`${
+                    process.env.NEXT_PUBLIC_API_URL
+                  }/${flyer.brochureUrl.replace("\\", "/")}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
