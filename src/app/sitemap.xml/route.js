@@ -7,18 +7,22 @@ export async function GET() {
     const json = await res.json();
   
     const courseUrls = json.data
-      ?.flatMap((category) =>
-        (category.courses || []).filter(course => course.View_On_Web)
-      )
-      .map((course) => `
+    ?.flatMap((category) =>
+      (category.courses || []).filter(course => course.In_Sitemap)
+    )
+    .map((course) => {
+      const priority = course.priority ?? 0.9; // Default to 0.8 if not provided
+         return `
         <url>
           <loc>${baseUrl}/${course.url_Slug}</loc>
-          <lastmod>${new Date().toISOString()}</lastmod>
-          <changefreq>weekly</changefreq>
-          <priority>0.8</priority>
+          <lastmod>${course.updatedAt}</lastmod>
+          <changefreq>monthly</changefreq>
+          <priority>${priority}</priority>
         </url>
-      `)
-      .join("");
+      `;
+    })
+    .join("");
+  
   
     // Add static pages if needed
     const staticUrls = [
@@ -26,14 +30,18 @@ export async function GET() {
       `${baseUrl}/about`,
       `${baseUrl}/contact`,
       `${baseUrl}/blog`,
-    ].map((url) => `
-      <url>
-        <loc>${url}</loc>
-        <lastmod>${new Date().toISOString()}</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-      </url>
-    `).join("");
+    ].map((url) => {
+      const priority = url === `${baseUrl}/` ? 0.1 : 0.05;
+      return `
+        <url>
+          <loc>${url}</loc>
+          <lastmod>${new Date().toISOString()}</lastmod>
+          <changefreq>monthly</changefreq>
+          <priority>${priority}</priority>
+        </url>
+      `;
+    }).join("");
+    
   
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset 

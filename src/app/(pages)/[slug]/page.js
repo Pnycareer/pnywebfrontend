@@ -23,12 +23,18 @@ export default async function Page({ params }) {
   const metadata = {
     metatitle: course.Meta_Title || "Course Not Found",
     metadescription: course.Meta_Description || "This course does not exist.",
+    noindex: course.Page_Index,
   };
 
   return (
     <>
       <title>{metadata.metatitle}</title>
       <meta name="description" content={metadata.metadescription} />
+      <meta
+        name="robots"
+        content={metadata.noindex ? "index, follow" : "noindex, nofollow"}
+      />
+
       <Detailpage course={course} />
     </>
   );
