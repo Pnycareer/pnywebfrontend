@@ -42,9 +42,9 @@ const TrainerCertification = () => {
           start in a career is a cherished dream for every career candidate.
         </p>
         <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed text-justify mt-3">
-          However, this is easier said than done especially in today's
+          However, this is easier said than done especially in todays
           challenging career range. To achieve this dream basic college
-          education is rarely enough, especially in Pakistan. Today's highly
+          education is rarely enough, especially in Pakistan. Todays highly
           competitive and demanding employment market is looking for only
           talented and skilled manpower with enough command of the essentials of
           the information technology industry. To make a mark you must have the
