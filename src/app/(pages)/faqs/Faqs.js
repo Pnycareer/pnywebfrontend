@@ -1,10 +1,20 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 
 const Faqs = ({ data }) => {
   const [activeCategory, setActiveCategory] = useState(data[0]);
+  const faqRef = useRef(null);
+
+  const handleCategoryClick = (category) => {
+    setActiveCategory(category);
+
+    // Wait for state update and DOM render, then scroll
+    setTimeout(() => {
+      faqRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+  };
 
   return (
     <>
@@ -13,7 +23,7 @@ const Faqs = ({ data }) => {
         {data.map((category) => (
           <div key={category._id} className="flex flex-col items-center">
             <div
-              onClick={() => setActiveCategory(category)}
+              onClick={() => handleCategoryClick(category)}
               className={`cursor-pointer bg-white border hover:shadow-md transition-all duration-300 rounded-xl overflow-hidden w-full p-2 ${
                 activeCategory._id === category._id
                   ? "shadow-lg border-blue-500"
@@ -37,7 +47,10 @@ const Faqs = ({ data }) => {
       </div>
 
       {/* Title */}
-      <h2 className="text-3xl font-bold text-center mb-6">
+      <h2
+        ref={faqRef}
+        className="text-3xl font-bold text-center mb-6 scroll-mt-28"
+      >
         {activeCategory.category.name}
       </h2>
 

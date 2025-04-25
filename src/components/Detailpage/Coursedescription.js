@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const Coursedescription = ({ coursedesc }) => {
-  console.log(coursedesc , 'checking')
   const [relatedCourses, setRelatedCourses] = useState([]);
   const router = useRouter();
 
@@ -37,9 +36,6 @@ const Coursedescription = ({ coursedesc }) => {
     router.push(`/${slug}`);
   };
 
-
-  console.log(relatedCourses , 'related')
-
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-blue-100 to-[#acb8d1] p-6">
       <div className="grid grid-cols-12 gap-6">
@@ -59,7 +55,8 @@ const Coursedescription = ({ coursedesc }) => {
                 [&>ul]:list-disc [&>ul]:pl-6
                 [&>ol]:list-decimal [&>ol]:pl-6
                 [&>ul>li]:mt-2
-                [&>ol>li]:mt-2"
+                [&>ol>li]:mt-2
+                course-description ql-editor [&_iframe]:w-full [&_iframe]:h-[400px] [&_iframe]:rounded-xl"
               dangerouslySetInnerHTML={{
                 __html: coursedesc.Course_Description || "",
               }}
@@ -89,7 +86,7 @@ const Coursedescription = ({ coursedesc }) => {
                 .sort(() => Math.random() - 0.5)
                 .slice(0, 4)
                 .map((course) => (
-                  <div
+                  <div  
                     key={course._id}
                     onClick={() => handleCourseClick(course.url_Slug)}
                     className="cursor-pointer rounded-xl border border-gray-300 bg-white/70 p-4 shadow transition-all duration-300 hover:scale-[1.02] hover:border-blue-400 hover:shadow-lg"

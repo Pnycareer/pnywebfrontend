@@ -4,7 +4,6 @@ import CourseCard from "@/components/cards/CourseCard";
 // import InstructorCard, { InstructorSection } from "@/components/cards/InstructorCard";
 
 const Courses = ({ slug, subcategory }) => {
-  console.log(subcategory, "test");
 
   const toURL = (path) =>
     `${process.env.NEXT_PUBLIC_API_URL}/${path?.replace(/\\/g, "/")}`;

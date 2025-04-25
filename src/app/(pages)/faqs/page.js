@@ -1,6 +1,13 @@
 import React from "react";
 import Faqs from "./Faqs";
 
+export const metadata = {
+  title: "FAQs",
+  description:
+    "Find answers to the most frequently asked questions about our courses, services, and platform. Get quick help and stay informed with our comprehensive FAQ section.",
+};
+
+
 const Page = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/faqs`, {
     cache: "no-store",
@@ -19,9 +26,13 @@ const Page = async () => {
   }
 
   return (
-    <div className="p-4 sm:p-8 max-w-7xl mx-auto">
-      <Faqs data={faqData} />
-    </div>
+    <>
+      <title>{metadata.title}</title>
+      <meta name="description" content={metadata.description} />
+      <div className="p-4 sm:p-8 max-w-7xl mx-auto">
+        <Faqs data={faqData} />
+      </div>
+    </>
   );
 };
 

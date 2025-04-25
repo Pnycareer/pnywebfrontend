@@ -1,3 +1,5 @@
+"use client";
+import { useState,useEffect } from "react";
 import Branches from "./Branches";
 import CityCourses from "./Citycourses";
 import Copyrights from "./Copyrights";
@@ -6,6 +8,26 @@ import logo from "@/assets/logo/Pnylogo.png";
 import Link from "next/link";
 
 export default function Footer() {
+  const [languageCourses, setLanguageCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/courses/getoncategory/language`
+        );
+        const data = await res.json();
+        if (data?.courses) {
+          const latestCourses = data.courses.slice(0, 4); // Only show latest 4
+          setLanguageCourses(latestCourses);
+        }
+      } catch (err) {
+        console.error("Failed to fetch language courses:", err);
+      }
+    };
+
+    fetchCourses();
+  }, []);
   return (
     <footer className="bg-grey-200 text-black py-10 px-5 md:px-20 min-h-[400px]">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
@@ -55,9 +77,9 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <Link href="/privacy-policy" className="hover:underline">
                 Privacy Policy
-              </a>
+              </Link>
             </li>
             <li>
               <a href="#" className="hover:underline">
@@ -65,9 +87,9 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <Link href="/best-online-it-institute-in-lahore" className="hover:underline">
                 Best Institute in Lahore
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -104,27 +126,28 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Language & Short Courses */}
+        {/* Language Courses */}
         <div>
           <h3 className="text-lg font-bold mb-4">Language Courses</h3>
           <ul className="space-y-2 text-sm">
-            <li>
-              <a href="#" className="hover:underline">
-                Spoken English Language
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:underline">
-                IELTS Preparation Course
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:underline">
-                Pearson Test of English (PTE)
-              </a>
-            </li>
+            {languageCourses.length > 0 ? (
+              languageCourses.map((course) => (
+                <li key={course._id}>
+                  <Link
+                    href={`/${course.url_Slug}`}
+                    className="hover:underline"
+                  >
+                    {course.course_Name}
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <li>Loading courses...</li>
+            )}
           </ul>
         </div>
+
+
         <div>
           <h3 className="text-lg font-bold mb-4">Short Courses</h3>
           <ul className="space-y-2 text-sm">

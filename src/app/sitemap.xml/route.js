@@ -18,7 +18,7 @@ export async function GET() {
         <url>
           <loc>${baseUrl}/${course.url_Slug}</loc>
           <lastmod>${course.updatedAt}</lastmod>
-          <changefreq>monthly</changefreq>
+          <changefreq>weekly</changefreq>
           <priority>${priority}</priority>
         </url>
       `;

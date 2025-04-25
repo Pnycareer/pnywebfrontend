@@ -1,10 +1,7 @@
 "use client";
-
-import React, { useEffect, useState } from "react";
-import Loader from "@/components/loader/Loader";
 import ScrollToTop from "@/components/ScrollToTop/Scrolltotop";
 
-const Termsconditions = ({ pageData }) => {
+const Privacypolicy = ({ pageData }) => {
 
   const { page_title, page_description, shortdescription } = pageData;
 
@@ -44,4 +41,4 @@ const Termsconditions = ({ pageData }) => {
   );
 };
 
-export default Termsconditions;
+export default Privacypolicy;
