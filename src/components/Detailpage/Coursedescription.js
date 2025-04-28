@@ -56,7 +56,10 @@ const Coursedescription = ({ coursedesc }) => {
                 [&>ol]:list-decimal [&>ol]:pl-6
                 [&>ul>li]:mt-2
                 [&>ol>li]:mt-2
-                course-description ql-editor [&_iframe]:w-full [&_iframe]:h-[400px] [&_iframe]:rounded-xl"
+                course-description ql-editor [&_iframe]:w-full [&_iframe]:h-[400px] [&_iframe]:rounded-xl
+                [&_.ql-align-center]:text-center
+                [&_.ql-align-right]:text-right"
+                
               dangerouslySetInnerHTML={{
                 __html: coursedesc.Course_Description || "",
               }}
