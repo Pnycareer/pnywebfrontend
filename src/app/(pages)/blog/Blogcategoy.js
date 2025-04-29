@@ -3,17 +3,26 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const BlogCategory = ({ blogsData }) => {
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const urlCategory = searchParams.get("category") || "all";
+  const [selectedCategory, setSelectedCategory] = useState(urlCategory);
 
   const categories = ["all", ...new Set(blogsData.map((cat) => cat.blogCategory))];
 
+  useEffect(() => {
+    setSelectedCategory(urlCategory); // Update state when URL changes
+  }, [urlCategory]);
+
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
+    router.push(category === "all" ? `/blog` : `/blog?category=${encodeURIComponent(category)}`);
   };
 
-  // Flatten blogs
   const allVisibleBlogs = blogsData.flatMap((category) =>
     category.blogs
       .filter((blog) => blog.inviewweb)
@@ -47,7 +56,7 @@ const BlogCategory = ({ blogsData }) => {
                   : "bg-white text-blue-700 border-blue-700 hover:bg-blue-700 hover:text-white"
               }`}
           >
-            {category.charAt(0).toUpperCase() + category.slice(1)}
+            {category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, " ")}
           </button>
         ))}
       </div>
@@ -63,28 +72,22 @@ const BlogCategory = ({ blogsData }) => {
               href={`/blog/${blog.category.toLowerCase()}/${blog.url_slug.toLowerCase()}`}
               className="bg-white border rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 block"
             >
-              <div>
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}/${blog.blogImage.replace(/\\/g, "/")}`}
-                  alt={blog.blogName}
-                  width={400}
-                  height={250}
-                  unoptimized
-                  className="w-full h-56 object-cover"
-                />
-
-                <div className="p-5">
-                  <h3 className="text-2xl font-bold mb-2 text-gray-800">
-                    {blog.blogName}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                    {blog.shortDescription}
-                  </p>
-                  <p className="text-gray-400 text-xs">
-                    Published on:{" "}
-                    {new Date(blog.publishDate).toLocaleDateString()}
-                  </p>
-                </div>
+              <Image
+                src={`${process.env.NEXT_PUBLIC_API_URL}/${blog.blogImage.replace(/\\/g, "/")}`}
+                alt={blog.blogName}
+                width={400}
+                height={250}
+                unoptimized
+                className="w-full h-56 object-cover"
+              />
+              <div className="p-5">
+                <h3 className="text-2xl font-bold mb-2 text-gray-800">{blog.blogName}</h3>
+                <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                  {blog.shortDescription}
+                </p>
+                <p className="text-gray-400 text-xs">
+                  Published on: {new Date(blog.publishDate).toLocaleDateString()}
+                </p>
               </div>
             </Link>
           ))}
