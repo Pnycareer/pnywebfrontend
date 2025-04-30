@@ -18,8 +18,19 @@ export default function RootLayout({ children }) {
           name="google-site-verification"
           content="xt9UQlTcyB46zJ1blAQyrgQvW-0AdlxqSsmkR8bUB4Y"
         />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          integrity="sha512-..."
+          crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
+        />
         <link rel="icon" href="/favicon.ico" />
-        <script dangerouslySetInnerHTML={{ __html: "history.scrollRestoration='manual'" }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "history.scrollRestoration='manual'",
+          }}
+        />
       </head>
       <body className={inter.className}>
         <Navbar />

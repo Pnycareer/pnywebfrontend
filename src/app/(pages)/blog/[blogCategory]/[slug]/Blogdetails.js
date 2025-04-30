@@ -210,66 +210,72 @@ const Blogdetails = ({ blog }) => {
 
           {/* Sidebar */}
           <aside className="w-full lg:w-1/3 sticky top-24 self-start space-y-10">
-  {/* Categories Section */}
-  <div className="bg-white p-5 rounded-xl shadow-md">
-    <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">
-      Blog Categories
-    </h3>
-    <ul className="flex flex-col gap-4">
-      {categories.map((cat, index) => (
-        <li key={index}>
-          <Link
-            href={`/blog?category=${encodeURIComponent(cat.toLowerCase())}`}
-            className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition font-medium"
-          >
-            <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
-            {cat.charAt(0).toUpperCase() + cat.slice(1).replace(/-/g, " ")}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  </div>
-
-  {/* Recent Posts Section */}
-  <div className="bg-white p-5 rounded-xl shadow-md">
-    <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">
-      Recent Posts
-    </h3>
-    <div className="flex flex-col gap-6">
-      {recentBlogs.map((recent, index) => (
-        <Link
-          href={`/blog/${recent.blogCategory.toLowerCase()}/${recent.url_slug}`}
-          key={index}
-          className="flex gap-4 items-center hover:bg-gray-100 p-2 rounded-md transition"
-        >
-          {recent.blogImage ? (
-            <Image
-              src={`${process.env.NEXT_PUBLIC_API_URL}/${recent.blogImage.replace(/\\/g, "/")}`}
-              unoptimized
-              alt="Post Thumbnail"
-              width={80}
-              height={60}
-              className="rounded-md object-cover flex-shrink-0"
-            />
-          ) : (
-            <div className="w-[80px] h-[60px] rounded-md bg-gray-300 flex items-center justify-center text-gray-600 text-xs flex-shrink-0">
-              No Image
+            {/* Categories Section */}
+            <div className="bg-white p-5 rounded-xl shadow-md">
+              <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">
+                Blog Categories
+              </h3>
+              <ul className="flex flex-col gap-4">
+                {categories.map((cat, index) => (
+                  <li key={index}>
+                    <Link
+                      href={`/blog?category=${encodeURIComponent(
+                        cat.toLowerCase()
+                      )}`}
+                      className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition font-medium"
+                    >
+                      <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
+                      {cat.charAt(0).toUpperCase() +
+                        cat.slice(1).replace(/-/g, " ")}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-          )}
-          <div className="flex flex-col">
-            <p className="text-xs text-gray-400">
-              {new Date(recent.publishDate).toLocaleDateString()}
-            </p>
-            <h4 className="text-sm font-semibold leading-tight text-gray-700 hover:text-blue-700 line-clamp-2">
-              {recent.blogName}
-            </h4>
-          </div>
-        </Link>
-      ))}
-    </div>
-  </div>
-</aside>
 
+            {/* Recent Posts Section */}
+            <div className="bg-white p-5 rounded-xl shadow-md">
+              <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">
+                Recent Posts
+              </h3>
+              <div className="flex flex-col gap-6">
+                {recentBlogs.map((recent, index) => (
+                  <Link
+                    href={`/blog/${recent.blogCategory.toLowerCase()}/${
+                      recent.url_slug
+                    }`}
+                    key={index}
+                    className="flex gap-4 items-center hover:bg-gray-100 p-2 rounded-md transition"
+                  >
+                    {recent.blogImage ? (
+                      <Image
+                        src={`${
+                          process.env.NEXT_PUBLIC_API_URL
+                        }/${recent.blogImage.replace(/\\/g, "/")}`}
+                        unoptimized
+                        alt="Post Thumbnail"
+                        width={80}
+                        height={60}
+                        className="rounded-md object-cover flex-shrink-0"
+                      />
+                    ) : (
+                      <div className="w-[80px] h-[60px] rounded-md bg-gray-300 flex items-center justify-center text-gray-600 text-xs flex-shrink-0">
+                        No Image
+                      </div>
+                    )}
+                    <div className="flex flex-col">
+                      <p className="text-xs text-gray-400">
+                        {new Date(recent.publishDate).toLocaleDateString()}
+                      </p>
+                      <h4 className="text-sm font-semibold leading-tight text-gray-700 hover:text-blue-700 line-clamp-2">
+                        {recent.blogName}
+                      </h4>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     </>

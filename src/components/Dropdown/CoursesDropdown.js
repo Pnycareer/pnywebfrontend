@@ -13,7 +13,12 @@ const CoursesDropdown = () => {
   useEffect(() => {
     const loadCategories = async () => {
       const data = await fetchCategories();
-      setCategories(data);
+
+      const filteredAndSorted = data
+        .filter((cat) => cat.viewonweb) // Only show those marked true
+        .sort((a, b) => parseInt(a.position) - parseInt(b.position)); // Sort by position
+
+      setCategories(filteredAndSorted);
     };
     loadCategories();
   }, []);
@@ -39,7 +44,6 @@ const CoursesDropdown = () => {
         <motion.div
           animate={{ rotate: dropdownOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-         
         >
           <CgMenuGridO size={18} />
         </motion.div>
@@ -54,10 +58,11 @@ const CoursesDropdown = () => {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
             className="fixed top-20 left-0 w-full px-4 md:px-10"
-            
           >
             <div className="backdrop-blur-xl bg-white border border-white/20 shadow-2xl rounded-3xl p-6 max-h-[70vh] overflow-y-auto mx-auto w-full md:w-[80%]">
-              <h3 className="text-lg font-bold mb-4 text-gray-800">Browse Courses</h3>
+              <h3 className="text-lg font-bold mb-4 text-gray-800">
+                Browse Courses
+              </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {categories.length > 0 ? (
                   categories.map((category, index) => (
@@ -65,9 +70,10 @@ const CoursesDropdown = () => {
                       key={index}
                       href={`/courses/${category.url_Slug}`}
                       onClick={() => setDropdownOpen(false)}
-                      className="block bg-white/40 text-gray-900 p-4 rounded-xl hover:bg-white/60 hover:text-blue-700 transition duration-300 shadow-sm"
+                      className="flex items-center gap-3 bg-white/40 text-gray-900 p-4 rounded-xl hover:bg-white/60 hover:text-blue-700 transition duration-300 shadow-sm"
                     >
-                      {category.Category_Name}
+                      <i className={`${category.Icon} text-lg`}></i>
+                      <span>{category.Category_Name}</span>
                     </Link>
                   ))
                 ) : (
