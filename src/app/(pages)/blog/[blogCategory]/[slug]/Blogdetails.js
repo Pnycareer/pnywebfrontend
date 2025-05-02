@@ -3,13 +3,9 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ScrollToTop from "@/components/ScrollToTop/Scrolltotop";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaLinkedinIn,
-  FaInstagram,
-} from "react-icons/fa";
 import Loader from "@/components/loader/Loader";
+import SocialShare from "@/components/SocialShare/SocialShare";
+import { usePathname } from "next/navigation";
 
 const Blogdetails = ({ blog }) => {
   const {
@@ -17,7 +13,6 @@ const Blogdetails = ({ blog }) => {
     blogDescription,
     shortDescription,
     publishDate,
-    socialLinks,
     blogImage,
     author,
     tags,
@@ -26,6 +21,10 @@ const Blogdetails = ({ blog }) => {
   const [recentBlogs, setRecentBlogs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const pathname = usePathname();
+  const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
+  const fullUrl = `${baseUrl}${pathname}`;
 
   useEffect(() => {
     const fetchRecentBlogs = async () => {
@@ -137,51 +136,7 @@ const Blogdetails = ({ blog }) => {
               ))}
             </div>
 
-            {/* Social Links */}
-            {socialLinks && (
-              <div className="flex gap-4 mt-6">
-                {socialLinks.facebook && (
-                  <a
-                    href={socialLinks.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 text-2xl"
-                  >
-                    <FaFacebookF />
-                  </a>
-                )}
-                {socialLinks.twitter && (
-                  <a
-                    href={socialLinks.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-400 hover:text-blue-600 text-2xl"
-                  >
-                    <FaTwitter />
-                  </a>
-                )}
-                {socialLinks.linkedin && (
-                  <a
-                    href={socialLinks.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-700 hover:text-blue-900 text-2xl"
-                  >
-                    <FaLinkedinIn />
-                  </a>
-                )}
-                {socialLinks.instagram && (
-                  <a
-                    href={socialLinks.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-pink-500 hover:text-pink-700 text-2xl"
-                  >
-                    <FaInstagram />
-                  </a>
-                )}
-              </div>
-            )}
+            <SocialShare title={blogName} url={fullUrl} />
 
             {/* Author Section */}
             <div className="flex items-center gap-4 p-4 mt-10 bg-gray-100 rounded-lg">
