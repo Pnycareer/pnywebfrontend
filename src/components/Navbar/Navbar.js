@@ -112,9 +112,13 @@ const Navbar = () => {
 
           {/* Center: Contact Info */}
           <div className="hidden lg:flex items-center space-x-6">
-            <button className="bg-green-600 text-white px-3 py-1 rounded-md hover:bg-green-700">
+            <a
+              href="https://pnyc.pk/"
+              target="_blank"
+              className="bg-green-600 text-white px-3 py-1 rounded-md hover:bg-green-700"
+            >
               PNY Conference
-            </button>
+            </a>
             <div className="flex items-center space-x-2">
               <FiPhone /> <span>UAN - 03041111774</span>
             </div>

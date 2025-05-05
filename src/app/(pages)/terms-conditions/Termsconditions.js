@@ -1,26 +1,17 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Loader from "@/components/loader/Loader";
-import ScrollToTop from "@/components/ScrollToTop/Scrolltotop";
+import HeaderSection from "@/components/HeaderSection/Headersection";
 
 const Termsconditions = ({ pageData }) => {
-
   const { page_title, page_description, shortdescription } = pageData;
 
   return (
     <>
-      <ScrollToTop />
-      <section className="relative flex items-center justify-center h-[300px] md:h-[400px] xl:h-[300px] w-full bg-gradient-to-r from-[#1B263B] via-[#475e5e] to-[#006d5f]">
-        <div className="absolute inset-0 backdrop-blur-md rounded-xl w-11/12 md:w-10/12 lg:w-8/12 mx-auto flex flex-col items-center justify-center p-6 md:p-10">
-          <h1 className="text-2xl md:text-5xl font-bold text-white text-center">
-            {page_title}
-          </h1>
-          <p className="text-lg md:text-xl text-gray-200 text-center mt-4 max-w-4xl">
-            {shortdescription}
-          </p>
-        </div>
-      </section>
+      <HeaderSection
+        pagetitle={page_title}
+        shortdescription={shortdescription}
+      />
+  
 
       <section className="px-6 md:px-16 py-12 bg-white text-gray-800">
         <div className="max-w-7xl mx-auto">

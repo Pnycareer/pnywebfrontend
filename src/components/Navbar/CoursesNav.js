@@ -122,7 +122,7 @@ const CoursesNav = () => {
           <Link href="/blog" className="hover:text-yellow-400 cursor-pointer">
             Blog
           </Link>
-          <li className="hover:text-yellow-400 cursor-pointer">Contact</li>
+          <Link href='/contact-us' className="hover:text-yellow-400 cursor-pointer">Contact</Link>
         </ul>
 
         {/* Mobile Menu Button */}

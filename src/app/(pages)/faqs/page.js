@@ -29,9 +29,9 @@ const Page = async () => {
     <>
       <title>{metadata.title}</title>
       <meta name="description" content={metadata.description} />
-      <div className="p-4 sm:p-8 max-w-7xl mx-auto">
+    
         <Faqs data={faqData} />
-      </div>
+      
     </>
   );
 };

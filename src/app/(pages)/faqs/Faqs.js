@@ -2,6 +2,7 @@
 import React, { useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
+import HeaderSection from "@/components/HeaderSection/Headersection";
 
 const Faqs = ({ data }) => {
   const [activeCategory, setActiveCategory] = useState(data[0]);
@@ -18,8 +19,13 @@ const Faqs = ({ data }) => {
 
   return (
     <>
+      <HeaderSection
+        pagetitle="FAQs"
+        shortdescription="Frequently asked question"
+      />
+
       {/* Category Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-10 p-4">
         {data.map((category) => (
           <div key={category._id} className="flex flex-col items-center">
             <div
@@ -55,7 +61,7 @@ const Faqs = ({ data }) => {
       </h2>
 
       {/* FAQ List */}
-      <div className="space-y-4">
+      <div className="space-y-4 p-4">
         {activeCategory.faqs.map((faq) => (
           <FaqItem key={faq._id} faq={faq} />
         ))}
@@ -68,46 +74,48 @@ const FaqItem = ({ faq }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden border">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex justify-between items-center p-5 text-left"
-      >
-        <span className="text-lg font-medium text-gray-800">
-          {faq.question}
-        </span>
-        <svg
-          className={`w-5 h-5 text-gray-500 transition-transform ${
-            open ? "rotate-180" : ""
-          }`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+    <>
+      <div className="bg-white rounded-xl shadow-md overflow-hidden border">
+        <button
+          onClick={() => setOpen(!open)}
+          className="w-full flex justify-between items-center p-5 text-left"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </button>
-
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key="answer"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden border-t"
+          <span className="text-lg font-medium text-gray-800">
+            {faq.question}
+          </span>
+          <svg
+            className={`w-5 h-5 text-gray-500 transition-transform ${
+              open ? "rotate-180" : ""
+            }`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
           >
-            <div className="p-4 text-gray-700">{faq.answer}</div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </button>
+
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.div
+              key="answer"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="overflow-hidden border-t"
+            >
+              <div className="p-4 text-gray-700">{faq.answer}</div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </>
   );
 };
 

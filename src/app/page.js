@@ -2,9 +2,7 @@ import Home from "@/app/(pages)/home/Home";
 
 export const metadata = async () => {
   try {
-    const response = await fetch(`https://api.pnytrainings.com/api/v1/meta/home`, {
-      next: { revalidate: 60 }, // Revalidates every 60 seconds
-    });
+    const response = await fetch(`https://api.pnytrainings.com/api/v1/meta/home`);
 
     const data = await response.json();
 

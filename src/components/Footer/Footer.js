@@ -67,7 +67,7 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <a href="https://lms.pnytraining.com/" target="_blank" className="hover:underline">
                 Admission
               </a>
             </li>
