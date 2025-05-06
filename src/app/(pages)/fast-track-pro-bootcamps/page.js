@@ -9,7 +9,9 @@ const metadata = {
 };
 
 const Page = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses/bootcamp-courses/get`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/courses/bootcamp-courses/get`
+  );
 
   const data = await res.json();
 
@@ -17,7 +19,7 @@ const Page = async () => {
     <>
       <title>{metadata.title}</title>
       <meta name="description" content={metadata.description} />
-      <Fastbootcamp bootcampCourses={data.data} />;
+      <Fastbootcamp bootcampCourses={data.data} />
     </>
   );
 };
