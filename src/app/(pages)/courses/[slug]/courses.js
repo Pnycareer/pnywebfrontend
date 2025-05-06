@@ -22,10 +22,13 @@ const Courses = ({ slug, subcategory }) => {
       <section className="flex flex-col items-center justify-center p-6 md:p-10 bg-gray-100 w-full animate-fade-in">
         {/* Courses Grid */}
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
-          {subcategory?.courses?.filter((course) => course.View_On_Web)
-            ?.length > 0 ? (
+          {subcategory?.courses?.filter(
+            (course) => course.View_On_Web && course.bootcamp === false
+          )?.length > 0 ? (
             subcategory.courses
-              .filter((course) => course.View_On_Web)
+              .filter(
+                (course) => course.View_On_Web && course.bootcamp === false
+              )
               .map((course) => (
                 <CourseCard
                   key={course._id}
