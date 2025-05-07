@@ -1,13 +1,20 @@
 export default async function sitemap() {
     const baseUrl = "https://pnywebfrontend.vercel.app";
-  
+
     try {
-        // Fetch course data
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`);
+        // Fetch course data without caching
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`, {
+            method: "GET",
+            headers: {
+                "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0"
+            }
+        });
+        
         const data = await res.json();
 
-        // Log the raw API data
-        console.log("Raw Data from API:", JSON.stringify(data.data, null, 2));
+        
 
         // Generate dynamic URLs
         const dynamicUrls = (data.data || [])
