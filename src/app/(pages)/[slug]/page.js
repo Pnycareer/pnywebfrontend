@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Detailpage from "./Detailpage";
+import Metadata from "@/components/Meta/Metadata";
 
 export default async function Page({ params }) {
   const { slug } = await params;
@@ -19,22 +20,19 @@ export default async function Page({ params }) {
     notFound();
   }
 
-  // Meta info
+
   const metadata = {
-    metatitle: course.Meta_Title || "Course Not Found",
-    metadescription: course.Meta_Description || "This course does not exist.",
+    title: course.Meta_Title || "Course Not Found",
+    description: course.Meta_Description || "This course does not exist.",
     noindex: course.Page_Index,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}/${slug}`,
+    image: course.course_Image|| "/default-course-image.jpg",
+    canonicalUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/${slug}`,
   };
 
   return (
     <>
-      <title>{metadata.metatitle}</title>
-      <meta name="description" content={metadata.metadescription} />
-      <meta
-        name="robots"
-        content={metadata.noindex ? "index, follow" : "noindex, nofollow"}
-      />
-
+      <Metadata {...metadata} />
       <Detailpage course={course} />
     </>
   );
