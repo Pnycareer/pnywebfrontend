@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://pnywebfrontend.vercel.app/sitemap.xml
