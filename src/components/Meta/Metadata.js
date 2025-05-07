@@ -10,8 +10,8 @@ const Metadata = ({
   const metaTitle = title || "Default Title";
   const metaDescription = description || "Default description for the page.";
   const metaImage = image
-    ? `http://api.pnytrainings.com/${image}`
-    : "/default-image.jpg";
+    ? `https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D`
+    : "https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D";
   const metaUrl = url || process.env.NEXT_PUBLIC_SITE_URL;
   const metaRobots = noindex ? "noindex, nofollow" : "index, follow";
   const metaCanonical = canonicalUrl || metaUrl;
