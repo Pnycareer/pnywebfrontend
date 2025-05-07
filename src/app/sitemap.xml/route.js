@@ -16,7 +16,7 @@ export async function GET() {
         return `
           <url>
             <loc>${baseUrl}/${course.url_Slug}</loc>
-            <lastmod>${new Date(course.updatedAt).toISOString()}</lastmod>
+            <lastmod>${course.updatedAt ? new Date(course.updatedAt).toISOString() : new Date().toISOString()}</lastmod>
             <changefreq>weekly</changefreq>
             <priority>${priority}</priority>
           </url>
