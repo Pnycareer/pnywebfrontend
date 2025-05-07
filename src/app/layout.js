@@ -14,10 +14,15 @@ export default function RootLayout({ children }) {
           name="format-detection"
           content="telephone=no, date=no, email=no, address=no"
         />
-        <meta
+        {/* <meta
           name="google-site-verification"
           content="DHKZlPpifcE7T6HhBJnUtiMkAtMR3DaowMzVMJ7nKlA"
+        /> */}
+        <meta
+          name="google-site-verification"
+          content="ZdienjYj4nQtRUmFiCWBuzBG5V7zcUfBhe0xsUUhsSQ"
         />
+
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
