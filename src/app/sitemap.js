@@ -41,7 +41,7 @@ export default async function sitemap() {
             priority,
         }));
 
-        console.log("Generated Sitemap URLs:", dynamicUrls);
+       
 
         // Return combined URLs
         return [...staticUrls, ...dynamicUrls];
