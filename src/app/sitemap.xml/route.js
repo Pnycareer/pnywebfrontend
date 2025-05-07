@@ -1,61 +1,148 @@
-export const dynamic = 'force-dynamic'; // Ensure dynamic route handling
-
-export async function GET() {
-  const baseUrl = "https://pnywebfrontend.vercel.app";
-
-  try {
-    // Fetch course data from your API
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`);
-    const data = await res.json();
-
-    // Generate dynamic course URLs
-    const courseUrls = data.data
-      ?.flatMap((category) => (category.courses || []).filter(course => course.In_Sitemap))
-      .map((course) => {
-        const priority = course.priority ?? 0.9;
-        return `
-          <url>
-            <loc>${baseUrl}/${course.url_Slug}</loc>
-            <lastmod>${course.updatedAt ? new Date(course.updatedAt).toISOString() : new Date().toISOString()}</lastmod>
-            <changefreq>weekly</changefreq>
-            <priority>${priority}</priority>
-          </url>
-        `;
-      })
-      .join("") || "";
-
-    // Define static URLs
-    const staticUrls = [
-      { url: `${baseUrl}/`, priority: 0.1 },
-      { url: `${baseUrl}/about`, priority: 0.05 },
-      { url: `${baseUrl}/contact`, priority: 0.05 },
-      { url: `${baseUrl}/blog`, priority: 0.05 },
-    ]
-      .map(({ url, priority }) => `
-        <url>
-          <loc>${url}</loc>
-          <lastmod>${new Date().toISOString()}</lastmod>
-          <changefreq>monthly</changefreq>
-          <priority>${priority}</priority>
-        </url>
-      `)
-      .join("");
-
-    // Combine into a full sitemap
-    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      ${staticUrls}
-      ${courseUrls}
-    </urlset>`.trim();
-
-    return new Response(sitemap, {
-      headers: {
-        "Content-Type": "application/xml",
-        "Cache-Control": "public, max-age=86400, must-revalidate",
-      },
-    });
-  } catch (error) {
-    console.error("Error generating sitemap:", error);
-    return new Response("Failed to generate sitemap", { status: 500 });
-  }
-}
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+  <url>
+    <loc>https://pnywebfrontend.vercel.app/</loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://pnywebfrontend.vercel.app/flyers</loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://pnywebfrontend.vercel.app/training-schedule</loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://pnywebfrontend.vercel.app/pny-training-fee-structure</loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://pnywebfrontend.vercel.app/fast-track-pro-bootcamps</loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://pnywebfrontend.vercel.app/about</loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://pnywebfrontend.vercel.app/blog</loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://pnywebfrontend.vercel.app/contact-us</loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://pnywebfrontend.vercel.app/faqs</loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://pnywebfrontend.vercel.app/news</loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://pnywebfrontend.vercel.app/gallery</loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://pnywebfrontend.vercel.app/terms-conditions</loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://pnywebfrontend.vercel.app/privacy-policy</loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>
+      https://pnywebfrontend.vercel.app/artificial-intelligence-course-in-multan1
+    </loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>
+      https://pnywebfrontend.vercel.app/blog/technology/top-10-it-courses-in-2025-that-guarantee-career-growth
+    </loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>
+      https://pnywebfrontend.vercel.app/blog/technology/why-ccna-certification-is-still-a-game-changer-for-it-professionals
+    </loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>
+      https://pnywebfrontend.vercel.app/blog/technology/graphic-design-in-the-digital-age-must-have-skills-and-tools-for-2025
+    </loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>
+      https://pnywebfrontend.vercel.app/blog/technology/online-business-for-women-in-pakistan-without-investment
+    </loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>
+      https://pnywebfrontend.vercel.app/blog/it-softwares/cybersecurity-essentials-how-to-launch-your-career-in-ethical-hacking
+    </loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>
+      https://pnywebfrontend.vercel.app/blog/marketing/the-scope-of-seo-in-2025-why-its-more-important-than-ever
+    </loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>
+      https://pnywebfrontend.vercel.app/blog/marketing/the-future-of-digital-marketing-exploring-the-scope-in-2025-and-beyond
+    </loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>
+      https://pnywebfrontend.vercel.app/blog/marketing/how-to-start-your-web-development-journey-a-beginners-roadmap-123
+    </loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>
+      https://pnywebfrontend.vercel.app/blog/software/data-science-demystified-what-you-need-to-succeed-in-2025
+    </loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>
+      https://pnywebfrontend.vercel.app/blog/design/learn-python-programming-7-projects-every-beginner-should-build
+    </loc>
+    <lastmod>2025-05-07T07:58:23+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+</urlset>;
