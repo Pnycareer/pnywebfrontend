@@ -1,28 +1,36 @@
-export const dynamic = 'force-dynamic'; // Ensure dynamic route handling
+export const dynamic = "force-dynamic"; // Ensure dynamic route handling
 
 export async function GET() {
   const baseUrl = "https://pnywebfrontend.vercel.app";
 
   try {
     // Fetch course data from your API
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`);
+    const res = await fetch(`https://api.pnytrainings.com/courses/get-course`);
     const data = await res.json();
 
     // Generate dynamic course URLs
-    const courseUrls = data.data
-      ?.flatMap((category) => (category.courses || []).filter(course => course.In_Sitemap))
-      .map((course) => {
-        const priority = course.priority ?? 0.9;
-        return `
+    const courseUrls =
+      data.data
+        ?.flatMap((category) =>
+          (category.courses || []).filter((course) => course.In_Sitemap)
+        )
+        .map((course) => {
+          const priority = course.priority ?? 0.9;
+          const lastmod =
+            course.updatedAt && !isNaN(new Date(course.updatedAt).getTime())
+              ? new Date(course.updatedAt).toISOString()
+              : new Date().toISOString();
+
+          return `
           <url>
             <loc>${baseUrl}/${course.url_Slug}</loc>
-            <lastmod>${new Date(course.updatedAt).toISOString()}</lastmod>
+            <lastmod>${lastmod}</lastmod>
             <changefreq>weekly</changefreq>
             <priority>${priority}</priority>
           </url>
         `;
-      })
-      .join("") || "";
+        })
+        .join("") || "";
 
     // Define static URLs
     const staticUrls = [
@@ -31,14 +39,16 @@ export async function GET() {
       { url: `${baseUrl}/contact`, priority: 0.05 },
       { url: `${baseUrl}/blog`, priority: 0.05 },
     ]
-      .map(({ url, priority }) => `
+      .map(
+        ({ url, priority }) => `
         <url>
           <loc>${url}</loc>
           <lastmod>${new Date().toISOString()}</lastmod>
           <changefreq>monthly</changefreq>
           <priority>${priority}</priority>
         </url>
-      `)
+      `
+      )
       .join("");
 
     // Combine into a full sitemap
