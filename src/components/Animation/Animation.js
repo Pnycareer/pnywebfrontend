@@ -1,6 +1,4 @@
 'use client'
-import { Player } from "@lottiefiles/react-lottie-player";
-import robotAnimation from '@/components/Animation/robot.json';
 
 const Animation = () => {
   return (
