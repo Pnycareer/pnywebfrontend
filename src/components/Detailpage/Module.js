@@ -1,13 +1,24 @@
+"use client";
+
+import { useState, useEffect, useMemo } from "react";
 import Particle from "@/components/effects/Particles";
 
 export default function CourseFeature({ Modules }) {
-  if (!Modules || !Modules.lectures) {
-    return <p>No lectures available</p>;
-  }
+  const [selectedLecture, setSelectedLecture] = useState(null);
 
-  const sortedLectures = [...Modules.lectures].sort(
-    (a, b) => a.lectureNumber - b.lectureNumber
-  );
+  // Memoize lectures to prevent recreating them every render
+  const lectures = useMemo(() => {
+    return Modules?.lectures?.length > 0
+      ? [...Modules.lectures].sort((a, b) => a.lectureNumber - b.lectureNumber)
+      : [];
+  }, [Modules]);
+
+  // Update selected lecture when lectures change
+  useEffect(() => {
+    if (lectures.length > 0) {
+      setSelectedLecture(lectures[0]);
+    }
+  }, [lectures]);
 
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-r from-gray-900 to-blue-500 overflow-hidden p-4">
@@ -16,7 +27,7 @@ export default function CourseFeature({ Modules }) {
         <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
           Course Module
         </h1>
-        <p className="max-w-3xl mx-auto text-sm md:text-xl text-gray-300 px-4">
+        <p className="max-w-3xl mx-auto text-sm  md:text-xl text-gray-300 px-4">
           Our course modules offer a well-rounded curriculum, combining
           theoretical foundations with hands-on training, ensuring students
           acquire industry-relevant skills and knowledge for future endeavors.
@@ -35,10 +46,15 @@ export default function CourseFeature({ Modules }) {
               📚 Lectures
             </h2>
             <div className="space-y-3">
-              {sortedLectures.map((lecture) => (
+              {lectures.map((lecture) => (
                 <button
                   key={lecture.lectureNumber}
-                  className="w-full text-left px-4 py-3 rounded-lg bg-gray-800 bg-opacity-50 text-white hover:bg-blue-400"
+                  onClick={() => setSelectedLecture(lecture)}
+                  className={`w-full text-left px-4 py-3 rounded-lg transition-all ${
+                    selectedLecture?.lectureNumber === lecture.lectureNumber
+                      ? "bg-blue-500 text-white shadow-lg"
+                      : "bg-gray-800 bg-opacity-50 text-white hover:bg-blue-400"
+                  }`}
                 >
                   🎓 Lecture {lecture.lectureNumber}
                 </button>
@@ -48,21 +64,41 @@ export default function CourseFeature({ Modules }) {
 
           {/* Main Content */}
           <div className="w-full md:w-2/3 p-4 text-white overflow-y-auto max-h-[calc(90vh-2rem)] md:max-h-[500px]">
-            <h1 className="md:text-3xl font-extrabold break-words">
-              {sortedLectures[0].title}
-            </h1>
-            <p className="mt-3 md:text-lg text-gray-300">
-              {sortedLectures[0].content}
-            </p>
-            <div className="mt-5">
-              <h3 className="md:text-xl font-semibold text-blue-400">
-                Key Topics:
-              </h3>
-              <div
-                className="mt-3 text-gray-300 prose prose-invert max-w-none"
-                dangerouslySetInnerHTML={{ __html: sortedLectures[0].topics }}
-              />
-            </div>
+            {selectedLecture ? (
+              <div>
+                <h1 className="md:text-3xl font-extrabold break-words">
+                  {selectedLecture.title}
+                </h1>
+                <p className="mt-3 md:text-lg text-gray-300">
+                  {selectedLecture.content}
+                </p>
+                <div className="mt-5">
+                  <h3 className="md:text-xl font-semibold text-blue-400">
+                    Key Topics:
+                  </h3>
+                  <div className="mt-3 text-gray-300 prose prose-invert max-w-none">
+                    <div
+                      className="[&>h1]:text-[34px] [&>h1]:font-semibold
+                [&>h2]:text-[30px] [&>h2]:font-medium
+                [&>h3]:text-[24px] [&>h3]:font-medium
+                [&>a]:cursor-pointer
+                [&>p]:mt-5 
+                [&>ul]:list-disc [&>ul]:pl-6
+                [&>ol]:list-decimal [&>ol]:pl-6
+                [&>ul>li]:mt-2
+                [&>ol>li]:mt-2"
+                      dangerouslySetInnerHTML={{
+                        __html: selectedLecture.topics,
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <p className="text-gray-400 text-lg text-center">
+                Select a lecture to view details.
+              </p>
+            )}
           </div>
         </div>
       </div>

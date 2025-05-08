@@ -36,7 +36,7 @@ export default async function Page({ params }) {
     <>
       <Metadata {...metadata} />
       <Detailpage course={course} />
-      <CourseFeature Modules={course.courseModule} />
+      {/* <CourseFeature Modules={course.courseModule} /> */}
     </>
   );
 }
