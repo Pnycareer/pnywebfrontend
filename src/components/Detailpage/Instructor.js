@@ -53,13 +53,13 @@ const InstructorOverview = ({ Instructor }) => {
           </div>
 
           {/* Right Side: Lottie Animation */}
-          <div className="md:w-1/3 flex justify-center items-center">
+          {/* <div className="md:w-1/3 flex justify-center items-center">
             <DotLottieReact
               src="https://lottie.host/a340c48e-0eff-4906-b028-f2821544d19f/S2nAteSLtR.lottie"
               loop
               autoplay
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
