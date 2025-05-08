@@ -22,7 +22,7 @@ const Metadata = ({
     <>
       <title>{metaTitle}</title>
       <meta name="description" content={metaDescription} />
-      <meta name="robots" content={metaRobots} />
+      {/* <meta name="robots" content={metaRobots} /> */}
       <link rel="canonical" href={metaCanonical} />
       {/* Open Graph / Facebook / WhatsApp */}
       <meta property="og:type" content="website" />
