@@ -61,11 +61,11 @@ const HeroSection = () => {
           </div>
         </div>
         <div className="md:w-2/5">
-          <DotLottieReact
+          {/* <DotLottieReact
             src="https://lottie.host/e953babb-361f-47ea-9b5a-9f2d801ccae6/DSuOSFabak.lottie"
             loop
             autoplay
-          />
+          /> */}
         </div>
       </div>
     </section>
