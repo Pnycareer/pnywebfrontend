@@ -128,9 +128,9 @@ const CourseSection = ({ course }) => {
 
       <BenefitsSection />
 
-      {/* {course.Instructor && (
+      {course.Instructor && (
         <InstructorOverview Instructor={course.Instructor} />
-      )} */}
+      )}
 
       <Coursedescription coursedesc={course} />
 

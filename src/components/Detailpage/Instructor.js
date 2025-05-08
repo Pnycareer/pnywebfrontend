@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
