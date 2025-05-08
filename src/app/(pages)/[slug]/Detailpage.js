@@ -122,9 +122,9 @@ const CourseSection = ({ course }) => {
         </div>
       </section>
 
-      {course?.courseModule?.lectures?.length > 0 && (
+      {/* {course?.courseModule?.lectures?.length > 0 && (
         <CourseFeature Modules={course.courseModule} />
-      )}
+      )} */}
 
       {/* <BenefitsSection />
 
