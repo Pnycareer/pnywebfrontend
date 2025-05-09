@@ -1,3 +1,4 @@
+"use client";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Poppins } from "next/font/google";
@@ -19,33 +20,38 @@ const CourseCard = ({ name, image, urlslug }) => {
 
   return (
     <motion.div
-      onClick={handleDetailsClick} // 👈 moved here
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
+      onClick={handleDetailsClick}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       viewport={{ once: true }}
-      className="relative group bg-white rounded-xl shadow-lg overflow-hidden w-64 h-80 flex flex-col cursor-pointer"
+      className="relative group bg-white rounded-2xl shadow-lg overflow-hidden w-72 h-96 flex flex-col cursor-pointer transition-transform transform hover:scale-105"
     >
       {/* Image Section */}
-      <div className="relative w-full h-40">
+      <div className="relative w-full h-48">
         <Image
-          // src={`${process.env.NEXT_PUBLIC_API_URL}/${image}`}
-          src={`${image}`}
+          src={image}
           alt={name}
           fill
-          style={{ objectFit: "cover" }}
-          unoptimized
+          unoptimized={true}
+          priority={true} // Faster initial load
+          className="rounded-t-2xl object-cover group-hover:opacity-90 transition-opacity duration-300"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-gray-800/50 to-transparent"></div>
       </div>
 
       {/* Content Section */}
-      <div className="flex flex-col justify-between p-4 flex-grow">
-        <h3 className="text-lg font-bold text-center mt-6">{name}</h3>
+      <div className="flex flex-col justify-between p-6 flex-grow">
+        <h3
+          className={`${poppins.className} text-xl font-bold text-center text-gray-900 truncate`}
+          title={name}
+        >
+          {name}
+        </h3>
 
         <button
           type="button"
-          className="group relative overflow-hidden px-4 py-2 border border-blue-300 rounded-lg text-blue-500 transition-all duration-500 mx-auto pointer-events-none"
+          className="group relative overflow-hidden px-6 py-3 mt-6 border border-blue-300 rounded-lg text-blue-500 transition-all duration-500 mx-auto"
         >
           <span
             className={`${poppins.className} relative z-10 text-black text-sm`}

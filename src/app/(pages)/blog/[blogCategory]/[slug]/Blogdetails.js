@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import ScrollToTop from "@/components/ScrollToTop/Scrolltotop";
 import Loader from "@/components/loader/Loader";
 import SocialShare from "@/components/SocialShare/SocialShare";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 
 const Blogdetails = ({ blog }) => {
   const {
@@ -66,43 +66,59 @@ const Blogdetails = ({ blog }) => {
 
   return (
     <>
-      <ScrollToTop />
       <div className="container mx-auto p-4">
         {/* Blog Header */}
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-10 p-8 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 rounded-lg">
-          {/* Left Content */}
-          <div className="flex-1 text-white">
-            <h1 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
-              {blogName}
-            </h1>
-            <p className="text-lg mb-6">{shortDescription}</p>
-            <p className="text-sm text-gray-400">
-              Publish date: {new Date(publishDate).toLocaleDateString()}
-            </p>
-          </div>
+        <div className="container mx-auto p-4">
+          {/* Animated Blog Header */}
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex flex-col lg:flex-row items-center justify-between gap-10 p-8 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 rounded-lg"
+          >
+            {/* Left Content */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="flex-1 text-white"
+            >
+              <h1 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
+                {blogName}
+              </h1>
+              <p className="text-lg mb-6">{shortDescription}</p>
+              <p className="text-sm text-gray-400">
+                Publish date: {new Date(publishDate).toLocaleDateString()}
+              </p>
+            </motion.div>
 
-          {/* Right Image */}
-          <div className="flex-1">
-            <div className="rounded-lg overflow-hidden shadow-lg">
-              {blogImage ? (
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}/${blogImage.replace(
-                    /\\/g,
-                    "/"
-                  )}`}
-                  unoptimized={true}
-                  alt="Blog Main"
-                  width={800}
-                  height={500}
-                  className="object-cover w-full h-auto"
-                />
-              ) : (
-                <div className="w-full h-[300px] flex items-center justify-center bg-gray-200 rounded-lg">
-                  <p className="text-gray-500">No Image Available</p>
-                </div>
-              )}
-            </div>
-          </div>
+            {/* Right Image */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex-1"
+            >
+              <div className="rounded-lg overflow-hidden shadow-lg">
+                {blogImage ? (
+                  <Image
+                    src={`${
+                      process.env.NEXT_PUBLIC_API_URL
+                    }/${blogImage.replace(/\\/g, "/")}`}
+                    unoptimized={true}
+                    alt="Blog Main"
+                    width={800}
+                    height={500}
+                    className="object-cover w-full h-auto"
+                  />
+                ) : (
+                  <div className="w-full h-[300px] flex items-center justify-center bg-gray-200 rounded-lg">
+                    <p className="text-gray-500">No Image Available</p>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
         </div>
 
         {/* Main Content and Sidebar */}

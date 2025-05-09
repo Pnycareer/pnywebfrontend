@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
@@ -9,6 +9,7 @@ const InstructorOverview = ({ Instructor }) => {
   if (!Instructor?.in_View) {
     return null; // or you can return a message if you want
   }
+  
 
   return (
     <div className="p-4 md:p-8 text-gray-100">
@@ -53,13 +54,9 @@ const InstructorOverview = ({ Instructor }) => {
           </div>
 
           {/* Right Side: Lottie Animation */}
-          {/* <div className="md:w-1/3 flex justify-center items-center">
-            <DotLottieReact
-              src="https://lottie.host/a340c48e-0eff-4906-b028-f2821544d19f/S2nAteSLtR.lottie"
-              loop
-              autoplay
-            />
-          </div> */}
+          <div className="md:w-1/3 flex justify-center items-center">
+            <iframe className="h-52" src="https://lottie.host/embed/a340c48e-0eff-4906-b028-f2821544d19f/S2nAteSLtR.lottie"></iframe>
+          </div>
         </div>
       </div>
     </div>

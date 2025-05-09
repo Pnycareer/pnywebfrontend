@@ -20,6 +20,7 @@ const CourseSection = ({ course }) => {
       )}`
     : "";
 
+
   return (
     <>
       <section className="relative bg-gradient-to-br from-black via-blue-500/85 to-black text-white py-16 px-6 md:px-12 lg:px-20">
