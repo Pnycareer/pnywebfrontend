@@ -59,14 +59,6 @@ const CoursesNav = () => {
     course.course_Name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleCourseClick = (slug) => {
-    setIsLoading(true);
-    setSearchOpen(false);
-    setTimeout(() => {
-      window.location.href = slug;
-    }, 800);
-  };
-
   return (
     <header className="w-full bg-gray-100 backdrop-blur-md sticky top-0 z-50">
       <div className="mx-auto flex justify-between items-center px-6 lg:px-12 py-4">
@@ -131,96 +123,23 @@ const CoursesNav = () => {
                 placeholder="Search the skills you want to learn"
                 className="w-full px-6 py-3 rounded-lg bg-white/40 text-black backdrop-blur-md border border-white/30 shadow-md outline-none placeholder-gray-700"
                 value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setSearchOpen(e.target.value.length > 0);
-                }}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button
-                onClick={() => setSearchOpen(false)}
-                className="absolute right-3 top-3 text-xl text-gray-700 hover:text-red-500"
-              >
-                <IoClose />
-              </button>
             </div>
 
             {searchQuery && filteredCourses.length > 0 && (
               <div className="absolute top-full mt-2 w-full max-h-60 overflow-y-auto bg-white border rounded-lg shadow-lg z-10">
                 <ul className="space-y-2 p-4">
                   {filteredCourses.map((course) => (
-                    <li
-                      key={course._id}
-                      className="cursor-pointer hover:bg-yellow-200 p-2 rounded-md"
-                      onClick={() => handleCourseClick(course.url_Slug)}
-                    >
-                      {course.course_Name}
-                    </li>
+                    <Link key={course._id} href={`/${course.url_Slug}`} onClick={() => setSearchOpen(false)}>
+                      <li className="cursor-pointer hover:bg-yellow-200 p-2 rounded-md">
+                        {course.course_Name}
+                      </li>
+                    </Link>
                   ))}
                 </ul>
               </div>
             )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Loader Overlay */}
-      {isLoading && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center z-50">
-          <div className="text-white text-xl">Loading...</div>
-        </div>
-      )}
-
-      {/* Mobile Menu with Fold Animation */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ scaleY: 0, opacity: 0, transformOrigin: "top" }}
-            animate={{ scaleY: 1, opacity: 1, transformOrigin: "top" }}
-            exit={{ scaleY: 0, opacity: 0, transformOrigin: "top" }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="md:hidden bg-gray-900/90 backdrop-blur-md text-white py-4 space-y-4 px-6 absolute top-full left-0 w-full z-40 origin-top"
-          >
-            {/* Mobile Search Input */}
-            <div className="relative w-full">
-              <input
-                type="text"
-                placeholder="Search the skills you want to learn"
-                className="px-4 py-2 w-full border rounded-md outline-none text-white bg-gray-700"
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setSearchOpen(e.target.value.length > 0);
-                }}
-              />
-
-              {/* Filtered Course Dropdown */}
-              {searchQuery && filteredCourses.length > 0 && (
-                <div className="mt-2 max-h-60 overflow-y-auto bg-white text-black border rounded-lg shadow-lg z-10">
-                  <ul className="space-y-2 p-4">
-                    {filteredCourses.map((course) => (
-                      <li
-                        key={course._id}
-                        className="cursor-pointer hover:bg-yellow-200 p-2 rounded-md"
-                        onClick={() => handleCourseClick(course.url_Slug)}
-                      >
-                        {course.course_Name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-
-            {/* Mobile Nav Links */}
-            <ul className="flex flex-col space-y-3 text-sm font-medium pt-4">
-              {navLinks.map((link) => (
-                <Link key={link.href} href={link.href}>
-                  <li className="hover:text-yellow-400 cursor-pointer">
-                    {link.label}
-                  </li>
-                </Link>
-              ))}
-            </ul>
           </motion.div>
         )}
       </AnimatePresence>
