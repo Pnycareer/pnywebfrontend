@@ -15,7 +15,11 @@ export default function RootLayout({ children }) {
           content="telephone=no, date=no, email=no, address=no"
         />
 
-      
+        <meta
+          name="google-site-verification"
+          content="V1XnCS_3kKIZY1cTkolGmqLipxnJbx2GB7X4RMxRZkc"
+        />
+
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
