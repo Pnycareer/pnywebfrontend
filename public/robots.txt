@@ -1,3 +1,4 @@
 User-agent: *
+Disallow: /training-schedule
+Disallow: /pny-training-fee-structure
 Allow: /
-Sitemap: https://pnywebfrontend.vercel.app/sitemap.xml

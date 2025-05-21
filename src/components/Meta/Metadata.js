@@ -15,8 +15,7 @@ const Metadata = ({
   const metaUrl = url || process.env.NEXT_PUBLIC_SITE_URL;
   const metaRobots = noindex ? "noindex, nofollow" : "index, follow";
   const metaCanonical = canonicalUrl || metaUrl;
-  const metaSiteName = siteName || "https://pnywebfrontend.vercel.app";
-
+  // const metaSiteName = siteName || "https://pnywebfrontend.vercel.app";
 
   return (
     <>
@@ -30,7 +29,7 @@ const Metadata = ({
       <meta property="og:description" content={metaDescription} />
       <meta property="og:image" content={metaImage} />
       <meta property="og:url" content={metaUrl} />
-      <meta property="og:site_name" content={metaSiteName} />
+      <meta property="og:site_name" content="NextCMS" />
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={metaTitle} />
