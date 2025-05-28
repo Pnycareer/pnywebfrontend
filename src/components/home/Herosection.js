@@ -17,7 +17,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-4xl md:text-5xl font-bold"
         >
-          <span className="text-red-600">PNY</span> Trainings
+          <span className="text-red-600">NEXT</span> Trainings
         </motion.h1>
 
         <motion.h2

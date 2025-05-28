@@ -42,7 +42,7 @@ const VisionMission = () => {
           </div>
           <div className="mt-6 space-y-2 text-center md:text-left">
             <h2 className="text-2xl md:text-3xl font-semibold text-slate-800">
-              PNY Trainings Empowers{" "}
+              Next cms Empowers{" "}
               <span className="bg-red-500 text-white px-2 py-1 rounded-md">
                 100K+
               </span>

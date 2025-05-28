@@ -12,7 +12,7 @@ const Copyrights = () => {
     <>
       <div className="flex flex-col items-center justify-center gap-4 p-3 bg-gray-300 text-black">
         <div className="text-center">
-          Copyright © 2025 - All rights reserved by PNY Trainings
+          Copyright © 2025 - All rights reserved by Next cms
         </div>
         <div className="flex space-x-4">
           {/* Icons with Links */}

@@ -7,7 +7,7 @@ const benefits = [
   { icon: <UserCheck size={36} />, text: "Instructor Support" },
   { icon: <Briefcase size={36} />, text: "Internship Opportunity" },
   { icon: <GraduationCap size={36} />, text: "Job Cell" },
-  { icon: <Users size={36} />, text: "PNY Community Member" },
+  { icon: <Users size={36} />, text: "NEXT Community Member" },
   { icon: <Video size={36} />, text: "Free Seminar Access" },
 ];
 

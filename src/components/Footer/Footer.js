@@ -15,9 +15,12 @@ const Footer = () => {
     // Fetching categories
     const fetchCategories = async () => {
       try {
-        const res = await fetch("http://localhost:8080/api/v1/categories", {
-          cache: "no-store", // Reduce caching for fresh data
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/categories`,
+          {
+            cache: "no-store", // Reduce caching for fresh data
+          }
+        );
         const data = await res.json();
         const visibleCategories = data.filter((category) => category.viewonweb);
         setCategories(visibleCategories);
@@ -29,9 +32,12 @@ const Footer = () => {
     // Fetching random courses
     const fetchCourses = async () => {
       try {
-        const res = await fetch("http://localhost:8080/courses/get-course", {
-          cache: "no-store", // Reduce caching for fresh data
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`,
+          {
+            cache: "no-store", // Reduce caching for fresh data
+          }
+        );
         const data = await res.json();
 
         if (data?.success && data.data.length > 0) {
@@ -61,7 +67,7 @@ const Footer = () => {
             src={logo}
             width={100}
             height={56}
-            alt="PNY Trainings Logo"
+            alt="Next cms Logo"
             className="mb-4 object-contain"
             priority={true}
           />

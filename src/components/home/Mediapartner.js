@@ -1,13 +1,11 @@
-'use client'
+"use client";
 import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
 
-
 const mediaPartners = [
- 
   { src: "/images/city-42.png", alt: "City 42" },
   { src: "/images/k21-news.png", alt: "K21 News" },
   { src: "/images/daily-pakistan.png", alt: "Daily Pakistan" },
@@ -33,26 +31,30 @@ const MediaPartners = () => {
   };
 
   return (
-    <section className="w-full bg-white py-16 px-6 overflow-hidden">  {/* ✅ Fix Overflow Here */}
+    <section className="w-full bg-white py-16 px-6 overflow-hidden">
+      {" "}
+      {/* ✅ Fix Overflow Here */}
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl font-bold mb-4">We Empower Professionals; see through Media Partner Networks</h2>
+        <h2 className="text-4xl font-bold mb-4">
+          We Empower Professionals; see through Media Partner Networks
+        </h2>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-          PNY Trainings encourage the opinions of youth by developing them professionally, trusting their abilities as leaders, and 
-          getting them excited to explore the world around them.
+          Next cms encourage the opinions of youth by developing them
+          professionally, trusting their abilities as leaders, and getting them
+          excited to explore the world around them.
         </p>
       </div>
-
       {/* Slider */}
       <div className="mt-10">
         <Slider {...settings}>
           {mediaPartners.map((partner, index) => (
             <div key={index} className="px-2 flex justify-center">
               <Image
-                src={partner.src} 
-                alt={partner.alt} 
+                src={partner.src}
+                alt={partner.alt}
                 width={200}
                 height={200}
-                className="w-auto h-20 md:h-24 object-contain max-w-full"  
+                className="w-auto h-20 md:h-24 object-contain max-w-full"
               />
             </div>
           ))}

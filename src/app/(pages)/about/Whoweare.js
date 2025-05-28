@@ -14,8 +14,7 @@ const Whoweare = () => {
             Who we are?
           </h2>
           <h3 className="text-2xl text-red-500 font-semibold">
-            PNY Trainings: A renowned IT Training institute in Pakistan since
-            2014
+            Next cms: A renowned IT Training institute in Pakistan since 2014
           </h3>
           <p className="text-lg leading-relaxed text-black">
             Offering professional IT diplomas and short courses for students and

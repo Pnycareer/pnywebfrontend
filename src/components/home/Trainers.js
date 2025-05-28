@@ -31,9 +31,7 @@ const TrainerCertification = () => {
 
         {/* Text Content */}
         <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed text-justify">
-          <strong>
-            PNY Trainings is the leading IT training Hub in Lahore
-          </strong>{" "}
+          <strong>Next cms is the leading IT training Hub in Lahore</strong>{" "}
           that conducts different training programs aimed at helping young
           career seekers understand the basic information technology functioning
           of the sector and the job role they aspire to take on. Their insight
@@ -62,17 +60,17 @@ const TrainerCertification = () => {
               contemporaries is to undergo courses offered by the reputable IT
               Hub in Lahore. There are so many seats available in Arfa Tower
               short courses and all you have to do is to enroll yourself in your
-              desired course. PNY Trainings offers different courses in Lahore,
+              desired course. Next cms offers different courses in Lahore,
               Islamabad, Rawalpindi, Karachi, and other major cities of
               Pakistan.
             </p>
             <p>
-              PNY Trainings is one of the promising and Best IT Training
-              institutes in Lahore that comes up with amazing courses, training,
-              and almost all short courses in Lahore. We are the introducers to
-              numerous IT trends, courses, and certifications in Lahore. The
-              motive of the PNY Arfa Tower short courses is to provide the best
-              courses with guaranteed results for everyone.
+              Next cms is one of the promising and Best IT Training institutes
+              in Lahore that comes up with amazing courses, training, and almost
+              all short courses in Lahore. We are the introducers to numerous IT
+              trends, courses, and certifications in Lahore. The motive of the
+              next Arfa Tower short courses is to provide the best courses with
+              guaranteed results for everyone.
               <strong>
                 Technology, Business, Development, and Digital Marketing.
               </strong>
@@ -82,29 +80,29 @@ const TrainerCertification = () => {
               center in Lahore that allows all professionals and students to
               learn new skills for online earning. The flexible timings let them
               be part of new industry trends and improve their skills to get
-              better-paid jobs in our PNY Arfa Karim tower courses, For every
+              better-paid jobs in our next Arfa Karim tower courses, For every
               single course we pay attention to the student ease and feasibility
               when it comes to class schedule, timings, course duration,
               content, and teaching method.
             </p>
             <p>
-              PNY Trainings is one of the best online IT training institutes in
-              Arfa Tower Lahore Pakistan that offers you the opportunity to
-              learn new skills online. By accessing the online repository, you
-              will be able to get the course and training from our qualified
-              trainers and mentors. We have an organized system of teaching,
+              Next cms is one of the best online IT training institutes in Arfa
+              Tower Lahore Pakistan that offers you the opportunity to learn new
+              skills online. By accessing the online repository, you will be
+              able to get the course and training from our qualified trainers
+              and mentors. We have an organized system of teaching,
               coordination, follow-up, and course completion to let you have the
               ultimate outcomes.
             </p>
             <p>
               We are here when you are looking for the best IT training
-              institute in Lahore that PNY Trainings all the next-level
-              skill-based IT training centers. Everything is designed precisely
-              from our graphic designing courses to SEO training courses, their
-              content, and even the training sessions. We pay attention to
-              market need, demand, and future scope of the skills while offering
-              a course. Every single course is an addition to your skillset that
-              will repay you in the future.
+              institute in Lahore that Next cms all the next-level skill-based
+              IT training centers. Everything is designed precisely from our
+              graphic designing courses to SEO training courses, their content,
+              and even the training sessions. We pay attention to market need,
+              demand, and future scope of the skills while offering a course.
+              Every single course is an addition to your skillset that will
+              repay you in the future.
             </p>
           </div>
         )}

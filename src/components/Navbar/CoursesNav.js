@@ -67,7 +67,7 @@ const CoursesNav = () => {
           <Link href="/">
             <Image
               src={pnylogo}
-              alt="PNY Trainings"
+              alt="Next cms"
               width={80}
               height={80}
               unoptimized
@@ -131,7 +131,11 @@ const CoursesNav = () => {
               <div className="absolute top-full mt-2 w-full max-h-60 overflow-y-auto bg-white border rounded-lg shadow-lg z-10">
                 <ul className="space-y-2 p-4">
                   {filteredCourses.map((course) => (
-                    <Link key={course._id} href={`/${course.url_Slug}`} onClick={() => setSearchOpen(false)}>
+                    <Link
+                      key={course._id}
+                      href={`/${course.url_Slug}`}
+                      onClick={() => setSearchOpen(false)}
+                    >
                       <li className="cursor-pointer hover:bg-yellow-200 p-2 rounded-md">
                         {course.course_Name}
                       </li>
