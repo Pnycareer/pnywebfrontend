@@ -1,9 +1,10 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import Blogdetails from "./Blogdetails";
+import Metadata from "@/components/Meta/Metadata";
 
 const page = async ({ params }) => {
-  const { slug } = await params;
+  const { slug, blogCategory } = await params;
 
   // 🛜 Fetch blog data from your API
   const res = await fetch(
@@ -17,6 +18,7 @@ const page = async ({ params }) => {
 
   const blog = await res.json();
 
+
   const metadata = {
     metatitle: blog.metaTitle || "Course Not Found",
     metadescription: blog.metaDescription || "This course does not exist.",
@@ -24,8 +26,13 @@ const page = async ({ params }) => {
 
   return (
     <>
-      <title>{metadata.metatitle}</title>
-      <meta name="description" content={metadata.metadescription} />
+      {/* <title>{metadata.metatitle}</title>
+      <meta name="description" content={metadata.metadescription} /> */}
+      <Metadata
+        title={metadata.metatitle}
+        description={metadata.metadescription}
+        url={`${process.env.NEXT_PUBLIC_SITE_URL}/blog/${blogCategory}/${slug}`}
+      />
       <Blogdetails blog={blog} />
     </>
   );

@@ -27,7 +27,7 @@ const Blogdetails = ({ blog }) => {
   const fullUrl = `${baseUrl}${pathname}`;
 
   useEffect(() => {
-    const fetchRecentBlogs = async () => {
+    const fetchRecentBlogs = async () => {      
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`);
         const data = await res.json();
