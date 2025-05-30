@@ -1,9 +1,8 @@
 "use client";
 import CourseCard from "@/components/cards/CourseCard";
+import Link from "next/link";
 
 const CityCoursescategory = ({ subcategory }) => {
-  
-
   const toURL = (path) =>
     `${process.env.NEXT_PUBLIC_API_URL}/${path?.replace(/\\/g, "/")}`;
 
@@ -25,18 +24,23 @@ const CityCoursescategory = ({ subcategory }) => {
       </section>
 
       <section className="flex flex-col items-center justify-center p-6 md:p-10 bg-gray-100">
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
           {subcategory?.courses?.length > 0 ? (
             subcategory.courses.map((course) => (
-              <CourseCard
+              <Link
                 key={course._id}
-                name={course.course_Name || "No Name"}
-                image={toURL(course.course_Image)}
-                description={`Instructor: ${
-                  course.Instructor?.name || "N/A"
-                }, Fee: $${course.Monthly_Fee || "N/A"}`}
-                urlslug={course.url_Slug}
-              />
+                href={`/${course.url_Slug}`}
+                className="cursor-pointer w-full h-full block"
+              >
+                <CourseCard
+                  name={course.course_Name || "No Name"}
+                  image={toURL(course.course_Image)}
+                  description={`Instructor: ${
+                    course.Instructor?.name || "N/A"
+                  }, Fee: $${course.Monthly_Fee || "N/A"}`}
+                  urlslug={course.url_Slug}
+                />
+              </Link>
             ))
           ) : (
             <p className="text-xl text-gray-600">No courses available</p>
