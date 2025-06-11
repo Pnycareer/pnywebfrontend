@@ -1,6 +1,5 @@
 import Feestruchure from "./Feestruchure";
 
-
 const getMetaData = async () => {
   const res = await fetch(
     "https://www.admin777.pny-trainings.com/api/metas/fee-sturcture",
@@ -33,6 +32,7 @@ export default async function Page() {
     <>
       <title>{meta.meta_title}</title>
       <meta name="description" content={meta.meta_description} />
+      <meta name="robots" content="noindex, nofollow" />
       <Feestruchure initialCourses={initialCourses} />
     </>
   );

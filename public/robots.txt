@@ -1,4 +1,5 @@
 User-agent: *
 Disallow: /training-schedule
 Disallow: /pny-training-fee-structure
-Allow: /
+Allow: /    
+    
