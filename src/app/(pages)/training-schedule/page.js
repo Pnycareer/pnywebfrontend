@@ -27,6 +27,7 @@ const Page = async () => {
     <div>
       <title>{meta.meta_title}</title>
       <meta name="description" content={meta.meta_description} />
+      <meta name="robots" content="noindex, nofollow" />
       <TrainingSchedule batches={allBatches} />
     </div>
   );
