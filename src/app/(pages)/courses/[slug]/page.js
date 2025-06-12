@@ -1,4 +1,4 @@
-import InstructorCard from "@/components/cards/InstructorCard";
+import axios from "@/utils/axiosInstance";
 import Courses from "./courses";
 import { notFound } from "next/navigation";
 
@@ -7,26 +7,17 @@ export default async function Page({ params }) {
 
   try {
     // Fetch subcategory data
-    const subcategoryResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/courses/getoncategory/${slug}`,
-      { cache: "no-cache" }
-    );
-    
-    if (!subcategoryResponse.ok) {
-      notFound();
-    }
-
-    const subcategory = await subcategoryResponse.json();
+    const subcategoryResponse = await axios.get(`/courses/getoncategory/${slug}`);
+    const subcategory = subcategoryResponse.data;
 
     // Fetch instructors based on the category (slug)
-    const instructorResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/instructors/get-instructor?category=${slug}`,
-      { cache: "no-cache" }
-    );
-    
-    const instructors = instructorResponse.ok
-      ? await instructorResponse.json()
-      : [];
+    let instructors = [];
+    try {
+      const instructorResponse = await axios.get(`/api/instructors/get-instructor?category=${slug}`);
+      instructors = instructorResponse.data;
+    } catch {
+      instructors = [];
+    }
 
     const metadata = {
       metatitle: subcategory.category_Name || "Course Not Found",
