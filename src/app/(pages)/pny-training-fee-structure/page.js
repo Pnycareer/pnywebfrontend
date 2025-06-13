@@ -1,5 +1,8 @@
 import Feestruchure from "./Feestruchure";
 
+export const dynamic = "force-dynamic"; // ✅ this tells Next.js to chill about static rendering
+
+
 const getMetaData = async () => {
   try {
     const res = await fetch(
@@ -23,11 +26,18 @@ const getInitialCourses = async () => {
     const data = await res.json();
     return data.Courses?.Lahore || [];
   } catch (error) {
-    console.error("Course fetch failed:", error);
+    if (
+      error?.cause?.code === "CERT_HAS_EXPIRED" ||
+      error?.message?.includes("fetch failed")
+    ) {
+      console.warn("SSL expired or fetch failed — showing no data.");
+    } else {
+      console.error("Course fetch failed:", error);
+    }
     return [];
   }
 };
-    
+
 export default async function Page() {
   const [meta, initialCourses] = await Promise.all([
     getMetaData(),
