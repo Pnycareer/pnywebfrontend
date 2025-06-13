@@ -36,7 +36,7 @@ const SocialShare = ({ title, url }) => {
 
   return (
     <div className="mt-8">
-      <h3 className="text-lg font-semibold mb-3">Share this blog:</h3>
+      <h3 className="text-lg font-semibold mb-3">Share this blog:-</h3>
       <div className="flex gap-4 flex-wrap">
         {platforms.map((platform) => (
           <a
