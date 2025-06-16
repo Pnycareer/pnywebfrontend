@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import Image from "next/image";
+import axios from "@/utils/axiosInstance"; // Adjust if needed
 
 // Force dynamic rendering
 export const dynamic = "force-dynamic";  // ✅ This tells Next.js NOT to statically render the page
@@ -7,18 +8,21 @@ export const dynamic = "force-dynamic";  // ✅ This tells Next.js NOT to static
 // Fetch Banner Data (Server-side)
 const fetchBanner = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/webbanner/get`, {
-      next: { revalidate: 60 }, // 🔥 Cache banner for 60 seconds
+    const res = await axios.get("/api/v1/webbanner/get", {
+      headers: {
+        // Optionally force revalidation logic here if using ISR/SSR caching on the server
+        "Cache-Control": "max-age=0, no-cache, no-store",
+      },
+      next: { revalidate: 60 }, // ✅ if you're in a Next.js Server Component
     });
 
-    const data = await res.json();
+    const data = res.data;
     return data.length > 0 ? data[0] : null;
   } catch (error) {
     console.error("Error fetching banner:", error);
     return null;
   }
 };
-
 
 // Web Banner Component
 const Webbanner = async () => {

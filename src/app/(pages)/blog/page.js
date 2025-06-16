@@ -1,6 +1,6 @@
-// app/blog/page.js (or pages/blog/index.js depending on your structure)
 import React from "react";
-import BlogCategory from "./Blogcategoy"; // Ensure correct relative path
+import BlogCategory from "./Blogcategoy"; // ✅ double-check spelling
+import axios from "@/utils/axiosInstance"; // ✅ uses your custom axios instance
 
 export const metadata = {
   title: 'Blogs',
@@ -9,10 +9,18 @@ export const metadata = {
 };
 
 const Page = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`, {
-    cache: "no-store", // disables caching (good for SSR)
-  });
-  const blogsData = await res.json();
+  let blogsData = [];
+
+  try {
+    const res = await axios.get("/api/blogs", {
+      headers: { "Cache-Control": "no-store" }, // disables caching
+    });
+
+    blogsData = res.data;
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    // Optionally you could redirect to a fallback page, show a custom error component, etc.
+  }
 
   return (
     <>

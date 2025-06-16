@@ -6,6 +6,7 @@ import Loader from "@/components/loader/Loader";
 import SocialShare from "@/components/SocialShare/SocialShare";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import axios from "@/utils/axiosInstance";
 
 const Blogdetails = ({ blog }) => {
   const {
@@ -27,34 +28,34 @@ const Blogdetails = ({ blog }) => {
   const fullUrl = `${baseUrl}${pathname}`;
 
   useEffect(() => {
-    const fetchRecentBlogs = async () => {      
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`);
-        const data = await res.json();
+  const fetchRecentBlogs = async () => {
+    try {
+      const res = await axios.get("/api/blogs");
+      const data = res.data;
 
-        const allBlogs = data.flatMap((category) =>
-          category.blogs.map((blog) => ({
-            ...blog,
-            blogCategory: category.blogCategory,
-          }))
-        );
+      const allBlogs = data.flatMap((category) =>
+        category.blogs.map((blog) => ({
+          ...blog,
+          blogCategory: category.blogCategory,
+        }))
+      );
 
-        const shuffledBlogs = allBlogs.sort(() => 0.5 - Math.random());
-        const topSixBlogs = shuffledBlogs.slice(0, 6);
-        setRecentBlogs(topSixBlogs);
+      const shuffledBlogs = allBlogs.sort(() => 0.5 - Math.random());
+      const topSixBlogs = shuffledBlogs.slice(0, 6);
+      setRecentBlogs(topSixBlogs);
 
-        // Extract unique categories
-        const uniqueCategories = data.map((cat) => cat.blogCategory);
-        setCategories(uniqueCategories);
-      } catch (error) {
-        console.error("Failed to fetch blogs:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+      // Extract unique categories
+      const uniqueCategories = data.map((cat) => cat.blogCategory);
+      setCategories(uniqueCategories);
+    } catch (error) {
+      console.error("Failed to fetch blogs:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchRecentBlogs();
-  }, []);
+  fetchRecentBlogs();
+}, []);
 
   if (loading) {
     return (

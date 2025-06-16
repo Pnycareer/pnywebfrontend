@@ -2,34 +2,36 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "@/utils/axiosInstance";
 
 const Coursedescription = ({ coursedesc }) => {
   const [relatedCourses, setRelatedCourses] = useState([]);
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchRelatedCourses = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/courses/getoncategory/${coursedesc.category_Name}`
-        );
-        const data = await response.json();
-    
-        if (data && Array.isArray(data.courses)) {
-          setRelatedCourses(data.courses);
-        } else {
-          setRelatedCourses([]);
-        }
-      } catch (error) {
-        console.error("Error fetching related courses:", error);
+ useEffect(() => {
+  const fetchRelatedCourses = async () => {
+    try {
+      const response = await axios.get(
+        `/courses/getoncategory/${coursedesc.category_Name}`
+      );
+
+      const data = response.data;
+
+      if (data && Array.isArray(data.courses)) {
+        setRelatedCourses(data.courses);
+      } else {
+        setRelatedCourses([]);
       }
-    };
-    
-  
-    
-      fetchRelatedCourses();
-    
-  }, []);
+    } catch (error) {
+      console.error("Error fetching related courses:", error);
+      setRelatedCourses([]);
+    }
+  };
+
+  if (coursedesc?.category_Name) {
+    fetchRelatedCourses();
+  }
+}, [coursedesc?.category_Name]);
   
 
   const handleCourseClick = (slug) => {

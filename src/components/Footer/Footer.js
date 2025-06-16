@@ -6,57 +6,54 @@ import Copyrights from "./Copyrights";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/logo/Pnylogo.png";
+import axios from "@/utils/axiosInstance"; // Make sure this points to your setup
 
 const Footer = () => {
   const [categories, setCategories] = useState([]);
   const [randomCourses, setRandomCourses] = useState([]);
 
-  useEffect(() => {
-    // Fetching categories
-    const fetchCategories = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/categories`,
-          {
-            cache: "no-store", // Reduce caching for fresh data
-          }
+
+
+useEffect(() => {
+  // Fetching categories
+  const fetchCategories = async () => {
+    try {
+      const res = await axios.get("/api/v1/categories");
+
+      const visibleCategories = res.data.filter(
+        (category) => category.viewonweb
+      );
+      setCategories(visibleCategories);
+    } catch (err) {
+      console.error("Failed to fetch categories:", err);
+    }
+  };
+
+  // Fetching random courses
+  const fetchCourses = async () => {
+    try {
+      const res = await axios.get("/courses/get-course");
+
+      const courseData = res.data;
+      if (courseData?.success && courseData.data.length > 0) {
+        const allCourses = courseData.data.flatMap((category) =>
+          category.courses.filter((course) => course.View_On_Web)
         );
-        const data = await res.json();
-        const visibleCategories = data.filter((category) => category.viewonweb);
-        setCategories(visibleCategories);
-      } catch (err) {
-        console.error("Failed to fetch categories:", err);
-      }
-    };
 
-    // Fetching random courses
-    const fetchCourses = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`,
-          {
-            cache: "no-store", // Reduce caching for fresh data
-          }
+        setRandomCourses(
+          allCourses.sort(() => 0.5 - Math.random()).slice(0, 5)
         );
-        const data = await res.json();
-
-        if (data?.success && data.data.length > 0) {
-          const allCourses = data.data.flatMap((category) =>
-            category.courses.filter((course) => course.View_On_Web)
-          );
-          // Select 5 random courses
-          setRandomCourses(
-            allCourses.sort(() => 0.5 - Math.random()).slice(0, 5)
-          );
-        }
-      } catch (err) {
-        console.error("Failed to fetch courses:", err);
       }
-    };
+    } catch (err) {
+      console.error("Failed to fetch courses:", err);
+    }
+  };
 
-    fetchCategories();
-    fetchCourses();
-  }, []);
+  fetchCategories();
+  fetchCourses();
+}, []);
+
+
 
   return (
     <footer className="bg-grey-200 text-black py-10 px-5 md:px-20 min-h-[400px]">

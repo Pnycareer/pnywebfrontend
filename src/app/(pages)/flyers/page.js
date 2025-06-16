@@ -18,7 +18,7 @@ const Page = async () => {
     <>
       <title>{metadata.title}</title>
       <meta name="description" content={metadata.description} />
-      <Flyers flyersData={flyersData} />;
+      <Flyers flyersData={flyersData} />
     </>
   );
 };
