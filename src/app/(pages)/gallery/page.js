@@ -1,15 +1,23 @@
 import React from 'react';
-import Gallery from './Gallaery'
+import Gallery from './Gallaery';
+import axios from '@/utils/axiosInstance';
+
 const getGalleries = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/gallery`, {
-    next: { revalidate: 0 },
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch galleries');
+  try {
+    const res = await axios.get(
+      `/api/v1/gallery`,
+      {
+        headers: {
+          // Optional: mimic fetch cache control if needed
+          "Cache-Control": "no-store",
+        },
+      }
+    );
+    return res.data;
+  } catch (err) {
+    console.error("Failed to fetch galleries:", err);
+    throw new Error("Failed to fetch galleries");
   }
-
-  return res.json();
 };
 
 const Page = async () => {

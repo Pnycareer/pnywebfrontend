@@ -5,7 +5,7 @@ import CourseFeature from "@/components/Detailpage/Module";
 import axios from "@/utils/axiosInstance";
 
 export default async function Page({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   let course;
 
@@ -37,6 +37,17 @@ export default async function Page({ params }) {
     <>
       <Metadata {...metadata} />
       <Detailpage course={course} />
+      {course.script && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html:
+              typeof course.script === "string"
+                ? course.script
+                : JSON.stringify(course.script),
+          }}
+        />
+      )}
       {/* <CourseFeature Modules={course.courseModule} /> */}
     </>
   );
