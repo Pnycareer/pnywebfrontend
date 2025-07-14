@@ -1,21 +1,20 @@
+import axiosInstance from "@/utils/axiosInstance";
+
+
 export default async function sitemap() {
   const baseUrl = "https://www.nextcms.shop";
 
   try {
     // --- Courses ---
-    const courseRes = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`,
-      {
-        headers: {
-          "Cache-Control":
-            "no-store, no-cache, must-revalidate, proxy-revalidate",
-          Pragma: "no-cache",
-          Expires: "0",
-        },
-      }
-    );
+    const courseRes = await axiosInstance.get("/courses/get-course", {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
+      },
+    });
 
-    const courseData = await courseRes.json();
+    const courseData = courseRes.data;
 
     const dynamicCourseUrls = (courseData.data || [])
       .flatMap((category) =>
@@ -29,27 +28,24 @@ export default async function sitemap() {
       }));
 
     // --- Blogs ---
-    const blogRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`, {
+    const blogRes = await axiosInstance.get("/api/blogs", {
       headers: {
-        "Cache-Control":
-          "no-store, no-cache, must-revalidate, proxy-revalidate",
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
         Pragma: "no-cache",
         Expires: "0",
       },
     });
 
-    const blogData = await blogRes.json();
+    const blogData = blogRes.data;
 
     const dynamicBlogUrls = (blogData || [])
       .flatMap((category) =>
         (category.blogs || []).filter((blog) => blog.insitemap)
           .map((blog) => ({
             url: `${baseUrl}/blog/${category.blogCategory.toLowerCase()}/${blog.url_slug}`,
-            lastModified: blog.publishDate
-              ? new Date(blog.publishDate)
-              : new Date(),
+            lastModified: blog.publishDate ? new Date(blog.publishDate) : new Date(),
             changeFrequency: "weekly",
-            priority: parseFloat(blog.canonical) || 0.7, // fallback to 0.7 if not a number
+            priority: parseFloat(blog.canonical) || 0.7,
           }))
       );
 
