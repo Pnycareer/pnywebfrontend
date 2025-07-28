@@ -7,6 +7,7 @@ import SocialShare from "@/components/SocialShare/SocialShare";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import axios from "@/utils/axiosInstance";
+import { generateHeadingsAndHTML } from "@/utils/htmlHeadingsParser";
 
 const Blogdetails = ({ blog }) => {
   const {
@@ -28,34 +29,37 @@ const Blogdetails = ({ blog }) => {
   const fullUrl = `${baseUrl}${pathname}`;
 
   useEffect(() => {
-  const fetchRecentBlogs = async () => {
-    try {
-      const res = await axios.get("/api/blogs");
-      const data = res.data;
+    const fetchRecentBlogs = async () => {
+      try {
+        const res = await axios.get("/api/blogs");
+        const data = res.data;
 
-      const allBlogs = data.flatMap((category) =>
-        category.blogs.map((blog) => ({
-          ...blog,
-          blogCategory: category.blogCategory,
-        }))
-      );
+        const allBlogs = data.flatMap((category) =>
+          category.blogs.map((blog) => ({
+            ...blog,
+            blogCategory: category.blogCategory,
+          }))
+        );
 
-      const shuffledBlogs = allBlogs.sort(() => 0.5 - Math.random());
-      const topSixBlogs = shuffledBlogs.slice(0, 6);
-      setRecentBlogs(topSixBlogs);
+        const shuffledBlogs = allBlogs.sort(() => 0.5 - Math.random());
+        const topSixBlogs = shuffledBlogs.slice(0, 6);
+        setRecentBlogs(topSixBlogs);
 
-      // Extract unique categories
-      const uniqueCategories = data.map((cat) => cat.blogCategory);
-      setCategories(uniqueCategories);
-    } catch (error) {
-      console.error("Failed to fetch blogs:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+        // Extract unique categories
+        const uniqueCategories = data.map((cat) => cat.blogCategory);
+        setCategories(uniqueCategories);
+      } catch (error) {
+        console.error("Failed to fetch blogs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  fetchRecentBlogs();
-}, []);
+    fetchRecentBlogs();
+  }, []);
+
+  const { html: updatedHtml, headings } =
+    generateHeadingsAndHTML(blogDescription);
 
   if (loading) {
     return (
@@ -128,19 +132,21 @@ const Blogdetails = ({ blog }) => {
           <div className="flex-1">
             {/* Blog Description */}
             <div
-              className="prose prose-lg max-w-full mb-10 text-justify
-              [&>h1]:text-[34px] [&>h1]:font-semibold
-              [&>h2]:text-[30px] [&>h2]:font-medium
-              [&>h3]:text-[24px] [&>h3]:font-medium
-              [&>a]:cursor-pointer
-              [&>p]:mt-5 
-              [&>ul]:list-disc [&>ul]:pl-6
-              [&>ol]:list-decimal [&>ol]:pl-6
-              [&>ul>li]:mt-2
-              [&>ol>li]:mt-2"
-              dangerouslySetInnerHTML={{ __html: blogDescription }}
+              className="max-w-full mb-10 
+    [&>h1]:text-[34px] [&>h1]:font-semibold
+    [&>h2]:text-[30px] [&>h2]:font-medium
+    [&>h3]:text-[24px] [&>h3]:font-medium
+    [&>a]:cursor-pointer
+    [&>p]:mt-5 
+    [&>ul]:list-disc [&>ul]:pl-6
+    [&>ol]:list-decimal [&>ol]:pl-6
+    [&>ul>li]:mt-2
+    [&>ol>li]:mt-2
+    [&>h1]:scroll-mt-28
+    [&>h2]:scroll-mt-28
+    [&>h3]:scroll-mt-28"
+              dangerouslySetInnerHTML={{ __html: updatedHtml }}
             ></div>
-
             {/* Tags Section */}
             <div className="flex flex-wrap gap-2 mb-6">
               {tags?.map((tag, index) => (
@@ -181,7 +187,47 @@ const Blogdetails = ({ blog }) => {
           </div>
 
           {/* Sidebar */}
-          <aside className="w-full lg:w-1/3 sticky top-24 self-start space-y-10">
+          <aside className="w-full lg:w-1/3 sticky top-32 self-start space-y-10">
+            {/* toc */}
+            {headings.length > 0 && (
+              <div className="bg-white p-6 rounded-2xl shadow-lg mb-12 border border-gray-200">
+                <h3 className="text-xl font-bold mb-5 text-blue-800">
+                  Table of Contents
+                </h3>
+                <ul className="list-disc pl-6  space-y-3 text-sm text-gray-800 ">
+                  {headings.map((heading) => (
+                    <li key={heading.id}>
+                      <button
+                        onClick={() => {
+                          const el = document.getElementById(heading.id);
+
+                          // Remove previous highlights
+                          document
+                            .querySelectorAll("h1, h2, h3")
+                            .forEach((h) => {
+                              h.classList.remove("text-red-600", "underline");
+                            });
+
+                          // Scroll & apply highlight
+                          if (el) {
+                            el.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start",
+                            });
+
+                            el.classList.add("text-red-600", "underline");
+                          }
+                        }}
+                        className="text-left hover:text-blue-600 transition-colors duration-200"
+                      >
+                        {heading.text}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {/* Categories Section */}
             <div className="bg-white p-5 rounded-xl shadow-md">
               <h3 className="text-2xl font-semibold mb-6 text-blue-800 border-b pb-2">

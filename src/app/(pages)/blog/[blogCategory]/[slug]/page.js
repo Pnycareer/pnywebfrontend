@@ -18,6 +18,8 @@ const page = async ({ params }) => {
 
   const blog = await res.json();
 
+  console.log(blog.blogDescription)
+
 
   const metadata = {
     metatitle: blog.metaTitle || "Course Not Found",
