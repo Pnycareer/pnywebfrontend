@@ -18,9 +18,6 @@ const page = async ({ params }) => {
 
   const blog = await res.json();
 
-  console.log(blog.blogDescription)
-
-
   const metadata = {
     metatitle: blog.metaTitle || "Course Not Found",
     metadescription: blog.metaDescription || "This course does not exist.",
@@ -28,8 +25,6 @@ const page = async ({ params }) => {
 
   return (
     <>
-      {/* <title>{metadata.metatitle}</title>
-      <meta name="description" content={metadata.metadescription} /> */}
       <Metadata
         title={metadata.metatitle}
         description={metadata.metadescription}

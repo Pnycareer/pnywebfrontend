@@ -70,7 +70,7 @@ const Coursedescription = ({ coursedesc }) => {
 
         {/* Sidebar */}
         <div className="col-span-12 md:col-span-4">
-          {headings.length > 0 && (
+          {coursedesc.showtoc && headings.length > 0 && (
             <div className="bg-white p-6 rounded-2xl shadow-lg mb-12 border border-gray-200">
               <h3 className="text-xl font-bold mb-5 text-blue-800">
                 Table of Contents

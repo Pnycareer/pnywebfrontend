@@ -18,11 +18,13 @@ const Blogdetails = ({ blog }) => {
     blogImage,
     author,
     tags,
+    showtoc,
   } = blog;
 
   const [recentBlogs, setRecentBlogs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  
 
   const pathname = usePathname();
   const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
@@ -189,14 +191,14 @@ const Blogdetails = ({ blog }) => {
           {/* Sidebar */}
           <aside className="w-full lg:w-1/3 sticky top-32 self-start space-y-10">
             {/* toc */}
-            {headings.length > 0 && (
+            {blog?.showtoc && headings.length > 0 && (
               <div className="bg-white p-6 rounded-2xl shadow-lg mb-12 border border-gray-200">
                 <h3 className="text-xl font-bold mb-5 text-blue-800">
                   Table of Contents
                 </h3>
-                <ul className="list-disc pl-6  space-y-3 text-sm text-gray-800 ">
+                <ul className="list-disc pl-6 space-y-3 text-sm text-gray-800">
                   {headings.map((heading) => (
-                    <li key={heading.id}>
+                    <li className="cursor-pointer" key={heading.id}>
                       <button
                         onClick={() => {
                           const el = document.getElementById(heading.id);
@@ -204,9 +206,9 @@ const Blogdetails = ({ blog }) => {
                           // Remove previous highlights
                           document
                             .querySelectorAll("h1, h2, h3")
-                            .forEach((h) => {
-                              h.classList.remove("text-red-600", "underline");
-                            });
+                            .forEach((h) =>
+                              h.classList.remove("text-blue-600", "underline")
+                            );
 
                           // Scroll & apply highlight
                           if (el) {
@@ -215,10 +217,10 @@ const Blogdetails = ({ blog }) => {
                               block: "start",
                             });
 
-                            el.classList.add("text-red-600", "underline");
+                            el.classList.add("text-blue-600", "underline");
                           }
                         }}
-                        className="text-left hover:text-blue-600 transition-colors duration-200"
+                        className="text-left text-blue-600 underline hover:text-blue-800 transition-colors duration-200 cursor-pointer"
                       >
                         {heading.text}
                       </button>
