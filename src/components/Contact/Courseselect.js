@@ -2,6 +2,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { motion, AnimatePresence } from "framer-motion";
+import axiosInstance from "@/utils/axiosInstance"; // adjust path as needed
 
 const CourseSelect = ({ selected, setSelected }) => {
   const [courses, setCourses] = useState([]);
@@ -11,10 +12,9 @@ const CourseSelect = ({ selected, setSelected }) => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`);
-        const json = await res.json();
-        if (json.success) {
-          const courseNames = json.data.flatMap((cat) =>
+        const res = await axiosInstance.get("/courses/get-course");
+        if (res.data.success) {
+          const courseNames = res.data.data.flatMap((cat) =>
             cat.courses.map((course) => course.course_Name)
           );
           setCourses(courseNames);

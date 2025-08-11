@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { AiOutlineMenu, AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
 import { IoClose } from "react-icons/io5";
 import CoursesDropdown from "@/components/Dropdown/CoursesDropdown";
@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import pnylogo from "@/assets/logo/Pnylogo.png";
+import axiosInstance from "@/utils/axiosInstance"; // ← use your custom instance
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -37,27 +38,43 @@ const CoursesNav = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [searchOpen]);
 
-  // Fetch courses for search
+  // Fetch courses for search (axios + cancellation)
   useEffect(() => {
     if (!searchOpen) return;
+
+    const controller = new AbortController();
+
     const fetchCourses = async () => {
+      setIsLoading(true);
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/courses/get-course`
-        );
-        const result = await res.json();
-        const allCourses = result.data.flatMap((cat) => cat.courses || []);
-        setCourses(allCourses);
+        const res = await axiosInstance.get("/courses/get-course", {
+          signal: controller.signal,
+        });
+
+        // shape: { success, data: [{ courses: [...] }, ...] }
+        const payload = res?.data;
+        const list = (payload?.data ?? []).flatMap((cat) => cat.courses || []);
+        setCourses(list);
       } catch (err) {
-        console.error("Fetch failed:", err);
+        if (err.name !== "CanceledError" && err.message !== "canceled") {
+          console.error("Fetch failed:", err);
+        }
+      } finally {
+        setIsLoading(false);
       }
     };
+
     fetchCourses();
+    return () => controller.abort();
   }, [searchOpen]);
 
-  const filteredCourses = courses.filter((course) =>
-    course.course_Name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredCourses = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return courses;
+    return courses.filter((c) =>
+      (c?.course_Name || "").toLowerCase().includes(q)
+    );
+  }, [searchQuery, courses]);
 
   return (
     <header className="w-full bg-gray-100 backdrop-blur-md sticky top-0 z-50">
@@ -76,7 +93,8 @@ const CoursesNav = () => {
           <CoursesDropdown />
           <button
             className="text-xl md:block hidden text-gray-600 hover:text-yellow-400"
-            onClick={() => setSearchOpen(!searchOpen)}
+            onClick={() => setSearchOpen((v) => !v)}
+            aria-label="Toggle search"
           >
             <AiOutlineSearch />
           </button>
@@ -100,7 +118,8 @@ const CoursesNav = () => {
         {/* Mobile menu button */}
         <button
           className="md:hidden text-black text-2xl"
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label="Toggle menu"
         >
           {menuOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
         </button>
@@ -125,25 +144,34 @@ const CoursesNav = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-            </div>
 
-            {searchQuery && filteredCourses.length > 0 && (
-              <div className="absolute top-full mt-2 w-full max-h-60 overflow-y-auto bg-white border rounded-lg shadow-lg z-10">
-                <ul className="space-y-2 p-4">
-                  {filteredCourses.map((course) => (
-                    <Link
-                      key={course._id}
-                      href={`/${course.url_Slug}`}
-                      onClick={() => setSearchOpen(false)}
-                    >
-                      <li className="cursor-pointer hover:bg-yellow-200 p-2 rounded-md">
-                        {course.course_Name}
-                      </li>
-                    </Link>
-                  ))}
-                </ul>
-              </div>
-            )}
+              {/* Results */}
+              {searchQuery && (
+                <div className="absolute top-full mt-2 w-full max-h-60 overflow-y-auto bg-white border rounded-lg shadow-lg z-10">
+                  {isLoading ? (
+                    <div className="p-4 text-sm text-gray-500">Loading…</div>
+                  ) : filteredCourses.length > 0 ? (
+                    <ul className="space-y-2 p-4">
+                      {filteredCourses.map((course) => (
+                        <Link
+                          key={course._id}
+                          href={`/${course.url_Slug}`}
+                          onClick={() => setSearchOpen(false)}
+                        >
+                          <li className="cursor-pointer hover:bg-yellow-200 p-2 rounded-md">
+                            {course.course_Name}
+                          </li>
+                        </Link>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div className="p-4 text-sm text-gray-500">
+                      No matches. Try another keyword.
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -7,6 +7,7 @@ import WhyChooseUs from "@/components/home/Whychooseus";
 import TrainerCertification from "@/components/home/Trainers";
 import MediaPartners from "@/components/home/Mediapartner";
 import Animation from "@/components/Animation/Animation";
+import Coursecategories from "@/components/home/Coursecategories";
 
 const Home = () => {
   return (
@@ -16,6 +17,7 @@ const Home = () => {
       <Animation />
       <CareerSection />
       <ProfessionalDevelopment />
+      <Coursecategories/>
       <WhyChooseUs />
       <TrainerCertification />
       {/* <MediaPartners/> */}

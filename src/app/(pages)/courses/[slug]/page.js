@@ -6,18 +6,22 @@ export default async function Page({ params }) {
   const { slug } = await params;
 
   try {
-    // Fetch subcategory data
     const subcategoryResponse = await axios.get(`/courses/getoncategory/${slug}`);
     const subcategory = subcategoryResponse.data;
 
-    // Fetch instructors based on the category (slug)
-    let instructors = [];
-    try {
-      const instructorResponse = await axios.get(`/api/instructors/get-instructor?category=${slug}`);
-      instructors = instructorResponse.data;
-    } catch {
-      instructors = [];
+    // ✅ Check if API returned a valid category or just a message
+    if (!subcategory || subcategory.message) {
+      return (
+        <>
+          <title>Courses in {slug}</title>
+          <meta name="description" content={`No category found for slug: ${slug}`} />
+          <Courses slug={slug} subcategory={null} instructors={[]} />
+        </>
+      );
     }
+
+    const instructorResponse = await axios.get(`/api/instructors/get-instructor?category=${slug}`);
+    const instructors = instructorResponse.data;
 
     const metadata = {
       metatitle: subcategory.category_Name || "Course Not Found",
@@ -37,6 +41,9 @@ export default async function Page({ params }) {
       </>
     );
   } catch (error) {
-    notFound();
+    return (
+      <Courses slug={slug} subcategory={null} instructors={[]} />
+    );
   }
 }
+

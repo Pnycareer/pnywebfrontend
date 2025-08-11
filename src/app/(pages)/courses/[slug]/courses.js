@@ -6,14 +6,23 @@ import Link from "next/link";
 import InstructorCard from "@/components/cards/InstructorCard";
 
 const Courses = ({ slug, subcategory, instructors }) => {
-  const toURL = (path) => `${process.env.NEXT_PUBLIC_API_URL}/${path?.replace(/\\/g, "/")}`;
+  const toURL = (path) =>
+    `${process.env.NEXT_PUBLIC_API_URL}/${path?.replace(/\\/g, "/")}`;
 
   return (
     <>
       {/* Banner Section */}
       <HeaderSection
-        pagetitle={`Courses in ${subcategory?.category_Name || slug}`}
-        shortdescription={subcategory?.category_Description || "No description found."}
+        pagetitle={
+          subcategory
+            ? `Courses in ${subcategory.category_Name}`
+            : `No Courses Available`
+        }
+        shortdescription={
+          subcategory
+            ? subcategory.category_Description
+            : `No courses found under "${slug}".`
+        }
       />
 
       {/* Courses Section */}
@@ -35,7 +44,9 @@ const Courses = ({ slug, subcategory, instructors }) => {
                   <CourseCard
                     name={course.course_Name}
                     image={toURL(course.course_Image)}
-                    description={`Instructor: ${course.Instructor?.name || "N/A"}, Fee: Rs ${course.Monthly_Fee || "N/A"}`}
+                    description={`Instructor: ${
+                      course.Instructor?.name || "N/A"
+                    }, Fee: Rs ${course.Monthly_Fee || "N/A"}`}
                     urlslug={course.url_Slug}
                   />
                 </Link>
@@ -50,8 +61,9 @@ const Courses = ({ slug, subcategory, instructors }) => {
       <section className="bg-gradient-to-r from-blue-900 to-blue-600 py-12 text-white text-center">
         <h2 className="text-4xl font-bold mb-4">Meet Your Instructors</h2>
         <p className="text-lg mb-8 max-w-3xl mx-auto">
-          Learn from industry experts with years of experience and a passion for teaching.
-          Our instructors are dedicated to helping you succeed in your learning journey.
+          Learn from industry experts with years of experience and a passion for
+          teaching. Our instructors are dedicated to helping you succeed in your
+          learning journey.
         </p>
         <hr className="border-t-2 border-white w-20 mx-auto mb-8" />
       </section>
