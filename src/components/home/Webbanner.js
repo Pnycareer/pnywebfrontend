@@ -8,13 +8,7 @@ export const dynamic = "force-dynamic";  // ✅ This tells Next.js NOT to static
 // Fetch Banner Data (Server-side)
 const fetchBanner = async () => {
   try {
-    const res = await axios.get("/api/v1/webbanner/get", {
-      headers: {
-        // Optionally force revalidation logic here if using ISR/SSR caching on the server
-        "Cache-Control": "max-age=0, no-cache, no-store",
-      },
-      next: { revalidate: 60 }, // ✅ if you're in a Next.js Server Component
-    });
+    const res = await axios.get("/api/v1/webbanner/get");
 
     const data = res.data;
     return data.length > 0 ? data[0] : null;
