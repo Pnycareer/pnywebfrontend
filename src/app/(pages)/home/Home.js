@@ -15,9 +15,9 @@ const Home = () => {
       <Webbanner />
       <HeroSection />
       <Animation />
+      <Coursecategories/>
       <CareerSection />
       <ProfessionalDevelopment />
-      <Coursecategories/>
       <WhyChooseUs />
       <TrainerCertification />
       {/* <MediaPartners/> */}
