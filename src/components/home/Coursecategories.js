@@ -77,10 +77,10 @@ const Coursecategories = () => {
   }
 
   return (
-    <section className="w-full py-12 md:py-16 lg:py-20">
+    <section className="w-full py-12 md:py-16 lg:py-20 bg-gray-100 mt-5">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-end justify-between gap-4 sm:mb-10">
-          <h1 className="text-3xl text-center mx-auto font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
+          <h1 className="text-4xl font-bold mb-4 mx-auto">
             Categories
           </h1>
         </div>
