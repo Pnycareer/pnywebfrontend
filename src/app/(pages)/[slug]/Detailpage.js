@@ -8,6 +8,7 @@ import BenefitsSection from "@/components/Detailpage/Benefits";
 import AdmissionSection from "@/components/Detailpage/Admission";
 import Image from "next/image";
 import DownloadBrochureForm from "@/components/DownloadBrochureForm/DownloadBrochureForm";
+import CourseAccordion from "@/components/CoursesAccordian/CoursesAccordion";
 
 
 const CourseSection = ({ course }) => {
@@ -19,7 +20,6 @@ const CourseSection = ({ course }) => {
         "/"
       )}`
     : "";
-
 
   return (
     <>
@@ -73,8 +73,10 @@ const CourseSection = ({ course }) => {
 
             <div className="flex flex-wrap gap-4 mt-4">
               {brochurePath && (
-               <DownloadBrochureForm brochureUrl={brochurePath} courseName={course.course_Name} />
-
+                <DownloadBrochureForm
+                  brochureUrl={brochurePath}
+                  courseName={course.course_Name}
+                />
               )}
               <a
                 href="https://lms.pnytraining.com"
@@ -134,6 +136,8 @@ const CourseSection = ({ course }) => {
       )}
 
       <Coursedescription coursedesc={course} />
+
+      <CourseAccordion faqs={course.faqs}/>
 
       <AdmissionSection />
     </>

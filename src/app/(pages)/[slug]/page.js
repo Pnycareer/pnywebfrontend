@@ -25,6 +25,9 @@ export default async function Page({ params }) {
     notFound();
   }
 
+
+ 
+
   const metadata = {
     title: course.Meta_Title || "Course Not Found",
     description: course.Meta_Description || "This course does not exist.",
