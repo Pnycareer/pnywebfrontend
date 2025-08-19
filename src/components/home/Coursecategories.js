@@ -1,127 +1,110 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import axiosInstance from "@/utils/axiosInstance";
+import { CATEGORY_CARDS as CARDS } from "@/app/lib/categoryData";
 
-// Local images
-import diploma from "@/assets/homecategories/diploma.jpg";
-import marketing from "@/assets/homecategories/marketing.jpg";
+/**
+ * One-section layout:
+ * - Hero + cards share the gradient
+ * - Straight image bottom edge (top corners rounded only)
+ * - 6 categories, responsive 1/2/3 cols
+ * - Clean structure; data moved to lib/categoryData.js
+ */
 
-// Image mapping
-const categoryImages = {
-  "One Year Diploma": diploma.src,
-  Marketing: marketing.src,
-  "Art & Design":
-    "https://images.unsplash.com/photo-1534665482403-a909d0d97c67?q=80&w=1400&auto=format&fit=crop",
-  "Business & Accounts":
-    "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1400&auto=format&fit=crop",
-  Multimedia:
-    "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=1400&auto=format&fit=crop",
-  "Amazon Courses":
-    "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1400&auto=format&fit=crop",
-  "Cyber Security & Networking":
-    "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1400&auto=format&fit=crop",
-  "Ecommerce & Online Business":
-    "https://images.unsplash.com/photo-1516245834210-c4c142787335?q=80&w=1400&auto=format&fit=crop",
-  "IT & Software":
-    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1400&auto=format&fit=crop",
-  Language:
-    "https://images.unsplash.com/photo-1522881451255-f59ad836fdfb?q=80&w=1400&auto=format&fit=crop",
-  "Manual Testing Category":
-    "https://images.unsplash.com/photo-1532619675605-1ede6cfac87f?q=80&w=1400&auto=format&fit=crop",
-  "Graphic Designer":
-    "https://images.unsplash.com/photo-1529101091764-c3526daf38fe?q=80&w=1400&auto=format&fit=crop",
-};
-
-// Description mapping
-const categoryDescriptions = {
-  "One Year Diploma": "Master core concepts in just 1 year.",
-  Marketing: "Learn modern marketing & branding strategies.",
-  "Art & Design": "Unlock your creative skills in digital design.",
-  "Business & Accounts": "Build a solid foundation in business finance.",
-  Multimedia: "From video editing to animation — all in one place.",
-  "Amazon Courses": "Crack the Amazon ecosystem for selling success.",
-  "Cyber Security & Networking": "Secure networks, defend data. Be the shield.",
-  "Ecommerce & Online Business": "Launch & grow your online business confidently.",
-  "IT & Software": "Master tech tools powering the digital world.",
-  Language: "Become fluent in global languages.",
-  "Manual Testing Category": "Test smarter with manual QA techniques.",
-  "Graphic Designer": "Turn ideas into stunning visuals.",
-};
-
-const Coursecategories = () => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    axiosInstance
-      .get("/api/v1/categories")
-      .then((res) => {
-        const filtered = res.data.filter((cat) => cat.viewonweb).slice(0, 8);
-        setCategories(filtered);
-      })
-      .catch((err) => {
-        console.error("Error fetching categories:", err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
-    return (
-      <section className="w-full py-12 text-center">
-        <p className="text-lg">Loading categories...</p>
-      </section>
-    );
-  }
-
+export default function Page() {
   return (
-    <section className="w-full py-12 md:py-16 lg:py-20 bg-gray-100 mt-5">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 flex items-end justify-between gap-4 sm:mb-10">
-          <h1 className="text-4xl font-bold mb-4 mx-auto">
-            Categories
+    <section className="relative isolate overflow-hidden bg-[linear-gradient(120deg,#e8fbff_0%,#eef5ff_40%,#ecebff_100%)]">
+      {/* soft ambient glows */}
+      <div className="pointer-events-none absolute -top-40 left-1/4 z-0 h-[44rem] w-[44rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.22),transparent_60%)] blur-2xl" />
+      <div className="pointer-events-none absolute -top-24 right-[-8%] z-0 h-[38rem] w-[38rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(167,139,250,0.18),transparent_60%)] blur-2xl" />
+
+      {/* faint outlined word */}
+      <div className="pointer-events-none absolute inset-x-0 top-6 z-0 flex justify-center">
+        <span
+          className="select-none text-[15vw] leading-none font-extrabold tracking-[-0.04em] uppercase"
+          style={{
+            WebkitTextStroke: "2px rgba(14,165,233,0.25)",
+            color: "transparent",
+          }}
+        >
+          categories
+        </span>
+      </div>
+
+      {/* content */}
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* hero */}
+        <div className="mx-auto max-w-6xl py-16 md:py-20 lg:py-24 text-center">
+          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-teal-700">
+            Top Program Categories
           </h1>
+          <p className="mx-auto mt-6 max-w-4xl text-base sm:text-lg text-zinc-600">
+            At Arfa Karim Technology Incubator, we offer an array of program
+            categories, each representing a unique learning path. Explore these
+            categories to find the one that aligns with your aspirations and
+            interests.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 auto-rows-fr">
-          {categories.map((item) => (
-            <Link
-              key={item._id}
-              href={`/courses/${item.url_Slug}`}
-              className="group flex flex-col h-full"
-            >
-              <article className="flex flex-col h-full overflow-hidden rounded-2xl bg-white/5 ring-1 ring-black/5 backdrop-blur transition hover:shadow-xl dark:bg-zinc-900/50 dark:ring-white/5">
-                <div className="relative h-48 sm:h-44 lg:h-40">
-                  <img
-                    src={
-                      categoryImages[item.Category_Name] ||
-                      "https://via.placeholder.com/400x200"
-                    }
-                    alt={item.Category_Name}
-                    className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
-                    loading="lazy"
+        {/* cards */}
+        <div className="pb-16 lg:pb-24">
+          <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {CARDS.map((card) => (
+              <article
+                key={card.title}
+                className="group overflow-hidden rounded-[20px] bg-white/60 backdrop-blur-[2px] ring-1 ring-black/5 shadow-[0_16px_40px_rgba(0,0,0,0.08)] transition hover:shadow-[0_22px_56px_rgba(0,0,0,0.12)]"
+              >
+                {/* IMAGE: rounded only on the TOP so the bottom edge is straight */}
+                <div className="relative h-56 md:h-60 w-full">
+                  <Image
+                    src={card.img}
+                    alt={card.title}
+                    fill
+                    unoptimized
+                    className="object-cover rounded-t-[20px] rounded-b-none transition duration-300 group-hover:scale-[1.02]"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 transition group-hover:opacity-100" />
                 </div>
 
-                <div className="space-y-2 p-4 sm:p-5 h-[120px] flex flex-col justify-between">
-                  <h3 className="text-base font-semibold leading-snug sm:text-lg line-clamp-1">
-                    {item.Category_Name}
+                {/* body */}
+                {/* body */}
+                <div className="px-6 md:px-7 pt-7 pb-8 bg-white/85 text-center">
+                  <h3 className="text-2xl md:text-[1.5rem] leading-tight text-teal-700">
+                    {card.title}
                   </h3>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2">
-                    {categoryDescriptions[item.Category_Name] ||
-                      "Explore this course category."}
+                  <p className="mt-3 text-[1.02rem] leading-7 text-zinc-600">
+                    {card.desc}
                   </p>
+                  <div className="mt-7 flex justify-center">
+                    <Link
+                      href={`/courses/${card.href}`}
+                      className="inline-flex items-center justify-center rounded-md border border-teal-700 px-6 py-3 text-base md:text-lg font-medium text-teal-700 transition hover:bg-teal-700 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-teal-600"
+                    >
+                      Explore Programs
+                      <svg
+                        className="ml-2 h-5 w-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M17.25 8.25L21 12m0 0-3.75 3.75M21 12H3"
+                        />
+                      </svg>
+                    </Link>
+                  </div>
                 </div>
               </article>
-            </Link>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
+
+      {/* bottom glow */}
+      <div className="pointer-events-none absolute -bottom-40 left-[-10%] z-0 h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(125,211,252,0.16),transparent_60%)] blur-2xl" />
     </section>
   );
-};
-
-export default Coursecategories;
+}
