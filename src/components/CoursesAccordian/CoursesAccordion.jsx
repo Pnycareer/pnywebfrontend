@@ -12,9 +12,9 @@ const CourseAccordion = ({ faqs = [] }) => {
   const isValidFaqs = Array.isArray(faqs) && faqs.length > 0;
 
   return (
-    <section className="bg-gradient-to-br from-blue-50 to-blue-100 py-16 px-4">
+    <section className="bg-gradient-to-br from-blue-50 to-blue-100 py-5 px-4">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-blue-800 mb-10">
+        <h2 className="text-3xl font-bold text-center text-blue-800 mb-5">
           Frequently Asked Questions
         </h2>
 
@@ -26,7 +26,7 @@ const CourseAccordion = ({ faqs = [] }) => {
           faqs.map((faq, i) => (
             <div
               key={i}
-              className="bg-white border border-blue-300 mb-4 rounded-xl overflow-hidden shadow-md transition-all"
+              className="bg-white border border-blue-300 mb-1 rounded-xl overflow-hidden shadow-md transition-all"
             >
               <button
                 onClick={() => toggle(i)}

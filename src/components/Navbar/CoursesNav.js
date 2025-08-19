@@ -1,13 +1,14 @@
 "use client";
+
 import { useState, useEffect, useRef, useMemo } from "react";
 import { AiOutlineMenu, AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
-import { IoClose } from "react-icons/io5";
 import CoursesDropdown from "@/components/Dropdown/CoursesDropdown";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import pnylogo from "@/assets/logo/Pnylogo.png";
-import axiosInstance from "@/utils/axiosInstance"; // ← use your custom instance
+import axiosInstance from "@/utils/axiosInstance";
+import { useRouter } from "next/navigation";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -23,47 +24,48 @@ const CoursesNav = () => {
   const [courses, setCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const searchRef = useRef(null);
+  const router = useRouter();
 
-  // Close search bar on outside click
+  // Close search bar when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (searchRef.current && !searchRef.current.contains(e.target)) {
         setSearchOpen(false);
       }
     };
-
     if (searchOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [searchOpen]);
 
-  // Fetch courses for search (axios + cancellation)
+  // Close mobile menu on route change
+  useEffect(() => {
+    const closeMenu = () => setMenuOpen(false);
+    router.events?.on("routeChangeStart", closeMenu);
+    return () => router.events?.off("routeChangeStart", closeMenu);
+  }, [router]);
+
+  // Fetch courses when search opens
   useEffect(() => {
     if (!searchOpen) return;
-
     const controller = new AbortController();
-
     const fetchCourses = async () => {
       setIsLoading(true);
       try {
         const res = await axiosInstance.get("/courses/get-course", {
           signal: controller.signal,
         });
-
-        // shape: { success, data: [{ courses: [...] }, ...] }
-        const payload = res?.data;
-        const list = (payload?.data ?? []).flatMap((cat) => cat.courses || []);
+        const list = (res?.data?.data ?? []).flatMap((cat) => cat.courses || []);
         setCourses(list);
       } catch (err) {
         if (err.name !== "CanceledError" && err.message !== "canceled") {
-          console.error("Fetch failed:", err);
+          console.error("Failed to fetch courses:", err);
         }
       } finally {
         setIsLoading(false);
       }
     };
-
     fetchCourses();
     return () => controller.abort();
   }, [searchOpen]);
@@ -77,22 +79,26 @@ const CoursesNav = () => {
   }, [searchQuery, courses]);
 
   return (
-    <header className="w-full bg-gray-100 backdrop-blur-md sticky top-0 z-50">
+    <header className="w-full bg-white backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
       <div className="mx-auto flex justify-between items-center px-6 lg:px-12 py-4">
-        {/* Left */}
-        <div className="flex items-center space-x-4">
+        {/* Left: Logo & Courses */}
+        <div className="flex items-center gap-4">
           <Link href="/">
             <Image
               src={pnylogo}
-              alt="Next cms"
+              alt="PNY Logo"
               width={80}
               height={80}
               unoptimized
+              priority
             />
           </Link>
+
           <CoursesDropdown />
+
+          {/* Search Icon (now visible on mobile too) */}
           <button
-            className="text-xl md:block hidden text-gray-600 hover:text-yellow-400"
+            className="text-xl text-gray-600 hover:text-yellow-400" // ✅ removed "hidden md:block"
             onClick={() => setSearchOpen((v) => !v)}
             aria-label="Toggle search"
           >
@@ -100,8 +106,8 @@ const CoursesNav = () => {
           </button>
         </div>
 
-        {/* Right (Desktop) */}
-        <ul className="hidden md:flex space-x-6 text-black font-medium">
+        {/* Right: Nav Links (desktop) */}
+        <ul className="hidden md:flex gap-6 text-black font-medium">
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href}>
               <motion.li
@@ -115,17 +121,41 @@ const CoursesNav = () => {
           ))}
         </ul>
 
-        {/* Mobile menu button */}
+        {/* Mobile Menu Toggle */}
         <button
           className="md:hidden text-black text-2xl"
           onClick={() => setMenuOpen((v) => !v)}
-          aria-label="Toggle menu"
+          aria-label="Toggle mobile menu"
         >
           {menuOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
         </button>
       </div>
 
-      {/* Search Dropdown */}
+      {/* Mobile Nav Menu (unchanged UI) */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.ul
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden flex flex-col bg-white px-6 py-4 space-y-4 shadow-md"
+          >
+            {navLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
+                <motion.li
+                  whileTap={{ scale: 0.95 }}
+                  className="text-gray-900 hover:text-yellow-400 text-base font-medium"
+                >
+                  {link.label}
+                </motion.li>
+              </Link>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+
+      {/* Search Bar (z-index bumped so it shows above header) */}
       <AnimatePresence>
         {searchOpen && (
           <motion.div
@@ -134,13 +164,13 @@ const CoursesNav = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed top-0 left-0 w-full backdrop-blur-lg bg-white/30 shadow-xl p-4 flex justify-center items-center z-40"
+            className="fixed top-0 left-0 w-full backdrop-blur-lg bg-white/80 shadow-xl p-4 flex justify-center items-center z-60" // ✅ was z-40
           >
             <div className="relative w-11/12 md:w-3/5">
               <input
                 type="text"
                 placeholder="Search the skills you want to learn"
-                className="w-full px-6 py-3 rounded-lg bg-white/40 text-black backdrop-blur-md border border-white/30 shadow-md outline-none placeholder-gray-700"
+                className="w-full px-6 py-3 rounded-lg bg-white text-black border border-gray-300 shadow-md outline-none placeholder-gray-700"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />

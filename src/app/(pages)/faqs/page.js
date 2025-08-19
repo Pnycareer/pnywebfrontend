@@ -24,7 +24,7 @@ const Page = async () => {
     );
   }
 
-  console.log(faqData.script);
+ 
 
   const faqSchema = {
     "@context": "https://schema.org",

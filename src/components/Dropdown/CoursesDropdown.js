@@ -14,8 +14,6 @@ const CoursesDropdown = () => {
     const loadCategories = async () => {
       const data = await fetchCategories();
 
-      console.log(data , 'data')
-
       const filteredAndSorted = data
         .filter((cat) => cat.viewonweb) // Only show those marked true
         .sort((a, b) => parseInt(a.position) - parseInt(b.position)); // Sort by position

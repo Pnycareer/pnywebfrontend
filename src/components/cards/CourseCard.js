@@ -1,4 +1,5 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Poppins } from "next/font/google";
@@ -9,7 +10,7 @@ const poppins = Poppins({
   subsets: ["latin"],
 });
 
-const CourseCard = ({ name, image, urlslug }) => {
+const CourseCard = ({ name, image, urlslug, shortdescription }) => {
   const router = useRouter();
 
   const handleDetailsClick = () => {
@@ -18,6 +19,11 @@ const CourseCard = ({ name, image, urlslug }) => {
     }
   };
 
+  // Handle missing or relative image
+  const fullImage = image?.startsWith("http")
+    ? image
+    : `${process.env.NEXT_PUBLIC_API_URL}/${image || "fallback.jpg"}`;
+
   return (
     <motion.div
       onClick={handleDetailsClick}
@@ -25,40 +31,42 @@ const CourseCard = ({ name, image, urlslug }) => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       viewport={{ once: true }}
-      className="relative group bg-white rounded-2xl shadow-lg overflow-hidden w-72 h-96 flex flex-col cursor-pointer transition-transform transform hover:scale-105"
+      className="relative group bg-white rounded-2xl shadow-lg overflow-hidden w-72 min-h-[420px] flex flex-col cursor-pointer transition-transform transform hover:scale-105"
     >
       {/* Image Section */}
-      <div className="relative w-full h-48">
+      <div className="relative w-full h-48 shrink-0">
         <Image
-          src={image}
+          src={fullImage}
           alt={name}
           fill
-          unoptimized={true}
-          priority={true} // Faster initial load
+          unoptimized
+          priority
           className="rounded-t-2xl object-cover group-hover:opacity-90 transition-opacity duration-300"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-gray-800/50 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-gray-800/50 to-transparent rounded-t-2xl" />
       </div>
 
       {/* Content Section */}
-      <div className="flex flex-col justify-between p-6 flex-grow">
+      <div className="flex flex-col p-6 flex-grow justify-start">
         <h3
-          className={`${poppins.className} text-xl font-bold text-center text-gray-900 truncate`}
+          className={`${poppins.className} text-xl font-bold text-center text-gray-900`}
           title={name}
         >
           {name}
         </h3>
 
+        <p className="line-clamp-3 mt-2 text-center text-gray-700">
+          {shortdescription}
+        </p>
+
         <button
           type="button"
-          className="group relative overflow-hidden px-6 py-3 mt-6 border border-blue-300 rounded-lg text-blue-500 transition-all duration-500 mx-auto"
+          className="mt-2 group relative overflow-hidden px-6 py-3 border border-blue-300 rounded-lg text-blue-500 transition-all duration-500 mx-auto w-full"
         >
-          <span
-            className={`${poppins.className} relative z-10 text-black text-sm`}
-          >
+          <span className={`${poppins.className} relative z-10 text-black text-sm`}>
             Details
           </span>
-          <span className="absolute inset-0 w-0 bg-gradient-to-r from-blue-100 to-blue-300 transition-all duration-500 group-hover:w-full"></span>
+          <span className="absolute inset-0 w-0 bg-gradient-to-r from-blue-100 to-blue-300 transition-all duration-500 group-hover:w-full" />
         </button>
       </div>
     </motion.div>

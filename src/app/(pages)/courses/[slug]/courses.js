@@ -6,6 +6,7 @@ import Link from "next/link";
 import InstructorCard from "@/components/cards/InstructorCard";
 
 const Courses = ({ slug, subcategory, instructors }) => {
+  console.log(subcategory , 'sub')
   const toURL = (path) =>
     `${process.env.NEXT_PUBLIC_API_URL}/${path?.replace(/\\/g, "/")}`;
 
@@ -44,6 +45,7 @@ const Courses = ({ slug, subcategory, instructors }) => {
                   <CourseCard
                     name={course.course_Name}
                     image={toURL(course.course_Image)}
+                    shortdescription={course.Short_Description}
                     description={`Instructor: ${
                       course.Instructor?.name || "N/A"
                     }, Fee: Rs ${course.Monthly_Fee || "N/A"}`}

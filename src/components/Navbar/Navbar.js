@@ -157,7 +157,7 @@ const Navbar = () => {
                 target="_blank"
                 className="block bg-green-600 w-full py-2 rounded-md text-center hover:bg-green-700"
               >
-                next Conference
+                Next Conference
               </a>
               {contactInfo.map((item, idx) => (
                 <div key={idx} className="flex items-center space-x-2">
