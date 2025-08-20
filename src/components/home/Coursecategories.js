@@ -36,13 +36,13 @@ export default function Page() {
         {/* hero */}
         <div className="mx-auto max-w-6xl py-16 md:py-20 lg:py-24 text-center">
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-teal-700">
-            Top Program Categories
+            Top Course Categories
           </h1>
           <p className="mx-auto mt-6 max-w-4xl text-base sm:text-lg text-zinc-600">
-            At Arfa Karim Technology Incubator, we offer an array of program
-            categories, each representing a unique learning path. Explore these
-            categories to find the one that aligns with your aspirations and
-            interests.
+            PNY Trainings offers top in-demand, career-focused courses designed
+            to equip you with money-making skills. Select the course category
+            that best fits your career path to gain practical knowledge, sharpen
+            your expertise, and achieve your professional goals with confidence.
           </p>
         </div>
 
