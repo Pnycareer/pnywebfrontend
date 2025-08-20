@@ -139,7 +139,7 @@ const CourseSection = ({ course }) => {
 
       <CourseAccordion faqs={course.faqs}/>
 
-      <AdmissionSection />
+      {/* <AdmissionSection /> */}
     </>
   );
 };
