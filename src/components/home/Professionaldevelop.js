@@ -1,50 +1,115 @@
+"use client";
+
 import React from "react";
-import WaveEffect from "@/components/effects/Waving";
+import { motion } from "framer-motion";
+import { GraduationCap, BadgeCheck, Rocket, Timer } from "lucide-react";
 
 const programs = [
   {
     title: "1 Year Professional Diploma Programs",
-    description: "A 1-year diploma is ideal for students who build their careers in software, graphics, web, and marketing for potential growth.",
+    description:
+      "Deep, career-track learning in software, graphics, web, and digital marketing with portfolio-grade outcomes.",
+    icon: GraduationCap,
+    accent: "from-teal-500 to-emerald-500",
   },
   {
     title: "6 Months Certified Courses",
-    description: "Accelerate your career with our comprehensive 6-month certified courses. Gain specialized expertise and excel in your career.",
+    description:
+      "In-depth, hands-on specialization to transition roles or level up efficiently with mentor feedback.",
+    icon: BadgeCheck,
+    accent: "from-blue-500 to-indigo-500",
   },
   {
-    title: "3-2 Months Certified Courses",
-    description: "Elevate your expertise from 3 to 2 months with our Professional Certification Courses. Unlock new career opportunities!",
+    title: "3–2 Months Certified Courses",
+    description:
+      "Fast-track certifications to add marketable skills quickly and unlock new professional lanes.",
+    icon: Timer,
+    accent: "from-violet-500 to-fuchsia-500",
   },
   {
     title: "Professional Boot Camp",
-    description: "Join our Professional Bootcamp and gain valuable insights to advance your career. Don't miss out!",
+    description:
+      "High-intensity, industry-simulated bootcamps to ship real projects and build pragmatic confidence.",
+    icon: Rocket,
+    accent: "from-rose-500 to-orange-500",
   },
 ];
 
-const ProfessionalDevelopment = () => {
-  return (
-    <section className="relative w-full bg-gradient-to-r from-blue-300 via-blue-500 to-blue-300 text-white py-16 px-6 overflow-hidden">
-    {/* Water Wave Effect */}
-    <WaveEffect height={150} />
-
-    <div className="max-w-6xl mx-auto text-center">
-      <h2 className="text-4xl font-bold mb-4">Professional Development Timeframe</h2>
-      <p className="text-lg text-gray-200 max-w-3xl mx-auto">
-        Unlock your potential with our comprehensive range of skill programs! Choose from 1-year diploma programs, 6-month certified courses, 
-        3-2 month certified courses, and professional boot camps. Upgrade your skills today!
-      </p>
-    </div>
-
-    {/* Card Grid */}
-    <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-      {programs.map((program, index) => (
-        <div key={index} className="bg-white/10 backdrop-blur-lg p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all border border-white/20">
-          <h3 className="text-xl font-semibold text-white">{program.title}</h3>
-          <p className="text-gray-200 mt-2">{program.description}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-  );
+const container = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
+};
+const item = {
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
 };
 
-export default ProfessionalDevelopment;
+export default function ProfessionalDevelopment() {
+  return (
+    <section className="relative w-full overflow-hidden bg-gradient-to-br from-white via-[#f7f9fc] to-[#eef3ff] py-20 sm:py-24">
+      {/* light ambient glows */}
+      <div className="pointer-events-none absolute -top-40 left-1/3 h-[36rem] w-[36rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.12),transparent_70%)] blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-48 right-[-10%] h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(167,139,250,0.12),transparent_70%)] blur-3xl" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* header */}
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900">
+            Professional Development Timeline
+          </h2>
+          <p className="mt-4 text-gray-600 leading-relaxed">
+            Choose a track that fits your pace and ambition. From immersive
+            diplomas to rapid bootcamps — every path is engineered for outcomes.
+          </p>
+        </div>
+
+        {/* timeline */}
+        <motion.ol
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="relative mx-auto mt-14 grid max-w-5xl grid-cols-1 gap-6 sm:gap-8 lg:max-w-6xl lg:grid-cols-2"
+        >
+          {/* vertical connector for small screens */}
+          <div className="pointer-events-none absolute left-5 top-0 h-full w-px bg-gray-200 sm:left-8 lg:hidden" />
+
+          {programs.map((p, idx) => {
+            const Icon = p.icon;
+            return (
+              <motion.li
+                key={p.title}
+                variants={item}
+                className="group relative flex gap-4 rounded-2xl border border-gray-200 bg-white/70 p-5 sm:p-6 backdrop-blur-md transition-all duration-300 hover:bg-white/90 hover:shadow-[0_12px_36px_rgba(0,0,0,0.1)]"
+              >
+                {/* bullet / icon */}
+                <div className="relative shrink-0">
+                  {/* connector dot for mobile timeline */}
+                  <span className="absolute -left-6 top-2 hidden h-3 w-3 rounded-full bg-gray-300 sm:-left-7 lg:hidden" />
+                  <div
+                    className={`grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br ${p.accent} shadow-lg ring-1 ring-black/10`}
+                  >
+                    <Icon className="h-6 w-6 text-white" />
+                  </div>
+                </div>
+
+                {/* content */}
+                <div>
+                  <h3 className="text-lg font-semibold leading-snug text-gray-900">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-gray-600">
+                    {p.description}
+                  </p>
+
+                  {/* subtle underline on hover */}
+                  <div className="mt-4 h-px w-0 bg-gradient-to-r from-gray-300 to-transparent transition-all duration-300 group-hover:w-32" />
+                </div>
+              </motion.li>
+            );
+          })}
+        </motion.ol>
+      </div>
+    </section>
+  );
+}

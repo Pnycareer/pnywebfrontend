@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect, memo } from "react";
 import Branches from "./Branches";
 import CityCourses from "./Citycourses";
@@ -6,76 +7,63 @@ import Copyrights from "./Copyrights";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/logo/Pnylogo.png";
-import axios from "@/utils/axiosInstance"; // Make sure this points to your setup
+import axios from "@/utils/axiosInstance";
 
 const Footer = () => {
   const [categories, setCategories] = useState([]);
   const [randomCourses, setRandomCourses] = useState([]);
 
-
-
-useEffect(() => {
-  // Fetching categories
-  const fetchCategories = async () => {
-    try {
-      const res = await axios.get("/api/v1/categories");
-
-      const visibleCategories = res.data.filter(
-        (category) => category.viewonweb
-      );
-      setCategories(visibleCategories);
-    } catch (err) {
-      console.error("Failed to fetch categories:", err);
-    }
-  };
-
-  // Fetching random courses
-  const fetchCourses = async () => {
-    try {
-      const res = await axios.get("/courses/get-course");
-
-      const courseData = res.data;
-      if (courseData?.success && courseData.data.length > 0) {
-        const allCourses = courseData.data.flatMap((category) =>
-          category.courses.filter((course) => course.View_On_Web)
-        );
-
-        setRandomCourses(
-          allCourses.sort(() => 0.5 - Math.random()).slice(0, 5)
-        );
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get("/api/v1/categories");
+        const visible = res.data.filter((cat) => cat.viewonweb);
+        setCategories(visible);
+      } catch (err) {
+        console.error("Category fetch error:", err);
       }
-    } catch (err) {
-      console.error("Failed to fetch courses:", err);
-    }
-  };
+    };
 
-  fetchCategories();
-  fetchCourses();
-}, []);
+    const fetchCourses = async () => {
+      try {
+        const res = await axios.get("/courses/get-course");
+        const courseList = res.data?.data?.flatMap((cat) =>
+          cat.courses.filter((c) => c.View_On_Web)
+        );
+        setRandomCourses(
+          courseList.sort(() => 0.5 - Math.random()).slice(0, 5)
+        );
+      } catch (err) {
+        console.error("Courses fetch error:", err);
+      }
+    };
 
-
+    fetchCategories();
+    fetchCourses();
+  }, []);
 
   return (
-    <footer className="bg-grey-200 text-black py-10 px-5 md:px-20 min-h-[400px]">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+    <footer className="bg-gray-100 text-gray-800 py-10 px-5 md:px-20">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         {/* Head Office */}
         <div>
           <Image
             src={logo}
             width={100}
             height={56}
-            alt="Next cms Logo"
+            alt="PNY Logo"
             className="mb-4 object-contain"
-            priority={true}
+            priority
           />
           <h3 className="text-lg font-bold">Head Office</h3>
-          <address className="text-sm not-italic">
+          <address className="text-sm not-italic leading-relaxed">
             Office # 1, Level # 14, Arfa Software Technology Park, Ferozepur
-            Road, Lahore, Pakistan
+            Road, Lahore
           </address>
           <p className="text-sm mt-2">
-            Phone: <a href="tel:+923041111774">03041111774</a> <br />
-            Whatsapp: <a href="https://wa.me/923097779401">0309-7779401</a>
+            Phone: <a href="tel:+923041111774">0304-1111774</a>
+            <br />
+            WhatsApp: <a href="https://wa.me/923097779401">0309-7779401</a>
           </p>
         </div>
 
@@ -98,15 +86,15 @@ useEffect(() => {
                 name: "Best Institute in Lahore",
                 link: "/best-online-it-institute-in-lahore",
               },
-            ].map((item) => (
-              <li key={item.name}>
+            ].map(({ name, link, external }) => (
+              <li key={name}>
                 <Link
-                  href={item.link}
-                  prefetch={!item.external}
-                  target={item.external ? "_blank" : "_self"}
+                  href={link}
+                  prefetch={!external}
+                  target={external ? "_blank" : undefined}
                   className="hover:underline"
                 >
-                  {item.name}
+                  {name}
                 </Link>
               </li>
             ))}
@@ -140,14 +128,14 @@ useEffect(() => {
           <h3 className="text-lg font-bold mb-4">Categories</h3>
           <ul className="space-y-2 text-sm">
             {categories.length > 0 ? (
-              categories.map((category) => (
-                <li key={category._id}>
+              categories.slice(0, 8).map((cat) => (
+                <li key={cat._id}>
                   <Link
-                    href={`/courses/${category.url_Slug}`}
+                    href={`/courses/${cat.url_Slug}`}
                     prefetch={false}
                     className="hover:underline"
                   >
-                    {category.Category_Name}
+                    {cat.Category_Name}
                   </Link>
                 </li>
               ))
@@ -157,7 +145,7 @@ useEffect(() => {
           </ul>
         </div>
 
-        {/* Short Courses */}
+        {/* Short Courses by City */}
         <div>
           <h3 className="text-lg font-bold mb-4">Short Courses</h3>
           <ul className="space-y-2 text-sm">
@@ -187,6 +175,8 @@ useEffect(() => {
           </ul>
         </div>
       </div>
+
+      {/* Additional Info Sections */}
       <Branches />
       <CityCourses />
       <Copyrights />

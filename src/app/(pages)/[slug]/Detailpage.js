@@ -1,15 +1,11 @@
 "use client";
-import { motion } from "framer-motion";
 import React from "react";
 import CourseFeature from "@/components/Detailpage/Module";
 import Coursedescription from "@/components/Detailpage/Coursedescription";
 import InstructorOverview from "@/components/Detailpage/Instructor";
 import BenefitsSection from "@/components/Detailpage/Benefits";
-import AdmissionSection from "@/components/Detailpage/Admission";
-import Image from "next/image";
-import DownloadBrochureForm from "@/components/DownloadBrochureForm/DownloadBrochureForm";
 import CourseAccordion from "@/components/CoursesAccordian/CoursesAccordion";
-
+import CourseHero from "@/components/Detailpage/CourseSection";
 
 const CourseSection = ({ course }) => {
   if (!course) return <p className="text-white p-10">Course not found</p>;
@@ -23,121 +19,61 @@ const CourseSection = ({ course }) => {
 
   return (
     <>
-      <section className="relative bg-gradient-to-br from-black via-blue-500/85 to-black text-white py-16 px-6 md:px-12 lg:px-20">
-        <div className="absolute inset-0 bg-gradient-to-t from-white/5 to-transparent backdrop-blur-xl z-0 pointer-events-none"></div>
+      <CourseHero course={course} brochurePath={brochurePath} />
 
-        <div className="relative max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
-          >
-            <h1 className="text-2xl md:text-4xl font-extrabold text-white leading-tight">
-              {course.course_Name} <br />
-            </h1>
-            <h1 className="text-2xl md:text-2xl font-extrabold text-white leading-tight">
-              {course.Duration_Months && (
-                <span className="text-blue-300 ml-2">
-                  ({course.Duration_Months} Months)
-                </span>
-              )}
-            </h1>
+      <div className="relative min-h-screen overflow-hidden bg-slate-50">
+        {/* Professional gradient system */}
+        {/* Primary gradient - sophisticated blue-purple */}
+        <div className="pointer-events-none absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full blur-3xl opacity-40 bg-gradient-to-br from-blue-600/50 via-indigo-500/30 to-transparent" />
+        
+        {/* Secondary gradient - elegant teal */}
+        <div className="pointer-events-none absolute top-1/3 -right-32 h-[450px] w-[450px] rounded-full blur-3xl opacity-35 bg-gradient-to-bl from-teal-500/40 via-cyan-400/25 to-transparent" />
+        
+        {/* Accent gradient - refined violet */}
+        <div className="pointer-events-none absolute bottom-20 left-1/4 h-[400px] w-[400px] -translate-x-1/2 rounded-full blur-3xl opacity-30 bg-gradient-to-tr from-violet-500/35 via-purple-400/20 to-transparent" />
+        
+        {/* Subtle highlight gradient - warm amber */}
+        <div className="pointer-events-none absolute top-1/2 left-1/3 h-[300px] w-[300px] rounded-full blur-3xl opacity-25 bg-gradient-to-br from-amber-400/30 via-orange-300/15 to-transparent" />
+        
+        {/* Depth gradient - deep blue for depth */}
+        <div className="pointer-events-none absolute bottom-0 right-1/4 h-[350px] w-[350px] rounded-full blur-3xl opacity-20 bg-gradient-to-tl from-slate-700/25 via-slate-600/15 to-transparent" />
 
-            {course.Short_Description && (
-              <p className="text-white/80 md:text-lg">
-                {course.Short_Description}
-              </p>
-            )}
+        {/* Additional gradient spots for richer effect */}
+        {/* Top center gradient - soft pink */}
+        <div className="pointer-events-none absolute -top-20 left-1/2 h-[250px] w-[250px] -translate-x-1/2 rounded-full blur-3xl opacity-20 bg-gradient-to-b from-pink-400/25 via-rose-300/15 to-transparent" />
+        
+        {/* Center right gradient - mint green */}
+        <div className="pointer-events-none absolute top-1/4 right-1/3 h-[200px] w-[200px] rounded-full blur-3xl opacity-30 bg-gradient-to-l from-emerald-400/30 via-green-300/20 to-transparent" />
+        
+        {/* Bottom left gradient - soft yellow */}
+        <div className="pointer-events-none absolute bottom-10 left-10 h-[180px] w-[180px] rounded-full blur-3xl opacity-25 bg-gradient-to-tr from-yellow-300/25 via-amber-200/15 to-transparent" />
+        
+        {/* Middle center gradient - subtle blue */}
+        <div className="pointer-events-none absolute top-1/2 left-1/2 h-[120px] w-[120px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl opacity-15 bg-gradient-to-r from-blue-300/20 via-sky-200/10 to-transparent" />
+        
+        {/* Top right corner gradient - lavender */}
+        <div className="pointer-events-none absolute -top-10 -right-10 h-[150px] w-[150px] rounded-full blur-3xl opacity-20 bg-gradient-to-bl from-lavender-400/25 via-purple-300/15 to-transparent" />
+        
+        {/* Bottom right gradient - coral */}
+        <div className="pointer-events-none absolute bottom-5 right-5 h-[220px] w-[220px] rounded-full blur-3xl opacity-25 bg-gradient-to-tl from-coral-400/20 via-orange-300/15 to-transparent" />
 
-            <div className="text-white font-medium space-y-2 flex gap-4 flex-wrap">
-              {course.Monthly_Fee && (
-                <p>
-                  <span className="font-bold">Course Fee:</span> Rs{" "}
-                  {course.Monthly_Fee}
-                </p>
-              )}
-              {course.Skill_Level && (
-                <p>
-                  <span className="font-bold">Skill Level:</span>{" "}
-                  {course.Skill_Level}
-                </p>
-              )}
-              {course.Duration_Day && (
-                <p>
-                  <span className="font-bold">Duration:</span>{" "}
-                  {course.Duration_Day} Days
-                </p>
-              )}
-            </div>
+        {/* content */}
+        {course?.courseModule?.lectures?.length > 0 && (
+          <CourseFeature
+            Modules={course.courseModule}
+            className="bg-transparent"
+          />
+        )}
+        <BenefitsSection className="bg-transparent -mt-px" />
 
-            <div className="flex flex-wrap gap-4 mt-4">
-              {brochurePath && (
-                <DownloadBrochureForm
-                  brochureUrl={brochurePath}
-                  courseName={course.course_Name}
-                />
-              )}
-              <a
-                href="https://lms.pnytraining.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-red-500 px-6 py-3 rounded-lg shadow-lg hover:bg-red-400 transition text-white"
-                >
-                  Enroll Now!
-                </motion.button>
-              </a>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="relative w-full h-56 md:h-64 lg:h-80"
-          >
-            {course.video_Id ? (
-              <iframe
-                className="w-full h-full rounded-xl shadow-lg border-4 border-white/20"
-                src={`https://www.youtube.com/embed/${course.video_Id}`}
-                title="Course Intro"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            ) : (
-              <Image
-                unoptimized
-                width={500}
-                height={300}
-                src={`${
-                  process.env.NEXT_PUBLIC_API_URL
-                }/${course.course_Image.replace(/\\/g, "/")}`}
-                alt={course.course_Name}
-                className="w-full h-full object-cover rounded-xl shadow-lg border-4 border-white/20"
-              />
-            )}
-          </motion.div>
-        </div>
-      </section>
-
-      {course?.courseModule?.lectures?.length > 0 && (
-        <CourseFeature Modules={course.courseModule} />
-      )}
-
-      <BenefitsSection />
-
-      {course.Instructor && (
-        <InstructorOverview Instructor={course.Instructor} />
-      )}
+        {course.Instructor && (
+          <InstructorOverview  Instructor={course.Instructor} />
+        )}
+      </div>
 
       <Coursedescription coursedesc={course} />
 
-      <CourseAccordion faqs={course.faqs}/>
+      <CourseAccordion faqs={course.faqs} />
 
       {/* <AdmissionSection /> */}
     </>

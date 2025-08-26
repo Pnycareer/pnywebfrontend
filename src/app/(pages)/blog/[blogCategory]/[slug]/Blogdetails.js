@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import axios from "@/utils/axiosInstance";
 import { generateHeadingsAndHTML } from "@/utils/htmlHeadingsParser";
+import RichTextRenderer from "@/components/RichTextRenderer/RichTextRenderer";
 
 const Blogdetails = ({ blog }) => {
   const {
@@ -133,24 +134,9 @@ const Blogdetails = ({ blog }) => {
           {/* Blog Main Content */}
           <div className="flex-1">
             {/* Blog Description */}
-            <div
-              className="max-w-full mb-10 
-    [&>h1]:text-[34px] [&>h1]:font-semibold
-    [&>h2]:text-[30px] [&>h2]:font-medium
-    [&>h3]:text-[24px] [&>h3]:font-medium
-    [&>a]:cursor-pointer
-    [&>p]:mt-5 
-    [&>ul]:list-disc [&>ul]:pl-6
-    [&>ol]:list-decimal [&>ol]:pl-6
-    [&>ul>li]:mt-2
-    [&>ol>li]:mt-2
-    [&>h1]:scroll-mt-28
-    [&>h2]:scroll-mt-28
-    [&>h3]:scroll-mt-28"
-              dangerouslySetInnerHTML={{ __html: updatedHtml }}
-            ></div>
+            <RichTextRenderer html={updatedHtml} />
             {/* Tags Section */}
-            <div className="flex flex-wrap gap-2 mb-6">
+            <div className="flex flex-wrap gap-2 my-5">
               {tags?.map((tag, index) => (
                 <span
                   key={index}

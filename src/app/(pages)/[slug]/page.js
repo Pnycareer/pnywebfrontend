@@ -7,6 +7,9 @@ import axios from "@/utils/axiosInstance";
 export default async function Page({ params }) {
   const { slug } = await params;
 
+
+  console.log(slug)
+
   let course;
 
   try {

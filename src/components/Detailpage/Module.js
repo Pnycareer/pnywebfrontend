@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import Particle from "@/components/effects/Particles";
 
-export default function CourseFeature({ Modules }) {
+export default function CourseFeature({ Modules, className = "" }) {
   const [selectedLecture, setSelectedLecture] = useState(null);
 
   // Memoize lectures to prevent recreating them every render
@@ -21,13 +21,45 @@ export default function CourseFeature({ Modules }) {
   }, [lectures]);
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-r from-gray-900 to-blue-500 overflow-hidden p-4">
+    <div
+      className={`relative flex items-center justify-center min-h-screen overflow-hidden p-4 ${className}`}
+    >
+      {/* Optional soft seam fade at the very top to blend with previous section */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-8 inset-x-0 h-8"
+        style={{
+          WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
+          maskImage: "linear-gradient(to bottom, black, transparent)",
+          background:
+            "linear-gradient(to bottom, rgba(99,102,241,0.18), rgba(99,102,241,0))",
+        }}
+      />
+
+      {/* Decorative Radial Spots (very light, no solid page bg) */}
+      <div
+        className="absolute -top-32 -left-24 h-96 w-96 -z-10 rounded-full opacity-40 blur-3xl pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(56,189,248,0.25), rgba(99,102,241,0.15), transparent)",
+          mixBlendMode: "soft-light",
+        }}
+      />
+      <div
+        className="absolute bottom-0 right-0 h-80 w-80 -z-10 rounded-full opacity-30 blur-3xl pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(244,63,94,0.15), rgba(16,185,129,0.1), transparent)",
+          mixBlendMode: "soft-light",
+        }}
+      />
+
       {/* Heading and Description */}
       <div className="absolute top-10 text-center z-20">
-        <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           Course Module
         </h1>
-        <p className="max-w-3xl mx-auto text-sm  md:text-xl text-gray-300 px-4">
+        <p className="max-w-3xl mx-auto text-sm md:text-xl text-gray-600 px-4">
           Our course modules offer a well-rounded curriculum, combining
           theoretical foundations with hands-on training, ensuring students
           acquire industry-relevant skills and knowledge for future endeavors.
@@ -38,11 +70,11 @@ export default function CourseFeature({ Modules }) {
       <Particle />
 
       {/* Main Card */}
-      <div className="relative w-full max-w-5xl bg-white/20 backdrop-blur-md rounded-2xl shadow-lg p-4 md:p-5 border border-gray-600 z-10 mt-52 md:mt-48">
+      <div className="relative w-full max-w-5xl bg-white/30 backdrop-blur-md rounded-2xl shadow-lg p-4 md:p-5 border border-gray-200 z-10 mt-52 md:mt-48">
         <div className="flex flex-col md:flex-row h-full max-h-[90vh] overflow-hidden gap-4">
           {/* Sidebar */}
-          <div className="w-full md:w-1/3 p-4 bg-black/50 rounded-lg shadow-lg max-h-[300px] md:max-h-[500px] overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-transparent">
-            <h2 className="text-xl font-bold text-white mb-4 text-center">
+          <div className="w-full md:w-1/3 p-4 bg-white/40 rounded-lg shadow-md max-h-[300px] md:max-h-[500px] overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-indigo-400 scrollbar-track-transparent">
+            <h2 className="text-xl font-bold text-gray-900 mb-4 text-center">
               📚 Lectures
             </h2>
             <div className="space-y-3">
@@ -50,10 +82,10 @@ export default function CourseFeature({ Modules }) {
                 <button
                   key={lecture.lectureNumber}
                   onClick={() => setSelectedLecture(lecture)}
-                  className={`w-full text-left px-4 py-3 rounded-lg transition-all ${
+                  className={`w-full text-left px-4 py-3 rounded-lg transition-all font-medium shadow-sm ${
                     selectedLecture?.lectureNumber === lecture.lectureNumber
-                      ? "bg-blue-500 text-white shadow-lg"
-                      : "bg-gray-800 bg-opacity-50 text-white hover:bg-blue-400"
+                      ? "bg-indigo-500 text-white shadow-lg"
+                      : "bg-white/60 text-gray-800 hover:bg-indigo-100"
                   }`}
                 >
                   🎓 Lecture {lecture.lectureNumber}
@@ -63,30 +95,30 @@ export default function CourseFeature({ Modules }) {
           </div>
 
           {/* Main Content */}
-          <div className="w-full md:w-2/3 p-4 text-white overflow-y-auto max-h-[calc(90vh-2rem)] md:max-h-[500px]">
+          <div className="w-full md:w-2/3 p-4 text-gray-900 overflow-y-auto max-h-[calc(90vh-2rem)] md:max-h-[500px]">
             {selectedLecture ? (
               <div>
                 <h1 className="md:text-3xl font-extrabold break-words">
                   {selectedLecture.title}
                 </h1>
-                <p className="mt-3 md:text-lg text-gray-300">
+                <p className="mt-3 md:text-lg text-gray-700">
                   {selectedLecture.content}
                 </p>
                 <div className="mt-5">
-                  <h3 className="md:text-xl font-semibold text-blue-400">
+                  <h3 className="md:text-xl font-semibold text-indigo-600">
                     Key Topics:
                   </h3>
-                  <div className="mt-3 text-gray-300 prose prose-invert max-w-none">
+                  <div className="mt-3 text-gray-700 prose max-w-none">
                     <div
                       className="[&>h1]:text-[34px] [&>h1]:font-semibold
-                [&>h2]:text-[30px] [&>h2]:font-medium
-                [&>h3]:text-[24px] [&>h3]:font-medium
-                [&>a]:cursor-pointer
-                [&>p]:mt-5 
-                [&>ul]:list-disc [&>ul]:pl-6
-                [&>ol]:list-decimal [&>ol]:pl-6
-                [&>ul>li]:mt-2
-                [&>ol>li]:mt-2"
+                        [&>h2]:text-[30px] [&>h2]:font-medium
+                        [&>h3]:text-[24px] [&>h3]:font-medium
+                        [&>a]:cursor-pointer
+                        [&>p]:mt-5 
+                        [&>ul]:list-disc [&>ul]:pl-6
+                        [&>ol]:list-decimal [&>ol]:pl-6
+                        [&>ul>li]:mt-2
+                        [&>ol>li]:mt-2"
                       dangerouslySetInnerHTML={{
                         __html: selectedLecture.topics,
                       }}
@@ -95,7 +127,7 @@ export default function CourseFeature({ Modules }) {
                 </div>
               </div>
             ) : (
-              <p className="text-gray-400 text-lg text-center">
+              <p className="text-gray-500 text-lg text-center">
                 Select a lecture to view details.
               </p>
             )}
