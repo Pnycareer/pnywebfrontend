@@ -53,15 +53,15 @@ const TrainerCertification = () => {
 
         {/* Summary Text */}
         <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed text-justify text-balance">
-          <strong className="text-gray-800">Next CMS</strong> is the leading IT training hub in Lahore that offers
+          {`Next CMS is the leading IT training hub in Lahore that offers
           various programs helping young career seekers grasp essential IT skills
-          and confidently enter the job market.
+          and confidently enter the job market.`}
         </p>
 
         <p className="text-lg text-gray-700 max-w-4xl mx-auto mt-4 leading-relaxed text-justify text-balance">
-          With a strong focus on practical expertise, our trainers are
+          {`With a strong focus on practical expertise, our trainers are
           internationally certified and committed to shaping the future of tech
-          talent in Pakistan.
+          talent in Pakistan.`}
         </p>
 
         {/* Show More Section */}
@@ -75,26 +75,26 @@ const TrainerCertification = () => {
               transition={{ duration: 0.5 }}
             >
               <p>
-                Stand out from the crowd by joining hands with a certified and
+                {`Stand out from the crowd by joining hands with a certified and
                 recognized institute. Our short courses at Arfa Tower and other
                 branches across Lahore, Rawalpindi, Karachi, Multan, and beyond
-                bring cutting-edge skills within your reach.
+                bring cutting-edge skills within your reach.`}
               </p>
               <p>
-                Whether it's Web Development, Graphic Design, SEO, or Digital
+                {`Whether it's Web Development, Graphic Design, SEO, or Digital
                 Marketing — we teach what the industry demands. Our mission is to
                 upskill individuals through hands-on training, flexible schedules,
-                and expert mentorship.
+                and expert mentorship.`}
               </p>
               <p>
-                Take advantage of our online and in-person batches. With flexible
+                {`Take advantage of our online and in-person batches. With flexible
                 weekend sessions and online portals, working professionals and
-                students can learn at their convenience.
+                students can learn at their convenience.`}
               </p>
               <p>
-                Each course is built around your success. From content quality to
+                {`Each course is built around your success. From content quality to
                 real-world application — you get everything you need to start
-                earning or excel in your job role.
+                earning or excel in your job role.`}
               </p>
             </motion.div>
           )}
