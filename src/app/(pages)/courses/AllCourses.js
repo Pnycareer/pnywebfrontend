@@ -72,7 +72,7 @@ const SearchBar = ({ value, onChange, onClear }) => (
   </div>
 );
 
-/* ---------- skeleton card using react-loading-skeleton ---------- */
+/* ---------- skeleton card ---------- */
 const CourseSkeleton = () => (
   <div className="min-h-[480px] rounded-2xl border border-white/30 bg-white/50 backdrop-blur-md">
     <Skeleton height={200} className="rounded-t-2xl" />
@@ -86,13 +86,8 @@ const CourseSkeleton = () => (
 
 /* ---------- main component ---------- */
 const AllCourses = ({ categories }) => {
-  if (!categories?.length) {
-    return (
-      <div className="p-6 text-center text-slate-600">
-        No categories available.
-      </div>
-    );
-  }
+  // ✅ Always call hooks — no early return above this line
+  const safeCategories = Array.isArray(categories) ? categories : [];
 
   // debounced search
   const [rawQuery, setRawQuery] = useState("");
@@ -105,11 +100,11 @@ const AllCourses = ({ categories }) => {
   // only allow courses with View_On_Web === true
   const visibleCategories = useMemo(
     () =>
-      categories.map((cat) => ({
+      safeCategories.map((cat) => ({
         ...cat,
         courses: (cat.courses || []).filter((c) => c?.View_On_Web === true),
       })),
-    [categories]
+    [safeCategories]
   );
 
   // search: match category name or course name
@@ -120,16 +115,15 @@ const AllCourses = ({ categories }) => {
     return visibleCategories
       .map((cat) => {
         const catMatch = normalize(cat?.category_Name).includes(q);
-        const matchedCourses = (cat?.courses || []).filter(
-          (c) => normalize(c?.course_Name).includes(q)
-          // optionally include description:
-          // || normalize(c?.Short_Description).includes(q)
+        const matchedCourses = (cat?.courses || []).filter((c) =>
+          normalize(c?.course_Name).includes(q)
         );
         return catMatch ? { ...cat } : { ...cat, courses: matchedCourses };
       })
       .filter(
         (cat) =>
-          cat?.courses?.length > 0 || normalize(cat?.category_Name).includes(q)
+          (cat?.courses?.length || 0) > 0 ||
+          normalize(cat?.category_Name).includes(q)
       );
   }, [visibleCategories, query]);
 
@@ -143,7 +137,7 @@ const AllCourses = ({ categories }) => {
     setVisibleCounts(init);
   }, [searched]);
 
-  // totals (respect View_On_Web)
+  // totals
   const totalCourses = useMemo(
     () => searched.reduce((acc, c) => acc + (c?.courses?.length || 0), 0),
     [searched]
@@ -163,7 +157,6 @@ const AllCourses = ({ categories }) => {
     setVisibleCounts((prev) => {
       const current = prev[catId] || 0;
       if (current >= total) return prev;
-      // small delay just to let skeleton show, feels smooth
       const next = Math.min(current + CHUNK, total);
       return { ...prev, [catId]: next };
     });
@@ -171,100 +164,116 @@ const AllCourses = ({ categories }) => {
 
   return (
     <div className="mx-auto max-w-7xl p-6">
-      {/* Header */}
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Courses</h1>
-        </div>
-        <div className="flex items-center gap-2">
-          <Badge>{searched.length} Categories</Badge>
-          <Badge>
-            {searched.reduce((acc, c) => acc + (c?.courses?.length || 0), 0)}{" "}
-            Courses
-          </Badge>
-        </div>
-      </div>
-
-      {/* Search */}
-      <SearchBar
-        value={rawQuery}
-        onChange={setRawQuery}
-        onClear={() => setRawQuery("")}
-      />
-
-      {/* Results */}
-      {!searched.length ? (
+      {/* If no categories at all */}
+      {!safeCategories.length ? (
         <Empty
-          title="No results found"
-          subtitle="Try a different keyword or clear the search."
+          title="No categories available."
+          subtitle="Please check back later."
         />
       ) : (
-        <div className="space-y-12">
-          {searched.map((cat, idx) => {
-            const total = cat.courses?.length || 0;
-            const visible = Math.min(visibleCounts[cat._id] || 0, total);
-            const hasMore = visible < total;
+        <>
+          {/* Header */}
+          <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight">Courses</h1>
+              <p className="sr-only">
+                Showing {shownCourses} of {totalCourses} courses
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Badge>{searched.length} Categories</Badge>
+              <Badge>
+                {searched.reduce(
+                  (acc, c) => acc + (c?.courses?.length || 0),
+                  0
+                )}{" "}
+                Courses
+              </Badge>
+            </div>
+          </div>
 
-            return (
-              <motion.section
-                key={cat._id}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.35, delay: idx * 0.03 }}
-              >
-                {/* Category header */}
-                <div className="mb-6 flex items-center justify-between">
-                  <div>
-                    <h2 className="text-3xl font-extrabold tracking-tight text-indigo-700">
-                      {toTitleCase(cat.category_Name)}
-                    </h2>
-                    {cat.category_Description ? (
-                      <p className="mt-2 max-w-3xl text-base text-slate-600">
-                        {cat.category_Description}
-                      </p>
-                    ) : null}
-                  </div>
-                  <Badge>{total} Courses</Badge>
-                </div>
+          {/* Search */}
+          <SearchBar
+            value={rawQuery}
+            onChange={setRawQuery}
+            onClear={() => setRawQuery("")}
+          />
 
-                {/* Grid */}
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {cat.courses.slice(0, visible).map((c) => (
-                    <CourseCard
-                      key={c._id}
-                      name={c.course_Name}
-                      image={c.course_Image}
-                      urlslug={c.url_Slug}
-                      shortdescription={c.Short_Description}
-                    />
-                  ))}
+          {/* Results */}
+          {!searched.length ? (
+            <Empty
+              title="No results found"
+              subtitle="Try a different keyword or clear the search."
+            />
+          ) : (
+            <div className="space-y-12">
+              {searched.map((cat, idx) => {
+                const total = cat.courses?.length || 0;
+                const visible = Math.min(visibleCounts[cat._id] || 0, total);
+                const hasMore = visible < total;
 
-                  {/* Skeleton shimmer for the next chunk (feels responsive) */}
-                  {hasMore &&
-                    Array.from({
-                      length: Math.min(CHUNK, total - visible),
-                    }).map((_, i) => (
-                      <CourseSkeleton key={`sk-${cat._id}-${i}`} />
-                    ))}
-                </div>
+                return (
+                  <motion.section
+                    key={cat._id}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.35, delay: idx * 0.03 }}
+                  >
+                    {/* Category header */}
+                    <div className="mb-6 flex items-center justify-between">
+                      <div>
+                        <h2 className="text-3xl font-extrabold tracking-tight text-indigo-700">
+                          {toTitleCase(cat.category_Name)}
+                        </h2>
+                        {cat.category_Description ? (
+                          <p className="mt-2 max-w-3xl text-base text-slate-600">
+                            {cat.category_Description}
+                          </p>
+                        ) : null}
+                      </div>
+                      <Badge>{total} Courses</Badge>
+                    </div>
 
-                {/* Sentinel — using InView so it always observes correctly */}
-                {hasMore && (
-                  <InView
-                    as="div"
-                    onChange={(inView) => {
-                      if (inView) handleLoadMore(cat._id, total);
-                    }}
-                    threshold={0}
-                    rootMargin="400px 0px 400px 0px"
-                    className="h-6"
-                  />
-                )}
-              </motion.section>
-            );
-          })}
-        </div>
+                    {/* Grid */}
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                      {cat.courses.slice(0, visible).map((c) => (
+                        <CourseCard
+                          key={c._id}
+                          name={c.course_Name}
+                          image={c.course_Image}
+                          urlslug={c.url_Slug}
+                          shortdescription={c.Short_Description}
+                        />
+                      ))}
+
+                      {/* Skeleton shimmer for the next chunk */}
+                      {hasMore &&
+                        Array.from({
+                          length: Math.min(CHUNK, total - visible),
+                        }).map((_, i) => (
+                          <CourseSkeleton key={`sk-${cat._id}-${i}`} />
+                        ))}
+                    </div>
+
+                    {/* Sentinel */}
+                    {hasMore && (
+                      <InView
+                        as="div"
+                        onChange={(inView) => {
+                          if (inView) handleLoadMore(cat._id, total);
+                        }}
+                        threshold={0}
+                        rootMargin="400px 0px 400px 0px"
+                        className="h-6"
+                      />
+                    )}
+                  </motion.section>
+                );
+              })}
+            </div>
+          )}
+        </>
       )}
     </div>
   );
