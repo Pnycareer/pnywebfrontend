@@ -14,9 +14,9 @@ const CourseAccordion = ({ faqs = [] }) => {
   return (
     <section className="bg-gradient-to-br from-blue-50 to-blue-100 py-5 px-4">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-blue-800 mb-5">
+        <h3 className="text-3xl font-bold text-center text-blue-800 mb-5">
           Frequently Asked Questions
-        </h2>
+        </h3>
 
         {!isValidFaqs ? (
           <div className="text-center text-gray-500 text-sm">

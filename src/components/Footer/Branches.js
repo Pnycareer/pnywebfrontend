@@ -56,9 +56,9 @@ const branches = [
 export default function Branches() {
   return (
     <section className="py-16 px-6 bg-gray-100">
-      <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-10">
+      <h3 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-10">
         Our Branches
-      </h2>
+      </h3>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
         {branches.map((branch, index) => (

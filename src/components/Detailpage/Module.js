@@ -56,9 +56,9 @@ export default function CourseFeature({ Modules, className = "" }) {
 
       {/* Heading and Description */}
       <div className="absolute top-10 text-center z-20">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Course Module
-        </h1>
+        <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+         Certified Digital Media Marketing Skills with Ai Enhanced Course
+        </h3>
         <p className="max-w-3xl mx-auto text-sm md:text-xl text-gray-600 px-4">
           Our course modules offer a well-rounded curriculum, combining
           theoretical foundations with hands-on training, ensuring students
@@ -74,9 +74,9 @@ export default function CourseFeature({ Modules, className = "" }) {
         <div className="flex flex-col md:flex-row h-full max-h-[90vh] overflow-hidden gap-4">
           {/* Sidebar */}
           <div className="w-full md:w-1/3 p-4 bg-white/40 rounded-lg shadow-md max-h-[300px] md:max-h-[500px] overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-indigo-400 scrollbar-track-transparent">
-            <h2 className="text-xl font-bold text-gray-900 mb-4 text-center">
+            <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
               📚 Lectures
-            </h2>
+            </h3>
             <div className="space-y-3">
               {lectures.map((lecture) => (
                 <button
@@ -98,9 +98,9 @@ export default function CourseFeature({ Modules, className = "" }) {
           <div className="w-full md:w-2/3 p-4 text-gray-900 overflow-y-auto max-h-[calc(90vh-2rem)] md:max-h-[500px]">
             {selectedLecture ? (
               <div>
-                <h1 className="md:text-3xl font-extrabold break-words">
+                <p className="md:text-xl font-bold break-words">
                   {selectedLecture.title}
-                </h1>
+                </p>
                 <p className="mt-3 md:text-lg text-gray-700">
                   {selectedLecture.content}
                 </p>

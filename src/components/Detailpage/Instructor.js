@@ -10,9 +10,9 @@ const InstructorOverview = ({ Instructor, className = "" }) => {
   return (
     <div className={`p-4 md:p-8 ${className}`}>
       <div className="rounded-2xl shadow-md p-6 md:p-10 transition-all duration-300 ease-in-out bg-white/70 backdrop-blur-md border border-gray-200">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6 border-b pb-2">
+        <h3 className="text-xl font-bold text-gray-900 mb-6 border-b pb-2">
           OVERVIEW
-        </h2>
+        </h3>
 
         <div className="flex flex-col md:flex-row gap-10">
           {/* Left Side: Instructor Info */}

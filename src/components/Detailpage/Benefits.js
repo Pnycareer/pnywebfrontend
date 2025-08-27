@@ -121,7 +121,7 @@ const BenefitsSection = ({ className = "" }) => {
           animate="show"
           className="mb-20"
         >
-          <h2
+          <h3
             id="benefits-heading"
             className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-8"
           >
@@ -133,7 +133,7 @@ const BenefitsSection = ({ className = "" }) => {
             <span className="text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-700">
               with Course Enrollment
             </span>
-          </h2>
+          </h3>
 
           <p className="mx-auto max-w-4xl text-xl md:text-2xl text-gray-600 leading-relaxed font-medium">
             Discover comprehensive opportunities designed to accelerate your personal and professional growth, 

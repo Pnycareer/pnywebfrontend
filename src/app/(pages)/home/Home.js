@@ -14,13 +14,13 @@ const Home = () => {
     <>
       <Webbanner />
       <HeroSection />
-      <Animation />
+      {/* <Animation /> */}
       <Coursecategories/>
       <CareerSection />
       <ProfessionalDevelopment />
       <WhyChooseUs />
       <TrainerCertification />
-      {/* <MediaPartners/> */}
+      <MediaPartners/>
     </>
   );
 };

@@ -140,9 +140,9 @@ const Coursedescription = ({ coursedesc }) => {
 
           {/* Related Courses */}
           <aside className="sticky top-28 h-fit space-y-4 rounded-2xl border border-gray-200 bg-white/50 p-6 shadow-md backdrop-blur-md">
-            <h2 className="mb-6 text-2xl font-bold text-gray-800">
+            <h3 className="mb-6 text-2xl font-bold text-gray-800">
               Related Courses
-            </h2>
+            </h3>
 
             {isLoading ? (
               <div className="space-y-4">

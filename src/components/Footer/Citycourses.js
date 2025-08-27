@@ -26,12 +26,12 @@ export default function CityCourses() {
 
   return (
     <div className="py-10 px-4 max-w-6xl mx-auto">
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
+      <h3 className="text-3xl font-bold text-center text-gray-800 mb-10">
         <span className="inline-flex items-center gap-2">
           <MapPin className="w-6 h-6 text-blue-600" />
           Explore Courses by City
         </span>
-      </h2>
+      </h3>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
         {cities.map((city, i) => (

@@ -46,7 +46,7 @@ const item = {
 
 export default function ProfessionalDevelopment() {
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-br from-white via-[#f7f9fc] to-[#eef3ff] py-20 sm:py-24">
+    <section className="relative w-full overflow-hidden bg-gradient-to-br from-white via-[#f7f9fc] to-[#eef3ff] py-10">
       {/* light ambient glows */}
       <div className="pointer-events-none absolute -top-40 left-1/3 h-[36rem] w-[36rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.12),transparent_70%)] blur-3xl" />
       <div className="pointer-events-none absolute -bottom-48 right-[-10%] h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(167,139,250,0.12),transparent_70%)] blur-3xl" />
