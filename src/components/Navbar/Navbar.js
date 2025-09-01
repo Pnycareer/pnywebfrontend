@@ -13,7 +13,7 @@ const navLinks = [
     external: true,
   },
   {
-    label: "Amazon Services",
+    label: "Gaming Courses",
     href: "https://www.eraflip.com/",
     external: true,
   },
@@ -33,9 +33,9 @@ const navLinks = [
 ];
 
 const contactInfo = [
-  { icon: <FiPhone />, text: "UAN - 03041111774" },
-  { icon: <FiMail />, text: "info@nexttrainings.com" },
-  { icon: <FaWhatsapp />, text: "0309-7779401" },
+  { icon: <FiPhone />, text: "UAN +92 304-1111774" },
+  { icon: <FiMail />, text: "info@pnytrainings.com" },
+  { icon: <FaWhatsapp />, text: "+92 309-7779401" },
 ];
 
 const Navbar = () => {
@@ -111,7 +111,7 @@ const Navbar = () => {
               target="_blank"
               className="bg-green-600 text-white px-3 py-1 rounded-md hover:bg-green-700"
             >
-              Next Conference
+              PNY Conference
             </a>
             {contactInfo.map((item, idx) => (
               <div key={idx} className="flex items-center space-x-2">
@@ -157,7 +157,7 @@ const Navbar = () => {
                 target="_blank"
                 className="block bg-green-600 w-full py-2 rounded-md text-center hover:bg-green-700"
               >
-                Next Conference
+                PNY Conference
               </a>
               {contactInfo.map((item, idx) => (
                 <div key={idx} className="flex items-center space-x-2">

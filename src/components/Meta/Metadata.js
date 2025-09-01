@@ -29,7 +29,7 @@ const Metadata = ({
       <meta property="og:description" content={metaDescription} />
       <meta property="og:image" content={metaImage} />
       <meta property="og:url" content={metaUrl} />
-      <meta property="og:site_name" content="NextCMS" />
+      <meta property="og:site_name" content="Pnytrainings" />
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={metaTitle} />

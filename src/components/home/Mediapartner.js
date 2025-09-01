@@ -6,10 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
 
 const mediaPartners = [
-  { src: "/images/city-42.png", alt: "City 42" },
-  { src: "/images/k21-news.png", alt: "K21 News" },
-  { src: "/images/daily-pakistan.png", alt: "Daily Pakistan" },
-  { src: "/images/gtv-news.png", alt: "GTV News" },
+  // { src: "./assets", alt: "City 42" },
 ];
 
 const MediaPartners = () => {
@@ -36,10 +33,10 @@ const MediaPartners = () => {
       {/* ✅ Fix Overflow Here */}
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-4xl font-bold mb-4">
-          We Empower Professionals; see through Media Partner Networks
+          We Empower Professionals see through Media Partner Networks
         </h2>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-          Next cms encourage the opinions of youth by developing them
+          Pny trainings encourage the opinions of youth by developing them
           professionally, trusting their abilities as leaders, and getting them
           excited to explore the world around them.
         </p>

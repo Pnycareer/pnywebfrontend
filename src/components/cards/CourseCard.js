@@ -47,17 +47,18 @@ const CourseCard = ({ name, image, urlslug, shortdescription }) => {
       aria-label={`Open details for ${name}`}
     >
       {/* Image Section */}
-      <div className="relative w-full h-52 shrink-0">
+      <div className="relative w-full shrink-0">
         <Image
           src={fullImage}
           alt={name || "Course image"}
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
+          width={1200} // or your actual image width
+          height={600} // or your actual image height
+          layout="responsive"
           priority
           unoptimized
-          className="rounded-t-2xl object-cover"
+          className="rounded-t-2xl object-contain"
         />
-        <div className="absolute inset-0 rounded-t-2xl bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+        <div className="absolute inset-0 rounded-t-2xl bg-gradient-to-t from-black/50 via-black/20 to-transparent pointer-events-none" />
       </div>
 
       {/* Content Section */}

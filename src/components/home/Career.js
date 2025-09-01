@@ -61,7 +61,7 @@ export default function CareerSection() {
             We Develop Your Inspiring Career — With Standards That Matter
           </h2>
           <p className="mt-4 text-gray-600 leading-relaxed">
-            Next CMS Pakistan leads with 100+ in-demand courses, structured
+            Pny trainings Pakistan leads with 100+ in-demand courses, structured
             internships, and a dedicated job cell — engineered to launch and
             level-up your career with confidence.
           </p>
@@ -96,8 +96,6 @@ export default function CareerSection() {
             </motion.div>
           ))}
         </motion.div>
-
-       
       </div>
     </section>
   );

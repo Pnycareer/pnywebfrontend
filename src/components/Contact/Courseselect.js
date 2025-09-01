@@ -47,7 +47,7 @@ const CourseSelect = ({ selected, setSelected }) => {
             }}
             onClick={() => setIsOpen(true)}
             onFocus={() => setIsOpen(true)}
-            placeholder="Select a course"
+            placeholder="Course name (e.g., Web Development)"
           />
 
           <AnimatePresence>

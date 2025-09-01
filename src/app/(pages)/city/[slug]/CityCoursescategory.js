@@ -35,6 +35,7 @@ const CityCoursescategory = ({ subcategory }) => {
                 <CourseCard
                   name={course.course_Name || "No Name"}
                   image={toURL(course.course_Image)}
+                  shortdescription={course.Short_Description}
                   description={`Instructor: ${
                     course.Instructor?.name || "N/A"
                   }, Fee: $${course.Monthly_Fee || "N/A"}`}

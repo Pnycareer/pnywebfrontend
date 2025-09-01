@@ -80,29 +80,21 @@ export default function CourseHero({ course, brochurePath }) {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative w-full h-56 md:h-64 lg:h-80"
+          className="relative w-full"
         >
-          {course.video_Id ? (
-            <iframe
-              className="w-full h-full rounded-xl shadow-lg border-4 border-white/20"
-              src={`https://www.youtube.com/embed/${course.video_Id}`}
-              title="Course Intro"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          ) : (
+          <div className="relative w-full">
             <Image
               unoptimized
-              width={500}
-              height={300}
               src={`${
                 process.env.NEXT_PUBLIC_API_URL
               }/${course.course_Image.replace(/\\/g, "/")}`}
               alt={course.course_Name}
-              className="w-full h-full object-cover rounded-xl shadow-lg border-4 border-white/20"
+              width={1200} // ✅ you can customize this
+              height={600} // ✅ depends on your image’s natural height
+              layout="responsive"
+              className="object-contain rounded-xl shadow-lg border-4 border-white/20"
             />
-          )}
+          </div>
         </motion.div>
       </div>
     </section>

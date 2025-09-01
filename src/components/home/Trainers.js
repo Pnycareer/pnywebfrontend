@@ -1,32 +1,26 @@
 "use client";
 import React, { useState } from "react";
-import {
-  BadgeCheck,
-  Atom,
-  BrainCircuit,
-  Laptop2,
-  GraduationCap,
-} from "lucide-react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
+// tailwind sizing/hover stays the same
 const iconStyle = "w-12 h-12 transition-transform duration-300 hover:scale-110";
 
-const icons = [
-  { icon: <BadgeCheck className={`${iconStyle} text-red-500`} />, label: "Certified" },
-  { icon: <Atom className={`${iconStyle} text-green-500`} />, label: "Science" },
-  { icon: <BrainCircuit className={`${iconStyle} text-blue-500`} />, label: "AI" },
-  { icon: <Laptop2 className={`${iconStyle} text-yellow-500`} />, label: "Tech" },
-  { icon: <GraduationCap className={`${iconStyle} text-purple-500`} />, label: "Education" },
+// 👉 Put your images in /public/assets and update the filenames if needed
+const badges = [
+  { src: "/assets/trainerslogo/adobe.png", label: "adobe" },
+  { src: "/assets/trainerslogo/autodesk.png", label: "autodesk" },
+  { src: "/assets/trainerslogo/google.png", label: "google" },
+  { src: "/assets/trainerslogo/nbc.png", label: "nbc" },
 ];
 
 const TrainerCertification = () => {
   const [showMore, setShowMore] = useState(false);
-
   const toggleContent = () => setShowMore(!showMore);
 
   return (
     <section className="w-full bg-gray-100 py-16 px-6">
-      <div className="max-w-6xl mx-auto text-center">
+      <div className="w-full mx-auto text-center">
         <motion.h2
           className="text-3xl md:text-4xl font-bold mb-10 text-gray-800"
           initial={{ opacity: 0, y: -20 }}
@@ -36,29 +30,40 @@ const TrainerCertification = () => {
           Our Trainers Are Certified From
         </motion.h2>
 
-        {/* Icon Row */}
+        {/* Badges Row (images from /public/assets) */}
         <div className="flex flex-wrap justify-center gap-8 mb-8">
-          {icons.map((item, idx) => (
+          {badges.map((item, idx) => (
             <motion.div
-              key={idx}
+              key={item.label}
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: idx * 0.1, duration: 0.4 }}
               viewport={{ once: true }}
+              className="flex flex-col items-center"
             >
-              {item.icon}
+              <div className="relative w-24 h-20">
+                <Image
+                  src={item.src}
+                  alt={item.label}
+                  fill
+                  priority={idx < 3}
+                  className="object-contain transition-transform duration-300 hover:scale-110"
+                />
+              </div>
+
+              <span className="mt-2 text-sm text-gray-700">{item.label}</span>
             </motion.div>
           ))}
         </div>
 
         {/* Summary Text */}
-        <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed text-justify text-balance">
-          {`Next CMS is the leading IT training hub in Lahore that offers
+        <p className="text-lg text-gray-700  mx-auto  leading-relaxed text-left text-balance">
+          {`Pny trainings is the leading IT training hub in Lahore that offers
           various programs helping young career seekers grasp essential IT skills
           and confidently enter the job market.`}
         </p>
 
-        <p className="text-lg text-gray-700 max-w-4xl mx-auto mt-4 leading-relaxed text-justify text-balance">
+        <p className="text-lg text-gray-700 mx-auto mt-4 leading-relaxed text-left text-balance">
           {`With a strong focus on practical expertise, our trainers are
           internationally certified and committed to shaping the future of tech
           talent in Pakistan.`}
@@ -68,7 +73,7 @@ const TrainerCertification = () => {
         <AnimatePresence>
           {showMore && (
             <motion.div
-              className="text-lg mt-6 text-gray-700 text-justify max-w-4xl mx-auto space-y-4"
+              className="text-lg mt-6 text-gray-700 text-left  mx-auto space-y-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}

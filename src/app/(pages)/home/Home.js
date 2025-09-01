@@ -14,10 +14,10 @@ const Home = () => {
     <>
       <Webbanner />
       <HeroSection />
+      <ProfessionalDevelopment />
       {/* <Animation /> */}
       <Coursecategories/>
       <CareerSection />
-      <ProfessionalDevelopment />
       <WhyChooseUs />
       <TrainerCertification />
       <MediaPartners/>

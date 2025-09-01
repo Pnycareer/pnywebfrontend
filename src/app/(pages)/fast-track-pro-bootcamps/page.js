@@ -3,7 +3,7 @@ import React from "react";
 import Fastbootcamp from "./Fastbootcamp";
 
 const metadata = {
-  title: "Make This Ramadan More Skillful With NEXT | Next cms",
+  title: "Make This Ramadan More Skillful With NEXT | Pny trainings",
   description:
     "Browse our collection of digital flyers featuring the latest promotions, product highlights, and announcements. Stay informed and explore what's new across our offerings.",
 };

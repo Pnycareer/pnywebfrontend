@@ -9,7 +9,7 @@ const branches = [
     title: "Arfa Tower (Head Office)",
     icon: <Landmark className="text-blue-500 w-6 h-6" />,
     address:
-      "Office 1, Level #14, Arfa Software Technology Park, Ferozepur Road, Lahore",
+      "Office No.1, Level 14, Arfa Software Technology Park, Ferozepur Road, Lahore",
   },
   {
     title: "Iqbal Town",

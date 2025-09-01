@@ -84,16 +84,16 @@ const Contactus = () => {
           <input
             type="email"
             name="email"
-            placeholder="you@company.com"
+            placeholder="email"
             className="w-full p-3 border rounded"
             value={formData.email}
             onChange={handleChange}
             required
           />
           <input
-            type="text"
+            type="number"
             name="phone"
-            placeholder="+92 303 4243782"
+            placeholder="contact"
             className="w-full p-3 border rounded"
             value={formData.phone}
             onChange={handleChange}
