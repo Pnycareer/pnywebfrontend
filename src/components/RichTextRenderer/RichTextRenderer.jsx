@@ -7,7 +7,7 @@ const RichTextRenderer = ({ html }) => {
 
   return (
     <div
-      className="bg-white/50 shadow-xl p-6 text-justify text-black leading-[1.7]
+      className="bg-white/50 shadow-xl p-6 text-black leading-[1.7]
       backdrop-blur-md border border-gray-200
       scrollbar-thin scrollbar-thumb-[#abc2e6] scrollbar-track-transparent
       ql-editor

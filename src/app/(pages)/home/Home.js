@@ -20,7 +20,7 @@ const Home = () => {
       <CareerSection />
       <WhyChooseUs />
       <TrainerCertification />
-      <MediaPartners/>
+      {/* <MediaPartners/> */}
     </>
   );
 };

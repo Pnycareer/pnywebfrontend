@@ -57,7 +57,7 @@ export default function CourseFeature({ Modules, className = "" }) {
       {/* Heading and Description */}
       <div className="absolute top-10 text-center z-20">
         <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-         Certified Digital Media Marketing Skills with Ai Enhanced Course
+         Course Modules
         </h3>
         <p className="max-w-3xl mx-auto text-sm md:text-xl text-gray-600 px-4">
           Our course modules offer a well-rounded curriculum, combining

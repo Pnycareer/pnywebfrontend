@@ -2,7 +2,7 @@ import axiosInstance from "@/utils/axiosInstance";
 
 
 export default async function sitemap() {
-  const baseUrl = "https://www.nextcms.shop";
+  const baseUrl = "https://www.pnytrainings.com";
 
   try {
     // --- Courses ---

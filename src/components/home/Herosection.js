@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import girl from "@/assets/Illustration/Girl.png";
+import girl from "@/assets/logo/arfatowerhome.png";
 import { Sparkles, BadgeCheck, Flame, ArrowRight, Rocket } from "lucide-react";
 import Link from "next/link";
 
@@ -58,7 +58,9 @@ const HeroSection = () => {
           className="mx-auto flex w-fit items-center gap-2 rounded-full border border-black/10 bg-white/70 px-4 py-1.5 text-gray-900 backdrop-blur-md"
         >
           <Sparkles className="h-4 w-4" />
-          <span className="text-sm font-medium tracking-wide">Limited-time scholarships live now</span>
+          <span className="text-sm font-medium tracking-wide">
+            Limited-time Discounts live now
+          </span>
         </motion.div>
       </div>
 
@@ -70,24 +72,36 @@ const HeroSection = () => {
             {...fadeUp(0.05)}
             className="text-4xl font-extrabold leading-tight text-gray-900 md:text-5xl lg:text-6xl"
           >
-            <span className="block">Pny <span className="text-gray-800">Trainings</span></span>
-            <span className="mt-2 block text-gray-700">Pakistan&rsquo;s No.1 IT Training Institute</span>
+            <span className="block">
+              Pny <span className="text-gray-800">Trainings</span>
+            </span>
+            <span className="mt-2 block text-gray-700">
+              Pakistan&rsquo;s No.1 IT Training Institute
+            </span>
           </motion.h1>
 
           <motion.p
             {...fadeUp(0.15)}
             className="mt-4 max-w-xl text-base text-gray-700 md:text-lg md:leading-8"
           >
-            Certified Courses with Money Making Skills! Empower Yourself with Practical Skills that Open Doors to Lucrative Opportunities
+            Recognized as Pakistan’s leading IT training institute, PNY
+            Trainings offers certified courses designed to equip you with
+            in-demand, money-making skills. Our practical programs empower
+            learners to build careers, grow businesses, and secure high-paying
+            opportunities worldwide.
           </motion.p>
 
           {/* CTAs */}
-          <motion.div {...fadeUp(0.25)} className="mt-6 flex flex-col items-center gap-3 md:flex-row md:items-stretch">
+          <motion.div
+            {...fadeUp(0.25)}
+            className="mt-6 flex flex-col items-center gap-3 md:flex-row md:items-stretch"
+          >
             <a
-              href="#apply"
+              href="https://lms.pnytraining.com/"
+              target="_blank"
               className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-black/10 transition-transform duration-200 hover:-translate-y-0.5 focus:outline-none"
             >
-              Start Your Journey
+              Enroll Now
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
             </a>
 
@@ -101,7 +115,10 @@ const HeroSection = () => {
           </motion.div>
 
           {/* Trust Row */}
-          <motion.div {...fadeUp(0.35)} className="mt-6 flex flex-wrap items-center justify-center gap-6 md:justify-start">
+          <motion.div
+            {...fadeUp(0.35)}
+            className="mt-6 flex flex-wrap items-center justify-center gap-6 md:justify-start"
+          >
             <div className="flex items-center gap-2 text-gray-700">
               <BadgeCheck className="h-5 w-5" />
               <span className="text-sm">Industry‑vetted curriculum</span>
@@ -116,7 +133,11 @@ const HeroSection = () => {
         {/* Visual */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1, transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+            transition: { duration: 0.8, ease: "easeOut", delay: 0.2 },
+          }}
           className="relative mx-auto flex w-full max-w-md items-center justify-center md:max-w-lg"
         >
           {/* Card behind image */}
@@ -132,7 +153,12 @@ const HeroSection = () => {
           <motion.div
             aria-hidden
             animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+            transition={{
+              duration: 5.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 0.2,
+            }}
             className="absolute -right-6 bottom-8 h-16 w-16 rounded-full border-2 border-black/10"
           />
 
@@ -149,26 +175,39 @@ const HeroSection = () => {
       {/* ======= Promo Bar ======= */}
       <div className="relative z-10 border-t border-gray-200 bg-white/70 backdrop-blur-sm">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-6 md:flex-row">
-          <motion.div {...fadeUp(0)} className="flex items-center gap-2 text-gray-900">
+          <motion.div
+            {...fadeUp(0)}
+            className="flex items-center gap-2 text-gray-900"
+          >
             <Flame className="h-5 w-5" />
             <p className="text-sm md:text-base">
-              <span className="font-semibold">Admissions are open</span> — seats move fast. Don’t get waitlisted.
+              <span className="font-semibold">Admissions are open</span> — seats
+              move fast. Don’t get waitlisted.
             </p>
           </motion.div>
 
-          <motion.div {...fadeUp(0.1)} className="flex items-center gap-6 text-gray-700">
+          <motion.div
+            {...fadeUp(0.1)}
+            className="flex items-center gap-6 text-gray-700"
+          >
             <div className="text-center">
-              <p className="text-xs uppercase tracking-wide text-gray-500">Cohorts</p>
+              <p className="text-xs uppercase tracking-wide text-gray-500">
+                Cohorts
+              </p>
               <p className="text-sm font-semibold">Monthly</p>
             </div>
             <div className="h-8 w-px bg-gray-200" />
             <div className="text-center">
-              <p className="text-xs uppercase tracking-wide text-gray-500">Placement</p>
+              <p className="text-xs uppercase tracking-wide text-gray-500">
+                Placement
+              </p>
               <p className="text-sm font-semibold">Career Support</p>
             </div>
             <div className="h-8 w-px bg-gray-200" />
             <div className="text-center">
-              <p className="text-xs uppercase tracking-wide text-gray-500">Format</p>
+              <p className="text-xs uppercase tracking-wide text-gray-500">
+                Format
+              </p>
               <p className="text-sm font-semibold">Hybrid / Remote</p>
             </div>
           </motion.div>

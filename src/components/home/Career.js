@@ -43,7 +43,7 @@ const item = {
 
 export default function CareerSection() {
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-br from-white via-[#f7f9fc] to-[#eef3ff] py-20 sm:py-24">
+    <section className="relative w-full overflow-hidden bg-gradient-to-br from-white via-[#f7f9fc] to-[#eef3ff] py-10">
       {/* light ambient radial glows */}
       <div className="pointer-events-none absolute -top-40 left-1/3 h-[36rem] w-[36rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.12),transparent_70%)] blur-3xl" />
       <div className="pointer-events-none absolute -bottom-48 right-[-10%] h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(167,139,250,0.12),transparent_70%)] blur-3xl" />
@@ -58,12 +58,13 @@ export default function CareerSection() {
           className="mx-auto max-w-3xl text-center"
         >
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900">
-            We Develop Your Inspiring Career — With Standards That Matter
+            Build Your Future Career with PNY Trainings in Pakistan
           </h2>
           <p className="mt-4 text-gray-600 leading-relaxed">
-            Pny trainings Pakistan leads with 100+ in-demand courses, structured
-            internships, and a dedicated job cell — engineered to launch and
-            level-up your career with confidence.
+            At PNY Trainings Pakistan, we go beyond theory by offering 100+
+            market-driven courses, hands-on internships, and real career
+            support. Our training is designed to sharpen your skills and prepare
+            you for success in today’s competitive job market.
           </p>
         </motion.div>
 
@@ -73,7 +74,7 @@ export default function CareerSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+          className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
         >
           {FEATURES.map(({ icon: Icon, title }) => (
             <motion.div
@@ -92,7 +93,7 @@ export default function CareerSection() {
               </h3>
 
               {/* underline on hover */}
-              <div className="mt-3 h-px w-0 bg-gradient-to-r from-sky-400/50 to-indigo-400/30 transition-all duration-300 group-hover:w-20" />
+              <div className="bg-gradient-to-r from-sky-400/50 to-indigo-400/30 transition-all duration-300 group-hover:w-20" />
             </motion.div>
           ))}
         </motion.div>

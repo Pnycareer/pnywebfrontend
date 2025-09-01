@@ -60,7 +60,7 @@ const Courses = ({ slug, subcategory, instructors }) => {
       </section>
 
       {/* Meet Your Instructors Section */}
-      <section className="w-full mt-20 py-16 bg-gradient-to-r from-[#1B263B] via-[#3B4A58] to-[#004d40] text-white text-center relative overflow-hidden">
+      <section className="w-full  py-10 bg-gradient-to-r from-[#1B263B] via-[#3B4A58] to-[#004d40] text-white text-center relative overflow-hidden">
         <div className="absolute -top-16 right-0 h-80 w-80 bg-blue-400/20 blur-3xl rounded-full -z-10" />
         <div className="absolute bottom-0 left-0 h-72 w-72 bg-pink-400/20 blur-3xl rounded-full -z-10" />
 

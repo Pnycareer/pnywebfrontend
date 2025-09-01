@@ -81,7 +81,7 @@ export default function Coursecategories() {
                       href={`/courses/${card.href}`}
                       className={`inline-flex items-center justify-center rounded-md border border-teal-700 px-6 py-3 text-base md:text-lg font-medium text-teal-700 transition hover:bg-teal-700 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-teal-600 ${oswald.className}`}
                     >
-                      Explore Programs
+                      Discover Courses
                       <svg
                         className="ml-2 h-5 w-5"
                         viewBox="0 0 24 24"
@@ -109,7 +109,7 @@ export default function Coursecategories() {
               className="inline-flex items-center justify-center rounded-md bg-teal-700 px-7 py-3.5 text-base md:text-lg font-semibold text-white shadow-[0_8px_22px_rgba(0,0,0,0.18)] transition hover:bg-teal-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-teal-600"
               aria-label="Explore all course categories"
             >
-              Explore All Categories
+              Explore All Courses
               <svg
                 className="ml-2 h-5 w-5"
                 viewBox="0 0 24 24"

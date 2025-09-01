@@ -89,7 +89,7 @@ const BenefitsSection = ({ className = "" }) => {
   return (
     <section
       aria-labelledby="benefits-heading"
-      className={`relative isolate overflow-hidden py-24 px-6 md:px-12 lg:px-20 ${className}`}
+      className={`relative isolate overflow-hidden py-10 px-6 md:px-12 lg:px-20 ${className}`}
     >
       {/* Next-level gradient system */}
       <div
