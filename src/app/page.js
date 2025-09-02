@@ -1,27 +1,33 @@
 import Home from "@/app/(pages)/home/Home";
 
-export const metadata = async () => {
+// Reusable function to fetch SEO metadata
+const getHomeMetadata = async () => {
   try {
-    const response = await fetch(`https://api.pnytrainings.com/api/v1/meta/home`);
+    const res = await fetch("https://api.pnytrainings.com/api/v1/meta/home", {
+      cache: "no-store",
+    });
 
-    const data = await response.json();
+    if (!res.ok) throw new Error("Failed to fetch metadata");
 
-    if (!data.metas || !Array.isArray(data.metas) || data.metas.length === 0) {
-      throw new Error("Invalid metadata response");
-    }
+    const { metas } = await res.json();
+
+    const meta = Array.isArray(metas) && metas.length > 0 ? metas[0] : {};
 
     return {
-      title: data.metas[0].meta_title || "Default Title",
-      description: data.metas[0].meta_description || "Default Description",
+      title: meta.meta_title || "Default Title",
+      description: meta.meta_description || "Default Description",
     };
-  } catch (error) {
-    console.error("Error fetching metadata:", error);
+  } catch (err) {
+    console.error("SEO metadata fetch error:", err);
     return {
       title: "Default Title",
       description: "Default Description",
     };
   }
 };
+
+// For Next.js dynamic metadata (in layout.js or page.js)
+export const metadata = getHomeMetadata;
 
 export default function Homepage() {
   return <Home />;
