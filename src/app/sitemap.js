@@ -4,7 +4,7 @@ export default async function sitemap() {
   const baseUrl = "https://www.pnytrainings.com";
 
   try {
-    // --- Courses ---
+    // --- Courses ----
     const courseRes = await axiosInstance.get("/courses/get-course", {
       headers: {
         "Cache-Control":
