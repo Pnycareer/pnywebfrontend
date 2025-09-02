@@ -7,6 +7,8 @@ import DownloadBrochureForm from "@/components/DownloadBrochureForm/DownloadBroc
 export default function CourseHero({ course, brochurePath }) {
   if (!course) return null;
 
+  const videoId = course.video_Id;
+
   return (
     <section className="relative bg-gradient-to-br from-black via-blue-500/85 to-black text-white py-16 px-6 md:px-12 lg:px-20">
       {/* overlay effect */}
@@ -52,12 +54,12 @@ export default function CourseHero({ course, brochurePath }) {
           </div>
 
           <div className="flex flex-wrap gap-4 mt-4">
-            {course.Brochure ? (
+            {course.Brochure && (
               <DownloadBrochureForm
                 brochureUrl={brochurePath}
                 courseName={course.course_Name}
               />
-            ) : null}
+            )}
 
             <a
               href="https://lms.pnytraining.com"
@@ -75,26 +77,39 @@ export default function CourseHero({ course, brochurePath }) {
           </div>
         </motion.div>
 
-        {/* Right Side: Video / Image */}
+        {/* Right Side: YouTube Video OR Image */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           className="relative w-full"
         >
-          <div className="relative w-full">
-            <Image
-              unoptimized
-              src={`${
-                process.env.NEXT_PUBLIC_API_URL
-              }/${course.course_Image.replace(/\\/g, "/")}`}
-              alt={course.course_Name}
-              width={1200} // ✅ you can customize this
-              height={600} // ✅ depends on your image’s natural height
-              layout="responsive"
-              className="object-contain rounded-xl shadow-lg border-4 border-white/20"
-            />
-          </div>
+          {videoId ? (
+            <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg border-4 border-white/20">
+              <iframe
+                className="w-full h-full"
+                src={`https://www.youtube.com/embed/${videoId}`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          ) : (
+            <div className="relative w-full">
+              <Image
+                unoptimized
+                src={`${
+                  process.env.NEXT_PUBLIC_API_URL
+                }/${course.course_Image.replace(/\\/g, "/")}`}
+                alt={course.course_Name}
+                width={1200}
+                height={600}
+                layout="responsive"
+                className="object-contain rounded-xl shadow-lg border-4 border-white/20"
+              />
+            </div>
+          )}
         </motion.div>
       </div>
     </section>
