@@ -35,9 +35,9 @@ export default function Coursecategories() {
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* hero */}
         <div className="mx-auto max-w-6xl py-16 md:py-20 lg:py-24 text-center">
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-teal-700 font-os">
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-teal-700 font-os">
             Top Course Categories
-          </h1>
+          </h2>
           <p className="mx-auto mt-6 max-w-4xl text-base sm:text-lg text-zinc-600">
             PNY Trainings offers top in-demand, career-focused courses designed
             to equip you with money-making skills. Select the course category

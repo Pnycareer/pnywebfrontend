@@ -10,7 +10,7 @@ const InstructorOverview = ({ Instructor, className = "" }) => {
   return (
     <div className={`p-4 md:p-8 ${className}`}>
       <div className="rounded-2xl shadow-md p-6 md:p-10 transition-all duration-300 ease-in-out bg-white/70 backdrop-blur-md border border-gray-200">
-        <h3 className="text-xl font-bold text-gray-900 mb-6 border-b pb-2">
+        <h3 className="text-xl font-bold mb-6 border-b pb-2">
           OVERVIEW
         </h3>
 
@@ -34,17 +34,17 @@ const InstructorOverview = ({ Instructor, className = "" }) => {
                     <FaUserCircle />
                   </div>
                 )}
-                <span className="mt-2 font-semibold text-gray-900">
+                <span className="mt-2 font-semibold">
                   Instructor
                 </span>
               </div>
 
               {/* Bio */}
               <div className="text-gray-800 text-sm md:text-base leading-relaxed text-justify max-w-5xl">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-semibold mb-2">
                   {Instructor.name}
                 </h3>
-                <p className="text-gray-700">{Instructor.other_info}</p>
+                <p>{Instructor.other_info}</p>
               </div>
             </div>
           </div>

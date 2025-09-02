@@ -6,14 +6,12 @@ import Particle from "@/components/effects/Particles";
 export default function CourseFeature({ Modules, className = "" }) {
   const [selectedLecture, setSelectedLecture] = useState(null);
 
-  // Memoize lectures to prevent recreating them every render
   const lectures = useMemo(() => {
     return Modules?.lectures?.length > 0
       ? [...Modules.lectures].sort((a, b) => a.lectureNumber - b.lectureNumber)
       : [];
   }, [Modules]);
 
-  // Update selected lecture when lectures change
   useEffect(() => {
     if (lectures.length > 0) {
       setSelectedLecture(lectures[0]);
@@ -24,7 +22,7 @@ export default function CourseFeature({ Modules, className = "" }) {
     <div
       className={`relative flex items-center justify-center min-h-screen overflow-hidden p-4 ${className}`}
     >
-      {/* Optional soft seam fade at the very top to blend with previous section */}
+      {/* Seam fade at the top */}
       <div
         aria-hidden
         className="pointer-events-none absolute -top-8 inset-x-0 h-8"
@@ -32,41 +30,57 @@ export default function CourseFeature({ Modules, className = "" }) {
           WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
           maskImage: "linear-gradient(to bottom, black, transparent)",
           background:
-            "linear-gradient(to bottom, rgba(99,102,241,0.18), rgba(99,102,241,0))",
+            "linear-gradient(to bottom, rgba(99,102,241,0.25), rgba(99,102,241,0))",
         }}
       />
 
-      {/* Decorative Radial Spots (very light, no solid page bg) */}
+      {/* 🔥 Gradient Blobs */}
       <div
-        className="absolute -top-32 -left-24 h-96 w-96 -z-10 rounded-full opacity-40 blur-3xl pointer-events-none"
+        className="absolute -top-32 -left-24 h-96 w-96 -z-10 rounded-full opacity-50 blur-3xl pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(56,189,248,0.25), rgba(99,102,241,0.15), transparent)",
+            "radial-gradient(circle, rgba(56,189,248,0.35), rgba(99,102,241,0.2), transparent)",
           mixBlendMode: "soft-light",
         }}
       />
       <div
-        className="absolute bottom-0 right-0 h-80 w-80 -z-10 rounded-full opacity-30 blur-3xl pointer-events-none"
+        className="absolute bottom-0 right-0 h-80 w-80 -z-10 rounded-full opacity-40 blur-3xl pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(244,63,94,0.15), rgba(16,185,129,0.1), transparent)",
+            "radial-gradient(circle, rgba(244,63,94,0.25), rgba(16,185,129,0.15), transparent)",
+          mixBlendMode: "soft-light",
+        }}
+      />
+      <div
+        className="absolute top-10 right-10 h-72 w-72 -z-10 rounded-full opacity-30 blur-2xl pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(99,102,241,0.3), rgba(147,51,234,0.15), transparent)",
+          mixBlendMode: "soft-light",
+        }}
+      />
+      <div
+        className="absolute top-1/2 left-0 h-72 w-72 -z-10 rounded-full opacity-25 blur-2xl pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(79,70,229,0.3), rgba(16,185,129,0.15), transparent)",
           mixBlendMode: "soft-light",
         }}
       />
 
-      {/* Heading and Description */}
+      {/* Title & Desc */}
       <div className="absolute top-10 text-center z-20">
-        <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-         Course Modules
+        <h3 className="text-sm md:text-4xl font-bold text-gray-900 mb-4">
+          Course Modules
         </h3>
-        <p className="max-w-3xl mx-auto text-sm md:text-xl text-gray-600 px-4">
+        <p className="max-w-3xl mx-auto text-sm md:text-xl text-black px-4">
           Our course modules offer a well-rounded curriculum, combining
           theoretical foundations with hands-on training, ensuring students
           acquire industry-relevant skills and knowledge for future endeavors.
         </p>
       </div>
 
-      {/* Background Effect */}
+      {/* Background Particles */}
       <Particle />
 
       {/* Main Card */}
@@ -74,7 +88,7 @@ export default function CourseFeature({ Modules, className = "" }) {
         <div className="flex flex-col md:flex-row h-full max-h-[90vh] overflow-hidden gap-4">
           {/* Sidebar */}
           <div className="w-full md:w-1/3 p-4 bg-white/40 rounded-lg shadow-md max-h-[300px] md:max-h-[500px] overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-indigo-400 scrollbar-track-transparent">
-            <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
+            <h3 className="text-xl font-bold text-black mb-4 text-center">
               📚 Lectures
             </h3>
             <div className="space-y-3">
@@ -94,7 +108,7 @@ export default function CourseFeature({ Modules, className = "" }) {
             </div>
           </div>
 
-          {/* Main Content */}
+          {/* Content Panel */}
           <div className="w-full md:w-2/3 p-4 text-gray-900 overflow-y-auto max-h-[calc(90vh-2rem)] md:max-h-[500px]">
             {selectedLecture ? (
               <div>
@@ -108,7 +122,7 @@ export default function CourseFeature({ Modules, className = "" }) {
                   <h3 className="md:text-xl font-semibold text-indigo-600">
                     Key Topics:
                   </h3>
-                  <div className="mt-3 text-gray-700 prose max-w-none">
+                  <div className="mt-3">
                     <div
                       className="[&>h1]:text-[34px] [&>h1]:font-semibold
                         [&>h2]:text-[30px] [&>h2]:font-medium
@@ -127,7 +141,7 @@ export default function CourseFeature({ Modules, className = "" }) {
                 </div>
               </div>
             ) : (
-              <p className="text-gray-500 text-lg text-center">
+              <p className="text-lg text-center">
                 Select a lecture to view details.
               </p>
             )}

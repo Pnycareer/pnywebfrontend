@@ -68,7 +68,7 @@ const HeroSection = () => {
       <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-10 md:grid-cols-2 md:gap-6 md:py-16">
         {/* Copy */}
         <div className="text-center md:text-left">
-          <motion.h1
+          <motion.h2
             {...fadeUp(0.05)}
             className="text-4xl font-extrabold leading-tight text-gray-900 md:text-5xl lg:text-6xl"
           >
@@ -78,7 +78,7 @@ const HeroSection = () => {
             <span className="mt-2 block text-gray-700">
               Pakistan&rsquo;s No.1 IT Training Institute
             </span>
-          </motion.h1>
+          </motion.h2>
 
           <motion.p
             {...fadeUp(0.15)}

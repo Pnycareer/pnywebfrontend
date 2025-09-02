@@ -123,19 +123,19 @@ const BenefitsSection = ({ className = "" }) => {
         >
           <h3
             id="benefits-heading"
-            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-8"
+            className="text-sm md:text-4xl font-bold tracking-tight text-gray-900 mb-8"
           >
             Unlock{" "}
             <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
               Premium Benefits
             </span>
             <br />
-            <span className="text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-700">
+            <span className="text-sm md:text-3xl font-semibold text-gray-700">
               with Course Enrollment
             </span>
           </h3>
 
-          <p className="mx-auto max-w-4xl text-xl md:text-2xl text-gray-600 leading-relaxed font-medium">
+          <p className="mx-auto max-w-3xl md:text-xl  text-black leading-relaxed font-medium">
             Discover comprehensive opportunities designed to accelerate your personal and professional growth, 
             providing you with the tools and connections needed for career advancement.
           </p>
