@@ -1,6 +1,5 @@
 import axiosInstance from "@/utils/axiosInstance";
 
-
 export default async function sitemap() {
   const baseUrl = "https://www.pnytrainings.com";
 
@@ -8,7 +7,8 @@ export default async function sitemap() {
     // --- Courses ---
     const courseRes = await axiosInstance.get("/courses/get-course", {
       headers: {
-        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        "Cache-Control":
+          "no-store, no-cache, must-revalidate, proxy-revalidate",
         Pragma: "no-cache",
         Expires: "0",
       },
@@ -22,7 +22,9 @@ export default async function sitemap() {
       )
       .map((course) => ({
         url: `${baseUrl}/${course.url_Slug}`,
-        lastModified: course.updatedAt ? new Date(course.updatedAt) : new Date(),
+        lastModified: course.updatedAt
+          ? new Date(course.updatedAt)
+          : new Date(),
         changeFrequency: "weekly",
         priority: course.priority ?? 0.9,
       }));
@@ -30,7 +32,8 @@ export default async function sitemap() {
     // --- Blogs ---
     const blogRes = await axiosInstance.get("/api/blogs", {
       headers: {
-        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        "Cache-Control":
+          "no-store, no-cache, must-revalidate, proxy-revalidate",
         Pragma: "no-cache",
         Expires: "0",
       },
@@ -38,23 +41,27 @@ export default async function sitemap() {
 
     const blogData = blogRes.data;
 
-    const dynamicBlogUrls = (blogData || [])
-      .flatMap((category) =>
-        (category.blogs || []).filter((blog) => blog.insitemap)
-          .map((blog) => ({
-            url: `${baseUrl}/blog/${category.blogCategory.toLowerCase()}/${blog.url_slug}`,
-            lastModified: blog.publishDate ? new Date(blog.publishDate) : new Date(),
-            changeFrequency: "weekly",
-            priority: parseFloat(blog.canonical) || 0.7,
-          }))
-      );
+    const dynamicBlogUrls = (blogData || []).flatMap((category) =>
+      (category.blogs || [])
+        .filter((blog) => blog.insitemap)
+        .map((blog) => ({
+          url: `${baseUrl}/blog/${category.blogCategory.toLowerCase()}/${
+            blog.url_slug
+          }`,
+          lastModified: blog.publishDate
+            ? new Date(blog.publishDate)
+            : new Date(),
+          changeFrequency: "weekly",
+          priority: parseFloat(blog.canonical) || 0.9,
+        }))
+    );
 
     // --- Static URLs ---
     const staticUrls = [
-      { url: `${baseUrl}/`, priority: 0.1 },
-      { url: `${baseUrl}/about`, priority: 0.05 },
-      { url: `${baseUrl}/contact`, priority: 0.05 },
-      { url: `${baseUrl}/blog`, priority: 0.05 },
+      { url: `${baseUrl}/`, priority: 0.9 },
+      { url: `${baseUrl}/about`, priority: 0.9 },
+      { url: `${baseUrl}/contact`, priority: 0.9 },
+      { url: `${baseUrl}/blog`, priority: 0.9 },
     ].map(({ url, priority }) => ({
       url,
       lastModified: new Date(),
