@@ -3,7 +3,7 @@
 import React from "react";
 import { Check } from "lucide-react";
 import Image from "next/image";
-import image from "@/assets/logo/whychooseus.jpg";
+
 
 const benefits = [
   "Money Making Skills",
@@ -65,9 +65,11 @@ const WhyChooseUs = () => {
 
             <div className="relative mx-auto aspect-[16/9] w-full max-w-2xl overflow-hidden rounded-2xl ring-1 ring-black/5 shadow-xl">
               <Image
-                src={image}
+                src='./whychooseus/whychooseus.jpg'
                 alt="Why Choose Us"
-                placeholder="blur"
+                unoptimized
+                width={600}
+                height={600}
                 priority
                 className="h- w-full object-cover transition-transform duration-500 will-change-transform hover:scale-[1.02]"
                 
