@@ -13,7 +13,7 @@ const navLinks = [
     external: true,
   },
   {
-    label: "Gaming Courses",
+    label: "Gaming Studio",
     href: "https://www.eraflip.com/",
     external: true,
   },
@@ -98,7 +98,7 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto flex justify-between items-center text-white text-sm">
           {/* Left: Bootcamp Button */}
           <Link
-            href="/fast-track-pro-bootcamps"
+            href="/courses/fast-track-pro-bootcamps"
             className="text-yellow-500 font-bold text-sm bg-yellow-900 px-3 py-1 rounded-md"
           >
             Pro Bootcamps 2025

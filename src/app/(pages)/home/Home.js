@@ -8,6 +8,7 @@ import TrainerCertification from "@/components/home/Trainers";
 import MediaPartners from "@/components/home/Mediapartner";
 import Animation from "@/components/Animation/Animation";
 import Coursecategories from "@/components/home/Coursecategories";
+import TawkToChatbot from "@/components/Talktobot/Chatbot";
 
 const Home = () => {
   return (
@@ -21,6 +22,7 @@ const Home = () => {
       <WhyChooseUs />
       <TrainerCertification />
       {/* <MediaPartners/> */}
+      <TawkToChatbot/>
     </>
   );
 };

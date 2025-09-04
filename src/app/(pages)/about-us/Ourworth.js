@@ -1,62 +1,98 @@
 "use client";
-import React, { lazy } from "react";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { Users, GraduationCap, Briefcase, FileSignature } from "lucide-react";
 
-const OurWorth = () => {
+const fadeUp = {
+  initial: { opacity: 0, y: 30 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
+
+export default function OurWorth() {
+  const stats = [
+    { icon: <Users className="w-5 h-5" />, value: "100k+", label: "Alumni" },
+    { icon: <Briefcase className="w-5 h-5" />, value: "100+", label: "Professional Programs" },
+    { icon: <GraduationCap className="w-5 h-5" />, value: "300+", label: "Instructors" },
+    { icon: <FileSignature className="w-5 h-5" />, value: "100+", label: "MoUs Signed" },
+  ];
+
   return (
-    <section className="w-full px-4 py-16 sm:px-8 md:px-16 lg:px-24 text-white overflow-hidden">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center bg-white backdrop-blur-md border border-white/20 rounded-3xl p-8 md:p-12 shadow-xl">
-        {/* Left - Circular Image */}
-        <div className="relative flex justify-center items-center">
-          <div className="rounded-full border-4 border-blue-400 p-2 relative w-72 h-72 bg-slate-800">
-            <Image
-              unoptimized={true}
-              src="https://www.pnytrainings.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fladymobile.7382ad0a.png&w=640&q=75" // Make sure this file is in /public
-              alt="Achievement"
-              fill
-              className="rounded-full object-cover"
-            />
-          </div>
-          <div className="absolute bottom-4 right-4 w-5 h-5 bg-red-600 rounded-full animate-ping" />
-        </div>
+    <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50 py-16 md:py-24">
+      {/* background blobs */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute -top-24 -left-16 h-80 w-80 rounded-full bg-blue-200/40 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-red-200/40 blur-3xl" />
+      </div>
 
-        {/* Right - Text and Stats */}
-        <div className="space-y-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-red-500">
-            Our Worth Our Achievements!
-          </h2>
-          <p className="text-lg text-white/90">
-            We’re only just getting started on our journey
-          </p>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* image */}
+          <motion.div
+            variants={fadeUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.3 }}
+            className="relative flex justify-center items-center"
+          >
+            <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-black/50 shadow-xl bg-slate-200">
+              <Image
+                src="./test1.jpg" // replace with your public folder asset
+                alt="Achievement"
+                width={400}
+                height={400}
+                unoptimized
+                priority
+              />
+              {/* glow ping */}
+              <span className="absolute bottom-6 right-6 flex h-6 w-6">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-6 w-6 bg-red-600"></span>
+              </span>
+            </div>
+          </motion.div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-blue-500 text-white p-4 rounded-xl shadow-md">
-              <h3 className="text-2xl font-bold">100k</h3>
-              <p className="text-sm">Alumni</p>
-            </div>
-            <div className="bg-blue-500 text-white p-4 rounded-xl shadow-md">
-              <h3 className="text-2xl font-bold">100+</h3>
-              <p className="text-sm">Professional Programs</p>
-            </div>
-            <div className="bg-blue-500 text-white p-4 rounded-xl shadow-md">
-              <h3 className="text-2xl font-bold">300+</h3>
-              <p className="text-sm">Instructor</p>
-            </div>
-            <div className="bg-blue-500 text-white p-4 rounded-xl shadow-md">
-              <h3 className="text-2xl font-bold">100+</h3>
-              <p className="text-sm">Mou’s Sign</p>
-            </div>
-          </div>
+          {/* text + stats */}
+          <motion.div
+            variants={fadeUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
+              Our Worth, Our Achievements!
+            </h2>
+            <p className="mt-4 text-lg text-slate-600 leading-relaxed">
+              We’re only just getting started on our journey. These milestones are proof of our
+              commitment to empowering individuals through quality education.
+            </p>
 
-          <div>
-            <button className="mt-4 w-full bg-blue-500 text-white text-sm py-3 rounded-full shadow-lg hover:bg-blue-600 transition-all">
+            <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6">
+              {stats.map((stat, i) => (
+                <div
+                  key={i}
+                  className="flex flex-col items-start rounded-2xl border border-slate-200 bg-white/70 backdrop-blur p-5 shadow-md hover:shadow-lg transition"
+                >
+                  <div className="flex items-center gap-2 text-slate-800">
+                    {stat.icon}
+                    <span className="text-2xl font-bold">{stat.value}</span>
+                  </div>
+                  <p className="mt-1 text-sm text-slate-600">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+
+            <motion.a
+              href="#branches"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="mt-8 inline-block rounded-full bg-blue-600 px-6 py-3 text-sm font-medium text-white shadow hover:bg-blue-700 transition"
+            >
               Multiple Branches in Pakistan
-            </button>
-          </div>
+            </motion.a>
+          </motion.div>
         </div>
       </div>
     </section>
   );
-};
-
-export default OurWorth;
+}

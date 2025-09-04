@@ -2,6 +2,7 @@
 
 import TrainingTable from "@/components/TrainingSchedule/TrainingTable";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 const Trainingschedule = ({ batches }) => {
   const [selectedCity, setSelectedCity] = useState("");
@@ -48,12 +49,12 @@ const Trainingschedule = ({ batches }) => {
         <div className="flex items-center justify-between flex-wrap">
           <h1 className="text-3xl font-bold text-black">Training Schedule</h1>
           <div className="flex gap-3 mt-2 sm:mt-0">
-            <button className="px-4 py-2 border border-blue-500 text-blue-500 rounded-md text-sm hover:bg-blue-50 transition">
+            <a href="https://lms.pnytraining.com" className="px-4 py-2 border border-blue-500 text-blue-500 rounded-md text-sm hover:bg-blue-50 transition">
               Enrol Now (Limited seats left)
-            </button>
-            <button className="px-4 py-2 bg-blue-500 text-white rounded-md text-sm font-semibold hover:bg-blue-600 transition">
+            </a>
+            <Link href="/pny-training-fee-structure" className="px-4 py-2 bg-blue-500 text-white rounded-md text-sm font-semibold hover:bg-blue-600 transition">
               Fee Structure
-            </button>
+            </Link>
           </div>
         </div>
       </div>

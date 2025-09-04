@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useCallback } from "react";
 import CourseCard from "@/components/cards/CourseCard";
 import { motion } from "framer-motion";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { InView } from "react-intersection-observer";
+import ScrollToTop from "@/components/ScrollToTop/Scrolltotop";
+import { useInView } from "react-intersection-observer";
 
 /* ---------- utils ---------- */
 const toTitleCase = (s = "") =>
@@ -18,8 +19,8 @@ const toTitleCase = (s = "") =>
 
 const normalize = (s = "") => s.toLowerCase().trim();
 
-const CHUNK = 6; // how many to load per step
-const INITIAL_CHUNK = 6; // first render per category
+const CHUNK = 6;
+const INITIAL_CHUNK = 6;
 
 /* ---------- small UI bits ---------- */
 const Empty = ({ title, subtitle }) => (
@@ -84,12 +85,27 @@ const CourseSkeleton = () => (
   </div>
 );
 
+/* ---------- robust sentinel (works on mobile) ---------- */
+function LoadMoreTrigger({ onTrigger }) {
+  const { ref, inView } = useInView({
+    root: null,
+    threshold: 0,                       // 1px is enough
+    rootMargin: "900px 0px 1200px 0px", // big margins => fires early on small viewports
+    triggerOnce: false,                 // keep firing as you scroll
+  });
+
+  useEffect(() => {
+    if (inView) onTrigger();
+  }, [inView, onTrigger]);
+
+  return <div ref={ref} className="h-4 md:h-6" />;
+}
+
 /* ---------- main component ---------- */
 const AllCourses = ({ categories }) => {
-  // ✅ Always call hooks — no early return above this line
   const safeCategories = Array.isArray(categories) ? categories : [];
 
-  // debounced search
+  // debounce search
   const [rawQuery, setRawQuery] = useState("");
   const [query, setQuery] = useState("");
   useEffect(() => {
@@ -107,7 +123,7 @@ const AllCourses = ({ categories }) => {
     [safeCategories]
   );
 
-  // search: match category name or course name
+  // search by category or course name
   const searched = useMemo(() => {
     const q = normalize(query);
     if (!q) return visibleCategories;
@@ -137,11 +153,11 @@ const AllCourses = ({ categories }) => {
     setVisibleCounts(init);
   }, [searched]);
 
-  // totals
   const totalCourses = useMemo(
     () => searched.reduce((acc, c) => acc + (c?.courses?.length || 0), 0),
     [searched]
   );
+
   const shownCourses = useMemo(
     () =>
       searched.reduce(
@@ -152,59 +168,41 @@ const AllCourses = ({ categories }) => {
     [searched, visibleCounts]
   );
 
-  // loader for each category (triggered by InView)
-  const handleLoadMore = (catId, total) => {
+  const handleLoadMore = useCallback((catId, total) => {
     setVisibleCounts((prev) => {
       const current = prev[catId] || 0;
       if (current >= total) return prev;
       const next = Math.min(current + CHUNK, total);
       return { ...prev, [catId]: next };
     });
-  };
+  }, []);
 
   return (
-    <div className="mx-auto max-w-7xl p-6">
-      {/* If no categories at all */}
+    <div className="mx-auto max-w-7xl p-6 pb-28"> {/* extra bottom space for floating buttons */}
       {!safeCategories.length ? (
-        <Empty
-          title="No categories available."
-          subtitle="Please check back later."
-        />
+        <Empty title="No categories available." subtitle="Please check back later." />
       ) : (
         <>
           {/* Header */}
           <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
             <div>
               <h1 className="text-3xl font-bold tracking-tight">Courses</h1>
-              <p className="sr-only">
-                Showing {shownCourses} of {totalCourses} courses
-              </p>
+              <p className="sr-only">Showing {shownCourses} of {totalCourses} courses</p>
             </div>
             <div className="flex items-center gap-2">
               <Badge>{searched.length} Categories</Badge>
               <Badge>
-                {searched.reduce(
-                  (acc, c) => acc + (c?.courses?.length || 0),
-                  0
-                )}{" "}
-                Courses
+                {searched.reduce((acc, c) => acc + (c?.courses?.length || 0), 0)} Courses
               </Badge>
             </div>
           </div>
 
           {/* Search */}
-          <SearchBar
-            value={rawQuery}
-            onChange={setRawQuery}
-            onClear={() => setRawQuery("")}
-          />
+          <SearchBar value={rawQuery} onChange={setRawQuery} onClear={() => setRawQuery("")} />
 
           {/* Results */}
           {!searched.length ? (
-            <Empty
-              title="No results found"
-              subtitle="Try a different keyword or clear the search."
-            />
+            <Empty title="No results found" subtitle="Try a different keyword or clear the search." />
           ) : (
             <div className="space-y-12">
               {searched.map((cat, idx) => {
@@ -213,15 +211,15 @@ const AllCourses = ({ categories }) => {
                 const hasMore = visible < total;
 
                 return (
-                  <motion.section
-                    key={cat._id}
-                    initial={{ opacity: 0, y: 12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ duration: 0.35, delay: idx * 0.03 }}
-                  >
+                  <section key={cat._id}>
                     {/* Category header */}
-                    <div className="mb-6 flex items-center justify-between">
+                    <motion.div
+                      initial={{ opacity: 0, y: 12 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{ duration: 0.35, delay: idx * 0.03 }}
+                      className="mb-6 flex items-center justify-between"
+                    >
                       <div>
                         <h2 className="text-3xl font-extrabold tracking-tight text-indigo-700">
                           {toTitleCase(cat.category_Name)}
@@ -233,7 +231,7 @@ const AllCourses = ({ categories }) => {
                         ) : null}
                       </div>
                       <Badge>{total} Courses</Badge>
-                    </div>
+                    </motion.div>
 
                     {/* Grid */}
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -249,32 +247,33 @@ const AllCourses = ({ categories }) => {
 
                       {/* Skeleton shimmer for the next chunk */}
                       {hasMore &&
-                        Array.from({
-                          length: Math.min(CHUNK, total - visible),
-                        }).map((_, i) => (
+                        Array.from({ length: Math.min(CHUNK, total - visible) }).map((_, i) => (
                           <CourseSkeleton key={`sk-${cat._id}-${i}`} />
                         ))}
                     </div>
 
-                    {/* Sentinel */}
+                    {/* Sentinel + mobile fallback */}
                     {hasMore && (
-                      <InView
-                        as="div"
-                        onChange={(inView) => {
-                          if (inView) handleLoadMore(cat._id, total);
-                        }}
-                        threshold={0}
-                        rootMargin="400px 0px 400px 0px"
-                        className="h-6"
-                      />
+                      <>
+                        <LoadMoreTrigger onTrigger={() => handleLoadMore(cat._id, total)} />
+                        <div className="mt-4 flex justify-center md:hidden">
+                          <button
+                            onClick={() => handleLoadMore(cat._id, total)}
+                            className="rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow hover:bg-slate-800 active:scale-95"
+                          >
+                            Load more
+                          </button>
+                        </div>
+                      </>
                     )}
-                  </motion.section>
+                  </section>
                 );
               })}
             </div>
           )}
         </>
       )}
+      <ScrollToTop showAfter={240} />
     </div>
   );
 };

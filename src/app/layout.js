@@ -3,6 +3,7 @@ import "./globals.css";
 import CoursesNav from "@/components/Navbar/CoursesNav";
 import { Inter } from "next/font/google";
 import Footer from "@/components/Footer/Footer";
+import Whatsapp from "@/components/whatsapp/Whatsapp";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -37,6 +38,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <Navbar />
         <CoursesNav />
+        <Whatsapp/>
         {children}
         <Footer />
       </body>
