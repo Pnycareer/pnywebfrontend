@@ -16,12 +16,10 @@ export default function RootLayout({ children }) {
           name="format-detection"
           content="telephone=no, date=no, email=no, address=no"
         />
-
         <meta
           name="google-site-verification"
           content="V1XnCS_3kKIZY1cTkolGmqLipxnJbx2GB7X4RMxRZkc"
         />
-
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -31,8 +29,8 @@ export default function RootLayout({ children }) {
         />
         <link rel="icon" href="/favicon.ico" />
 
-        {/* GTM Head Script */}
-        <Script id="gtm-head">
+        {/* GTM (head) */}
+        <Script id="gtm-head" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -42,7 +40,7 @@ export default function RootLayout({ children }) {
           `}
         </Script>
 
-        {/* Disable scroll restoration */}
+        {/* Disable scroll restoration (plain <script> is fine) */}
         <script
           dangerouslySetInnerHTML={{
             __html: "history.scrollRestoration='manual'",
@@ -50,14 +48,14 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={inter.className}>
-        {/* GTM NoScript */}
+        {/* GTM (noscript) */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-PWZBZXFD"
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
-          ></iframe>
+          />
         </noscript>
 
         <Navbar />
@@ -66,16 +64,19 @@ export default function RootLayout({ children }) {
         {children}
         <Footer />
 
-        {/* JSON-LD Schema */}
+        {/* JSON-LD needs an id because it's inline */}
         <Script
+          id="org-schema"
           type="application/ld+json"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "CollegeOrUniversity",
               name: "PNY Trainings",
               url: "https://www.pnytrainings.com/",
-              logo: "https://www.pnytrainings.com/assets/uploads//logo/1529168423-school-logo.jpg",
+              logo:
+                "https://www.pnytrainings.com/assets/uploads//logo/1529168423-school-logo.jpg",
               contactPoint: {
                 "@type": "ContactPoint",
                 telephone: "03041111774",
@@ -94,12 +95,13 @@ export default function RootLayout({ children }) {
           }}
         />
 
-        {/* Google Analytics */}
+        {/* GA4 via gtag.js */}
         <Script
-          async
+          id="ga-src"
           src="https://www.googletagmanager.com/gtag/js?id=G-JWSHEGQWHD"
+          strategy="afterInteractive"
         />
-        <Script id="gtag-init">
+        <Script id="gtag-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
