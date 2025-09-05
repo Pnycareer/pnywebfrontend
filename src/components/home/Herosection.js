@@ -73,7 +73,7 @@ const HeroSection = () => {
             className="text-4xl font-extrabold leading-tight text-gray-900 md:text-5xl lg:text-6xl"
           >
             <span className="block">
-              Pny <span className="text-gray-800">Trainings</span>
+              PNY <span className="text-gray-800">Trainings</span>
             </span>
             <span className="mt-2 block text-gray-700">
               Pakistan&rsquo;s No.1 IT Training Institute
@@ -206,9 +206,9 @@ const HeroSection = () => {
             <div className="h-8 w-px bg-gray-200" />
             <div className="text-center">
               <p className="text-xs uppercase tracking-wide text-gray-500">
-                Format
+                Classes
               </p>
-              <p className="text-sm font-semibold">Hybrid / Remote</p>
+              <p className="text-sm font-semibold">In Campus / Online</p>
             </div>
           </motion.div>
         </div>

@@ -48,7 +48,7 @@ export default function Copyrights() {
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="text-center text-sm font-medium tracking-wide">
           © {new Date().getFullYear()} — reserved by{" "}
-          <span className="font-bold text-primary">Pny Trainings</span>
+          <span className="font-bold text-primary">PNY Trainings</span>
         </div>
 
         <div className="flex items-center flex-wrap gap-4 justify-center">

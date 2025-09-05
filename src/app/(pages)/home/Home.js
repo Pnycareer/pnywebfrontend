@@ -9,6 +9,7 @@ import MediaPartners from "@/components/home/Mediapartner";
 import Animation from "@/components/Animation/Animation";
 import Coursecategories from "@/components/home/Coursecategories";
 import TawkToChatbot from "@/components/Talktobot/Chatbot";
+import Affiliation from "@/components/home/Affiliation";
 
 const Home = () => {
   return (
@@ -17,12 +18,13 @@ const Home = () => {
       <HeroSection />
       <ProfessionalDevelopment />
       {/* <Animation /> */}
-      <Coursecategories/>
+      <Coursecategories />
       <CareerSection />
       <WhyChooseUs />
       <TrainerCertification />
+      <Affiliation />
       {/* <MediaPartners/> */}
-      <TawkToChatbot/>
+      <TawkToChatbot />
     </>
   );
 };

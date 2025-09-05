@@ -7,7 +7,7 @@ const Page = () => {
     <>
       <Metadata
         title="About Us | PNY"
-        description="Learn more about our mission, team, and what makes Pny stand out."
+        description="Learn more about our mission, team, and what makes PNY stand out."
         // url="https://www.pnytrainings.com/about-us"
         // image="images/about-banner.jpg" // Optional: relative to your base URL
         canonicalUrl="https://www.pnytrainings.com/about-us"
