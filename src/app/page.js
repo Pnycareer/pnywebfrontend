@@ -10,24 +10,31 @@ const getHomeMetadata = async () => {
     if (!res.ok) throw new Error("Failed to fetch metadata");
 
     const { metas } = await res.json();
-
     const meta = Array.isArray(metas) && metas.length > 0 ? metas[0] : {};
 
     return {
       title: meta.meta_title || "Default Title",
       description: meta.meta_description || "Default Description",
+      alternates: {
+        canonical: "https://www.pnytrainings.com/",
+      },
     };
   } catch (err) {
     console.error("SEO metadata fetch error:", err);
     return {
       title: "Default Title",
       description: "Default Description",
+      alternates: {
+        canonical: "https://www.pnytrainings.com",
+      },
     };
   }
 };
 
-// For Next.js dynamic metadata (in layout.js or page.js)
-export const metadata = getHomeMetadata;
+// ✅ Correct way: export a function, not a raw promise
+export async function generateMetadata() {
+  return await getHomeMetadata();
+}
 
 export default function Homepage() {
   return <Home />;

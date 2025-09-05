@@ -1,17 +1,18 @@
 "use client";
 
 import HeaderSection from "@/components/HeaderSection/Headersection";
+import ScrollToTopEffect from "@/components/ScrollToTop/ScrolltoTopeffect";
 
 const Termsconditions = ({ pageData }) => {
   const { page_title, page_description, shortdescription } = pageData;
 
   return (
     <>
+      <ScrollToTopEffect />
       <HeaderSection
         pagetitle={page_title}
         shortdescription={shortdescription}
       />
-  
 
       <section className="px-6 md:px-16 py-12 bg-white text-gray-800">
         <div className="max-w-7xl mx-auto">

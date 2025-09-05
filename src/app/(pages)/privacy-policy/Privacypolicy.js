@@ -1,5 +1,7 @@
 "use client";
-import ScrollToTop from "@/components/ScrollToTop/Scrolltotop";
+
+import ScrollToTopEffect from "@/components/ScrollToTop/ScrolltoTopeffect";
+
 
 const Privacypolicy = ({ pageData }) => {
 
@@ -7,7 +9,7 @@ const Privacypolicy = ({ pageData }) => {
 
   return (
     <>
-      <ScrollToTop />
+     <ScrollToTopEffect/>
       <section className="relative flex items-center justify-center h-[300px] md:h-[400px] xl:h-[300px] w-full bg-gradient-to-r from-[#1B263B] via-[#475e5e] to-[#006d5f]">
         <div className="absolute inset-0 backdrop-blur-md rounded-xl w-11/12 md:w-10/12 lg:w-8/12 mx-auto flex flex-col items-center justify-center p-6 md:p-10">
           <h1 className="text-2xl md:text-5xl font-bold text-white text-center">

@@ -1,24 +1,23 @@
+import axiosInstance from "@/utils/axiosInstance";
 import Privacypolicy from "./Privacypolicy";
 
-Privacypolicy;
+export default async function PrivacyPage() {
+  let data;
 
-export default async function TermsPage() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/privacy`, {
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch terms");
+  try {
+    const res = await axiosInstance.get("/api/v1/privacy");
+    data = res.data;
+  } catch (err) {
+    // be blunt: this page depends on the API
+    throw new Error("Failed to fetch privacy policy");
   }
 
-  const data = await res.json();
-
-  // ✅ FIX: Pick the first item in the array
-  const pageData = Array.isArray(data) ? data[0] : data;
+  const pageData = Array.isArray(data) ? data[0] : data || {};
 
   const metadata = {
-    metatitle: pageData.meta_title || "Course Not Found",
-    metadescription: pageData.meta_description || "This course does not exist.",
+    metatitle: pageData?.meta_title || "Privacy Policy Not Found",
+    metadescription:
+      pageData?.meta_description || "This privacy policy does not exist.",
   };
 
   return (
