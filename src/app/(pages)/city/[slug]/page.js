@@ -12,6 +12,8 @@ const page = async ({ params }) => {
 
     const data = response.data;
 
+    console.log(data)
+
     const metadata = {
       metatitle: data?.category_Meta_Title?.trim()
         ? data.category_Meta_Title
