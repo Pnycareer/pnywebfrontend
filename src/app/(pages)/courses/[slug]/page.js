@@ -40,8 +40,7 @@ export default async function Page({ params }) {
         ? subcategory.category_Meta_Description
         : subcategory?.category_Description || "This course does not exist.",
 
-      canonical: `https://www.pnytrainings.com/${
-        subcategory?.category_Meta_Title ||
+      canonical: `https://www.pnytrainings.com/courses/${
         subcategory?.category_Name ||
         "course-not-found"
       }`,
@@ -57,9 +56,7 @@ export default async function Page({ params }) {
         <Metadata
           title={metadata.metatitle}
           description={metadata.metadescription}
-          canonicalUrl={`https://www.pnytrainings.com/${metadata.metatitle}`}
-          url={`https://www.pnytrainings.com/${metadata.metatitle}`}
-          image={metadata.image}
+          canonicalUrl={metadata.canonical}
           siteName="Pnytrainings"
         />
 

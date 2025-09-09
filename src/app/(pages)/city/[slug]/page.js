@@ -23,8 +23,8 @@ const page = async ({ params }) => {
         ? data.category_Meta_Description
         : data?.category_Description || "",
 
-      canonical: `https://www.pnytrainings.com/${
-        data?.category_Meta_Title || data?.category_Name || ""
+      canonical: `https://www.pnytrainings.com/city/${
+        data?.category_Name || ""
       }`,
     };
 
@@ -33,9 +33,7 @@ const page = async ({ params }) => {
         <Metadata
           title={metadata.metatitle}
           description={metadata.metadescription}
-          canonicalUrl={`https://www.pnytrainings.com/${metadata.metatitle}`}
-          url={`https://www.pnytrainings.com/${metadata.metatitle}`}
-          image={metadata.image}
+          canonicalUrl={metadata.canonical}
           siteName="Pnytrainings"
         />
 
