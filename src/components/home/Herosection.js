@@ -73,9 +73,9 @@ const HeroSection = () => {
             className="text-4xl font-extrabold leading-tight text-gray-900 md:text-5xl lg:text-6xl"
           >
             <span className="block">
-              PNY <span className="text-gray-800">Trainings</span>
+              PNY <span className="text-black">Trainings</span>
             </span>
-            <span className="mt-2 block text-gray-700">
+            <span className="mt-2 block text-black">
               Pakistan&rsquo;s No.1 IT Training Institute
             </span>
           </motion.h2>

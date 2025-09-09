@@ -1,5 +1,6 @@
 import axiosInstance from "@/utils/axiosInstance";
 import Privacypolicy from "./Privacypolicy";
+import Metadata from "@/components/Meta/Metadata";
 
 export default async function PrivacyPage() {
   let data;
@@ -14,16 +15,13 @@ export default async function PrivacyPage() {
 
   const pageData = Array.isArray(data) ? data[0] : data || {};
 
-  const metadata = {
-    metatitle: pageData?.meta_title || "Privacy Policy Not Found",
-    metadescription:
-      pageData?.meta_description || "This privacy policy does not exist.",
-  };
-
   return (
     <>
-      <title>{metadata.metatitle}</title>
-      <meta name="description" content={metadata.metadescription} />
+      <Metadata
+        title="Privacy Policy – Your Security & Trust at PNY Trainings"
+        description="At PNY Trainings, your privacy matters. Learn how we securely collect, protect, and use personal data with transparency and care."
+        canonicalUrl="https://www.pnytrainings.com/privacy-policy"
+      />
       <Privacypolicy pageData={pageData} />
     </>
   );

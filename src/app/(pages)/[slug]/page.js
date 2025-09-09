@@ -36,7 +36,7 @@ export default async function Page({ params }) {
     description: course.Meta_Description || "This course does not exist.",
     url: `${process.env.NEXT_PUBLIC_SITE_URL}/${slug}`,
     image: course.course_Image,
-    canonicalUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/${slug}`,
+    canonicalUrl: `${process.env.NEXT_PUBLIC_SITE_URL}${slug}`,
   };
 
   return (

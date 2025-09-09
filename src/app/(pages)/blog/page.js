@@ -1,12 +1,7 @@
 import React from "react";
 import BlogCategory from "./Blogcategoy"; // ✅ double-check spelling
 import axios from "@/utils/axiosInstance"; // ✅ uses your custom axios instance
-
-export const metadata = {
-  title: 'Blogs',
-  description:
-    'Discover the latest insights, tutorials, and tips across marketing, technology, design, SEO, and more on our blog. Stay updated and grow your knowledge with our expert-written articles.',
-};
+import Metadata from "@/components/Meta/Metadata";
 
 const Page = async () => {
   let blogsData = [];
@@ -24,8 +19,12 @@ const Page = async () => {
 
   return (
     <>
-      <title>{metadata.title}</title>
-      <meta name="description" content={metadata.description} />
+      <Metadata
+        title="PNY Trainings Blog – Insights, Tips & Tutorials"
+        description="Explore the PNY Trainings blog for helpful tutorials, technology insights, marketing tips, and design ideas to boost your learning and career growth.
+"
+        canonicalUrl="https://www.pnytrainings.com/blog"
+      />
       <BlogCategory blogsData={blogsData} />
     </>
   );

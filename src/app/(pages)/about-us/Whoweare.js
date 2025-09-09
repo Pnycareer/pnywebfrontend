@@ -22,7 +22,7 @@ export default function Whoweare({
   description = `Offering professional IT diplomas and short courses for students and professionals seeking career growth. With top-level industry instructors and multiple branches nationwide, we help you unlock your potential in the world of tech.`,
   points = [
     { icon: <ShieldCheck className="w-5 h-5" />, text: "Industry-vetted curriculum" },
-    { icon: <Users className="w-5 h-5" />, text: "10,000+ learners trained" },
+    { icon: <Users className="w-5 h-5" />, text: "Government Recognize & Affiliated" },
     { icon: <Award className="w-5 h-5" />, text: "Recognized certifications" },
   ],
   cta = { label: "Explore Programs", href: "/courses" },

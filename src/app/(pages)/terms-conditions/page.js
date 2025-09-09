@@ -1,5 +1,6 @@
 import axiosInstance from "@/utils/axiosInstance";
 import Termsconditions from "./Termsconditions";
+import Metadata from "@/components/Meta/Metadata";
 
 export default async function TermsPage() {
   let data;
@@ -16,15 +17,13 @@ export default async function TermsPage() {
 
   const pageData = Array.isArray(data) ? data[0] : data;
 
-  const metadata = {
-    metatitle: pageData?.meta_title || "Course Not Found",
-    metadescription: pageData?.meta_description || "This course does not exist.",
-  };
-
   return (
     <>
-      <title>{metadata.metatitle}</title>
-      <meta name="description" content={metadata.metadescription} />
+      <Metadata
+        title="Terms & Conditions – Fair Use & Service Guidelines at PNY Trainings"
+        description="Read PNY Trainings Terms & Conditions for service policies on payments, cancellations, pricing, re-scheduling, usage, and training conduct designed to ensure clarity and fairness."
+        canonicalUrl="https://www.pnytrainings.com/terms-conditions"
+      />
       <Termsconditions pageData={pageData} />
     </>
   );

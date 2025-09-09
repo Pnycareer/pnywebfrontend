@@ -6,10 +6,8 @@ const Page = () => {
   return (
     <>
       <Metadata
-        title="About Us | PNY"
-        description="Learn more about our mission, team, and what makes PNY stand out."
-        // url="https://www.pnytrainings.com/about-us"
-        // image="images/about-banner.jpg" // Optional: relative to your base URL
+        title="About PNY Trainings – A Reputable Institute in Pakistan for IT Training"
+        description="PNY Trainings is a reputable institute in Pakistan offering quality IT training since 2014. Learn about our journey, vision, and commitment to student success."
         canonicalUrl="https://www.pnytrainings.com/about-us"
       />
       <About />

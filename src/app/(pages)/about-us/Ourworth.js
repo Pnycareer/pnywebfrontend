@@ -12,9 +12,21 @@ const fadeUp = {
 export default function OurWorth() {
   const stats = [
     { icon: <Users className="w-5 h-5" />, value: "100k+", label: "Alumni" },
-    { icon: <Briefcase className="w-5 h-5" />, value: "100+", label: "Professional Programs" },
-    { icon: <GraduationCap className="w-5 h-5" />, value: "300+", label: "Instructors" },
-    { icon: <FileSignature className="w-5 h-5" />, value: "100+", label: "MoUs Signed" },
+    {
+      icon: <Briefcase className="w-5 h-5" />,
+      value: "100+",
+      label: "Professional Programs",
+    },
+    {
+      icon: <GraduationCap className="w-5 h-5" />,
+      value: "300+",
+      label: "Instructors",
+    },
+    {
+      icon: <FileSignature className="w-5 h-5" />,
+      value: "100+",
+      label: "MoUs Signed",
+    },
   ];
 
   return (
@@ -37,7 +49,7 @@ export default function OurWorth() {
           >
             <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-black/50 shadow-xl bg-slate-200">
               <Image
-                src="./test1.jpg" // replace with your public folder asset
+                src="./test1.jpg"
                 alt="Achievement"
                 width={400}
                 height={400}
@@ -63,8 +75,9 @@ export default function OurWorth() {
               Our Worth, Our Achievements!
             </h2>
             <p className="mt-4 text-lg text-slate-600 leading-relaxed">
-              We’re only just getting started on our journey. These milestones are proof of our
-              commitment to empowering individuals through quality education.
+              We’re only just getting started on our journey. These milestones
+              are proof of our commitment to empowering individuals through
+              quality education.
             </p>
 
             <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6">
@@ -82,14 +95,26 @@ export default function OurWorth() {
               ))}
             </div>
 
-            <motion.a
-              href="#branches"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="mt-8 inline-block rounded-full bg-blue-600 px-6 py-3 text-sm font-medium text-white shadow hover:bg-blue-700 transition"
-            >
-              Multiple Branches in Pakistan
-            </motion.a>
+            {/* info text instead of button */}
+            <div className="mt-8 flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 shadow-sm backdrop-blur-sm">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-blue-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 20h5v-2a3 3 0 00-3-3h-4.28a2 2 0 01-1.94-1.46l-.3-1.2A2 2 0 0010.6 11H5.83a2 2 0 01-1.9-1.37l-.4-1.2A2 2 0 015.43 6H15a2 2 0 012 2v4"
+                />
+              </svg>
+              <span className="text-sm font-medium text-blue-800">
+                We’re proudly operating multiple branches across Pakistan.
+              </span>
+            </div>
           </motion.div>
         </div>
       </div>
