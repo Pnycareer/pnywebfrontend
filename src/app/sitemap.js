@@ -65,7 +65,7 @@ export default async function sitemap() {
     ].map(({ url, priority }) => ({
       url,
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "weekly",
       priority,
     }));
 
