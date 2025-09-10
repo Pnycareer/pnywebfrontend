@@ -1,6 +1,8 @@
 import Home from "@/app/(pages)/home/Home";
+import Metadata from "@/components/Meta/Metadata";
 
-// Reusable function to fetch SEO metadata
+
+// Fetch SEO metadata
 const getHomeMetadata = async () => {
   try {
     const res = await fetch("https://api.pnytrainings.com/api/v1/meta/home", {
@@ -15,27 +17,43 @@ const getHomeMetadata = async () => {
     return {
       title: meta.meta_title || "Default Title",
       description: meta.meta_description || "Default Description",
-      alternates: {
-        canonical: "https://www.pnytrainings.com/",
-      },
+      url: "https://www.pnytrainings.com",
+      canonicalUrl: "https://www.pnytrainings.com",
     };
   } catch (err) {
     console.error("SEO metadata fetch error:", err);
     return {
       title: "Default Title",
       description: "Default Description",
-      alternates: {
-        canonical: "https://www.pnytrainings.com",
-      },
+      image: null,
+      url: "https://www.pnytrainings.com/",
+      canonicalUrl: "https://www.pnytrainings.com/",
     };
   }
 };
 
-// ✅ Correct way: export a function, not a raw promise
+// ✅ Next.js metadata function (still supported if you want automatic tags)
 export async function generateMetadata() {
   return await getHomeMetadata();
 }
 
-export default function Homepage() {
-  return <Home />;
+// ✅ Page Component
+export default async function Homepage() {
+  const meta = await getHomeMetadata();
+
+  return (
+    <>
+      {/* Inject your reusable Metadata component */}
+      <Metadata
+        title={meta.title}
+        description={meta.description}
+        url={meta.url}
+        canonicalUrl={meta.canonicalUrl}
+        siteName="Pnytrainings"
+      />
+
+      {/* Actual page content */}
+      <Home />
+    </>
+  );
 }

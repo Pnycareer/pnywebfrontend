@@ -44,6 +44,7 @@ const Courses = ({ slug, subcategory, instructors }) => {
                 >
                   <CourseCard
                     name={course.course_Name}
+                    alt={course.course_Image_Alt}
                     image={toURL(course.course_Image)}
                     shortdescription={course.Short_Description}
                     description={`Instructor: ${

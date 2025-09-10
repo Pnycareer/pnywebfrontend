@@ -87,7 +87,7 @@ const BlogCategory = ({ blogsData }) => {
                   src={`${
                     process.env.NEXT_PUBLIC_API_URL
                   }/${blog.blogImage.replace(/\\/g, "/")}`}
-                  alt={blog.blogName}
+                  alt={blog.blogImageAlt || blog.blogName}
                   width={400}
                   height={250}
                   unoptimized

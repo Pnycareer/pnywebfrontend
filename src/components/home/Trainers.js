@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import Link from "next/link";
 
 // Put your images in /public/assets/trainerslogo
 const badges = [
@@ -122,7 +123,6 @@ export default function TrainerCertification() {
             </div>
           </div>
 
-          {/* Read More — ALL remaining text here */}
           <AnimatePresence initial={false}>
             {expanded && (
               <motion.div
@@ -133,18 +133,34 @@ export default function TrainerCertification() {
                 transition={{ duration: 0.45, ease: "easeInOut" }}
                 className="overflow-hidden"
               >
-                <div className="prose prose-slate max-w-none mt-6 prose-p:leading-relaxed flex flex-wrap gap-4">
+                <div className="prose prose-slate max-w-none mt-6 prose-p:leading-relaxed space-y-3">
                   <p>
                     PNY Trainings is the leading IT training hub in Lahore, and
-                    it conducts different training programs aimed at helping
-                    young career seekers understand the basic information
-                    technology functioning of the sector and the job role they
-                    aspire to take on. Their insight and vision have assisted us
-                    in enhancing the knowledge and skills of youngsters to take
-                    on modern-day corporate challenges through AI courses in
-                    Pakistan. Getting a good start in a career is a cherished
-                    dream for every career candidate.
+                    it conducts different{" "}
+                    <Link
+                      href="/courses"
+                      target="_blank"
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      training programs
+                    </Link>{" "}
+                    aimed at helping young career seekers understand the basic
+                    information technology functioning of the sector and the job
+                    role they aspire to take on. Their insight and vision have
+                    assisted us in enhancing the knowledge and skills of
+                    youngsters to take on modern-day corporate challenges
+                    through{" "}
+                    <Link
+                      href="/machine-learning-course-training-in-pakistan"
+                      target="_blank"
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      AI Courses in Pakistan
+                    </Link>
+                    . Getting a good start in a career is a cherished dream for
+                    every career candidate.
                   </p>
+
                   <p>
                     However, this is easier said than done, especially in
                     today&apos;s challenging career landscape. To achieve this
@@ -156,38 +172,70 @@ export default function TrainerCertification() {
                     must have the necessary knowledge, skills, and capability to
                     provide to the specific industry you aspire to enter and
                     grow. This is equally true across domains of Technology,
-                    Business, Development, and Design, IT Software Development,
+                    Business, development and design, IT Software Development,
                     Digital Marketing Courses, and many more.
                   </p>
+
                   <p>
                     One of the ways that you can gain an advantage over your
                     contemporaries is to undergo courses offered by the
                     reputable IT Hub in Lahore. There are so many seats
                     available in Arfa Karim Tower short courses, and all you
                     have to do is enroll in your desired course. PNY Trainings
-                    offers different courses in Lahore, Islamabad, Rawalpindi,
-                    Karachi, and other major cities of Pakistan.
+                    offer all courses in Lahore, Islamabad, Rawalpindi, Karachi,
+                    and other major cities of Pakistan.
                   </p>
+
                   <p>
-                    PNY Trainings is one of the promising and Best IT Training
-                    institutes in Lahore that comes up with amazing courses for
-                    online earning in Pakistan, training, and almost all short
-                    courses. We are the introducers to numerous IT trends,
-                    courses, and certifications in Lahore. The motive of the PNY
-                    Arfa Karim Tower courses list provide the best training with
-                    guaranteed results for everyone.
+                    PNY Trainings is one of the promising and{" "}
+                    <Link
+                      href="/best-online-it-institute-in-lahore"
+                      target="_blank"
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      Best IT Training institutes in Lahore
+                    </Link>{" "}
+                    that comes up with amazing courses for{" "}
+                    <Link
+                      href="/free-online-earning-app-in-pakistan"
+                      target="_blank"
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      online earning in Pakistan
+                    </Link>
+                    , training, and almost all{" "}
+                    <Link
+                      href="/short-courses-in-lahore"
+                      target="_blank"
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      short courses
+                    </Link>
+                    . We are the introducers to numerous IT trends, courses, and
+                    certifications in Lahore. The motive of the PNY Arfa Tower
+                    courses list provide the best training with guaranteed
+                    results for everyone.
                   </p>
+
                   <p>
                     With our weekend classes in Lahore, we are the only IT
                     training center in Lahore that allows all professionals and
-                    students to learn new skills for online earning. The
-                    flexible timings let them be part of new industry trends and
-                    improve their skills to get better-paid jobs in our PNY Arfa
-                    Karim tower courses. For every single course, we pay
-                    attention to the student&apos;s ease and feasibility when it
-                    comes to class schedule, timings, course duration, content,
-                    and teaching method.
+                    students to learn{" "}
+                    <Link
+                      href="/freelancing-tranings-course-in-lahore-at-arfa-tower"
+                      target="_blank"
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      new skills for online earning
+                    </Link>
+                    . The flexible timings let them be part of new industry
+                    trends and improve their skills to get better-paid jobs in
+                    our PNY Arfa Karim tower courses. For every single course,
+                    we pay attention to the student&apos;s ease and feasibility
+                    when it comes to class schedule, timings, course duration,
+                    content, and teaching method.
                   </p>
+
                   <p>
                     PNY Trainings is one of the best online IT training
                     institutes in Arfa Karim Tower, Lahore, Pakistan, that
@@ -198,16 +246,45 @@ export default function TrainerCertification() {
                     follow-up, and course completion to let you have the
                     ultimate outcomes.
                   </p>
+
                   <p>
-                    We are here when you are looking for the best IT training
-                    institute in Lahore, that PNY Trainings all the next-level
-                    skill-based IT training centers. Everything is designed
-                    precisely from our graphic designing courses to SEO training
-                    courses, their content, and even the training sessions. We
-                    pay attention to market need, demand, and future scope of
-                    the skills while offering a course. Every single course is
-                    an addition to your skill set that will pay off in the
-                    future.
+                    We are here when you are looking for the{" "}
+                    <Link
+                      href="/best-online-it-institute-in-lahore"
+                      target="_blank"
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      best IT training institute in Lahore
+                    </Link>
+                    , that PNY Trainings all the next-level skill-based IT
+                    training centers. Everything is designed precisely from our{" "}
+                    <Link
+                      href="/graphic-designing-training-course"
+                      target="_blank"
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      graphic designing courses
+                    </Link>{" "}
+                    to{" "}
+                    <Link
+                      href="/best-seo-training-institute-in-lahore"
+                      target="_blank"
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      SEO training courses
+                    </Link>
+                    , their content, and even the training sessions. We pay
+                    attention to market need, demand, and future scope of the
+                    skills while offering a course. Every single course is an
+                    addition to your{" "}
+                    <Link
+                      href="/blog"
+                      target="_blank"
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      skill set
+                    </Link>{" "}
+                    that will pay off in the future.
                   </p>
                 </div>
               </motion.div>

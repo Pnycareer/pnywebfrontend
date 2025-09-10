@@ -12,7 +12,7 @@ const poppins = Poppins({
   display: "swap",
 });
 
-const CourseCard = ({ name, image, urlslug, shortdescription }) => {
+const CourseCard = ({ name, alt, image, urlslug, shortdescription }) => {
   const router = useRouter();
 
   const handleDetailsClick = useCallback(
@@ -50,7 +50,7 @@ const CourseCard = ({ name, image, urlslug, shortdescription }) => {
       <div className="relative w-full shrink-0">
         <Image
           src={fullImage}
-          alt={name || "Course image"}
+          alt={alt || "Course image"}
           width={1200} // or your actual image width
           height={600} // or your actual image height
           layout="responsive"
