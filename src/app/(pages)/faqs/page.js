@@ -15,7 +15,10 @@ const Page = async () => {
     const res = await axiosInstance.get("/api/v1/faqs", {
       // force no-cache headers
       headers: {
-        "Cache-Control": "no-store",
+        "Cache-Control":
+          "no-store, no-cache, must-revalidate, proxy-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
       },
     });
 
