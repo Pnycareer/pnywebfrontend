@@ -23,7 +23,7 @@ const cities = [
   "sialkot",
   "faisalabad",
   "gujranwala",
-  "azad-kashmir",
+  "azad-Kashmir",
   "islamabad",
   "sargodha",
 ];

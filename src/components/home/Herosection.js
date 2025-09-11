@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import girl from "@/assets/logo/arfatowerhome.png";
+import girl from "@/assets/logo/arfatowerhome.webp";
 import { Sparkles, BadgeCheck, Flame, ArrowRight, Rocket } from "lucide-react";
 import Link from "next/link";
 

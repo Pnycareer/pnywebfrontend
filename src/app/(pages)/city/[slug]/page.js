@@ -5,14 +5,12 @@ import axiosInstance from "@/utils/axiosInstance";
 import Metadata from "@/components/Meta/Metadata";
 
 const page = async ({ params }) => {
-  const { slug } = params;
+  const { slug } = await params;
 
   try {
     const response = await axiosInstance.get(`/courses/getoncategory/${slug}`);
 
     const data = response.data;
-
-    console.log(data)
 
     const metadata = {
       metatitle: data?.category_Meta_Title?.trim()

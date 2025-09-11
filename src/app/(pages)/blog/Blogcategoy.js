@@ -8,6 +8,7 @@ import HeaderSection from "@/components/HeaderSection/Headersection";
 import ScrollToTop from "@/components/ScrollToTop/Scrolltotop";
 
 const BlogCategory = ({ blogsData }) => {
+  
   const router = useRouter();
   const searchParams = useSearchParams();
 

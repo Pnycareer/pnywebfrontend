@@ -17,6 +17,9 @@ const Page = async () => {
     // Optionally you could redirect to a fallback page, show a custom error component, etc.
   }
 
+
+  
+
   return (
     <>
       <Metadata

@@ -74,15 +74,15 @@ const Blogdetails = ({ blog }) => {
 
   return (
     <>
-      <div className="container mx-auto p-4">
+      
         {/* Blog Header */}
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto">
           {/* Animated Blog Header */}
           <motion.div
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-col lg:flex-row items-center justify-between gap-10 p-8 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 rounded-lg"
+            className="flex flex-col lg:flex-row items-center justify-between gap-10 p-8 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500"
           >
             {/* Left Content */}
             <motion.div
@@ -283,7 +283,7 @@ const Blogdetails = ({ blog }) => {
             </div>
           </aside>
         </div>
-      </div>
+   
     </>
   );
 };

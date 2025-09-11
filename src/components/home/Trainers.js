@@ -140,7 +140,6 @@ export default function TrainerCertification() {
                     <Link
                       href="/courses"
                       target="_blank"
-                      className="text-blue-600 underline hover:text-blue-800"
                     >
                       training programs
                     </Link>{" "}
@@ -153,7 +152,7 @@ export default function TrainerCertification() {
                     <Link
                       href="/machine-learning-course-training-in-pakistan"
                       target="_blank"
-                      className="text-blue-600 underline hover:text-blue-800"
+                      
                     >
                       AI Courses in Pakistan
                     </Link>
@@ -191,7 +190,7 @@ export default function TrainerCertification() {
                     <Link
                       href="/best-online-it-institute-in-lahore"
                       target="_blank"
-                      className="text-blue-600 underline hover:text-blue-800"
+                      
                     >
                       Best IT Training institutes in Lahore
                     </Link>{" "}
@@ -199,7 +198,7 @@ export default function TrainerCertification() {
                     <Link
                       href="/free-online-earning-app-in-pakistan"
                       target="_blank"
-                      className="text-blue-600 underline hover:text-blue-800"
+                      
                     >
                       online earning in Pakistan
                     </Link>
@@ -207,7 +206,7 @@ export default function TrainerCertification() {
                     <Link
                       href="/short-courses-in-lahore"
                       target="_blank"
-                      className="text-blue-600 underline hover:text-blue-800"
+                      
                     >
                       short courses
                     </Link>
@@ -224,7 +223,7 @@ export default function TrainerCertification() {
                     <Link
                       href="/freelancing-tranings-course-in-lahore-at-arfa-tower"
                       target="_blank"
-                      className="text-blue-600 underline hover:text-blue-800"
+                      
                     >
                       new skills for online earning
                     </Link>
@@ -252,7 +251,7 @@ export default function TrainerCertification() {
                     <Link
                       href="/best-online-it-institute-in-lahore"
                       target="_blank"
-                      className="text-blue-600 underline hover:text-blue-800"
+                      
                     >
                       best IT training institute in Lahore
                     </Link>
@@ -261,7 +260,7 @@ export default function TrainerCertification() {
                     <Link
                       href="/graphic-designing-training-course"
                       target="_blank"
-                      className="text-blue-600 underline hover:text-blue-800"
+                      
                     >
                       graphic designing courses
                     </Link>{" "}
@@ -269,7 +268,7 @@ export default function TrainerCertification() {
                     <Link
                       href="/best-seo-training-institute-in-lahore"
                       target="_blank"
-                      className="text-blue-600 underline hover:text-blue-800"
+                      
                     >
                       SEO training courses
                     </Link>
@@ -280,7 +279,7 @@ export default function TrainerCertification() {
                     <Link
                       href="/blog"
                       target="_blank"
-                      className="text-blue-600 underline hover:text-blue-800"
+                      
                     >
                       skill set
                     </Link>{" "}
