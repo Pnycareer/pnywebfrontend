@@ -7,8 +7,12 @@ const getGalleries = async () => {
   try {
     const res = await axios.get(`/api/v1/gallery`, {
       headers: {
-        // Optional: mimic fetch cache control if needed
-        "Cache-Control": "no-store",
+        // Always force fresh response, never reuse cached copy
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        // Proxies shouldn’t serve cached responses
+        Pragma: "no-cache",
+        // Expire immediately
+        Expires: "0",
       },
     });
     return res.data;

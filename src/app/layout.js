@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import Footer from "@/components/Footer/Footer";
 import Whatsapp from "@/components/whatsapp/Whatsapp";
 import Script from "next/script";
+import ScrollToTopEffect from "@/components/ScrollToTop/ScrolltoTopeffect";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -57,7 +58,8 @@ export default function RootLayout({ children }) {
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-
+        
+        <ScrollToTopEffect/>
         <Navbar />
         <CoursesNav />
         <Whatsapp />

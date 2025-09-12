@@ -1,31 +1,26 @@
+"use client";
 import { useState } from "react";
 import { FaPlus, FaTimes } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import RichTextRenderer from "@/components/RichTextRenderer/RichTextRenderer"; // 👈 use your renderer
 
-const CourseAccordion = ({ faqs = [] }) => {
+const CourseAccordion = ({ faqs = [], title = "Frequently Asked Questions", emptyText = "No FAQs available." }) => {
   const [openIndex, setOpenIndex] = useState(null);
-
-  const toggle = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+  const toggle = (index) => setOpenIndex(openIndex === index ? null : index);
 
   const isValidFaqs = Array.isArray(faqs) && faqs.length > 0;
 
   return (
     <section className="bg-gradient-to-br from-blue-50 to-blue-100 py-5 px-4">
       <div className="max-w-4xl mx-auto">
-        <h3 className="text-3xl font-bold text-center text-blue-800 mb-5">
-          Frequently Asked Questions
-        </h3>
+        <h3 className="text-3xl font-bold text-center text-blue-800 mb-5">{title}</h3>
 
         {!isValidFaqs ? (
-          <div className="text-center text-gray-500 text-sm">
-            No FAQs available for this course.
-          </div>
+          <div className="text-center text-gray-500 text-sm">{emptyText}</div>
         ) : (
           faqs.map((faq, i) => (
             <div
-              key={i}
+              key={faq._id || i}
               className="bg-white border border-blue-300 mb-1 rounded-xl overflow-hidden shadow-md transition-all"
             >
               <button
@@ -47,8 +42,9 @@ const CourseAccordion = ({ faqs = [] }) => {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
-                    <div className="px-6 py-4 text-gray-700 text-sm bg-blue-50 leading-relaxed">
-                      {faq.answer}
+                    {/* 👇 your styled HTML renderer (no extra padding to avoid double spacing) */}
+                    <div className="px-6 py-4 bg-blue-50">
+                      <RichTextRenderer html={faq.answer || ""} />
                     </div>
                   </motion.div>
                 )}

@@ -8,7 +8,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import pnylogo from "@/assets/logo/Pnylogo.png";
 import axiosInstance from "@/utils/axiosInstance";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation"; // 👈 add usePathname
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -25,6 +25,7 @@ const CoursesNav = () => {
   const [isLoading, setIsLoading] = useState(false);
   const searchRef = useRef(null);
   const router = useRouter();
+  const pathname = usePathname(); // 👈 current route
 
   // Close search bar when clicking outside
   useEffect(() => {
@@ -33,18 +34,14 @@ const CoursesNav = () => {
         setSearchOpen(false);
       }
     };
-    if (searchOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
+    if (searchOpen) document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [searchOpen]);
 
-  // Close mobile menu on route change
+  // Close mobile menu on route change (App Router way)
   useEffect(() => {
-    const closeMenu = () => setMenuOpen(false);
-    router.events?.on("routeChangeStart", closeMenu);
-    return () => router.events?.off("routeChangeStart", closeMenu);
-  }, [router]);
+    setMenuOpen(false);
+  }, [pathname]);
 
   // Fetch courses when search opens
   useEffect(() => {
@@ -73,17 +70,27 @@ const CoursesNav = () => {
   const filteredCourses = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     if (!q) return courses;
-    return courses.filter((c) =>
-      (c?.course_Name || "").toLowerCase().includes(q)
-    );
+    return courses.filter((c) => (c?.course_Name || "").toLowerCase().includes(q));
   }, [searchQuery, courses]);
+
+  // 👇 handle clicks so same-route clicks also scroll to top
+  const handleNavClick = (href) => (e) => {
+    if (pathname === href) {
+      // same page — prevent a no-op push and just scroll
+      e.preventDefault();
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+      setMenuOpen(false);
+      setSearchOpen(false);
+    }
+    // else: let Next.js navigate; it auto-scrolls to top by default
+  };
 
   return (
     <header className="w-full bg-white backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
       <div className="mx-auto flex justify-between items-center px-6 lg:px-12 py-4">
         {/* Left: Logo & Courses */}
         <div className="flex items-center gap-4">
-          <Link href="/">
+          <Link href="/" onClick={handleNavClick("/")} scroll>
             <Image
               src={pnylogo}
               alt="PNY Logo"
@@ -96,9 +103,8 @@ const CoursesNav = () => {
 
           <CoursesDropdown />
 
-          {/* Search Icon (now visible on mobile too) */}
           <button
-            className="text-xl text-gray-600 hover:text-yellow-400" // ✅ removed "hidden md:block"
+            className="text-xl text-gray-600 hover:text-yellow-400"
             onClick={() => setSearchOpen((v) => !v)}
             aria-label="Toggle search"
           >
@@ -109,7 +115,12 @@ const CoursesNav = () => {
         {/* Right: Nav Links (desktop) */}
         <ul className="hidden md:flex gap-6 text-black font-medium">
           {navLinks.map((link) => (
-            <Link key={link.href} href={link.href}>
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={handleNavClick(link.href)} // 👈 here
+              scroll
+            >
               <motion.li
                 whileHover={{ scale: 1.1, color: "#facc15" }}
                 whileTap={{ scale: 0.95 }}
@@ -131,7 +142,7 @@ const CoursesNav = () => {
         </button>
       </div>
 
-      {/* Mobile Nav Menu (unchanged UI) */}
+      {/* Mobile Nav Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.ul
@@ -142,7 +153,12 @@ const CoursesNav = () => {
             className="md:hidden flex flex-col bg-white px-6 py-4 space-y-4 shadow-md"
           >
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={handleNavClick(link.href)} // 👈 same fix on mobile
+                scroll
+              >
                 <motion.li
                   whileTap={{ scale: 0.95 }}
                   className="text-gray-900 hover:text-yellow-400 text-base font-medium"
@@ -155,7 +171,7 @@ const CoursesNav = () => {
         )}
       </AnimatePresence>
 
-      {/* Search Bar (z-index bumped so it shows above header) */}
+      {/* Search Bar */}
       <AnimatePresence>
         {searchOpen && (
           <motion.div
@@ -164,7 +180,7 @@ const CoursesNav = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed top-0 left-0 w-full backdrop-blur-lg bg-white/80 shadow-xl p-4 flex justify-center items-center z-60" // ✅ was z-40
+            className="fixed top-0 left-0 w-full backdrop-blur-lg bg-white/80 shadow-xl p-4 flex justify-center items-center z-60"
           >
             <div className="relative w-11/12 md:w-3/5">
               <input
@@ -175,7 +191,6 @@ const CoursesNav = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
 
-              {/* Results */}
               {searchQuery && (
                 <div className="absolute top-full mt-2 w-full max-h-60 overflow-y-auto bg-white border rounded-lg shadow-lg z-10">
                   {isLoading ? (
@@ -187,6 +202,7 @@ const CoursesNav = () => {
                           key={course._id}
                           href={`/${course.url_Slug}`}
                           onClick={() => setSearchOpen(false)}
+                          scroll
                         >
                           <li className="cursor-pointer hover:bg-yellow-200 p-2 rounded-md">
                             {course.course_Name}

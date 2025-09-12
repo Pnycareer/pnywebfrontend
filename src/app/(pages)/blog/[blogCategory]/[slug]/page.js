@@ -23,6 +23,7 @@ const page = async ({ params }) => {
       metadescription: blog.metaDescription || "This course does not exist.",
     };
 
+
     return (
       <>
         <Metadata
@@ -30,7 +31,7 @@ const page = async ({ params }) => {
           description={metadata.metadescription}
           url={`${process.env.NEXT_PUBLIC_SITE_URL}/blog/${blogCategory}/${slug}`}
         />
-        <Blogdetails blog={blog} />
+        <Blogdetails blog={blog}  />
       </>
     );
   } catch (error) {

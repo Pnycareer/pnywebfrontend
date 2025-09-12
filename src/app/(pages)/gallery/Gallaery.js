@@ -1,39 +1,74 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Gallery = ({ galleries }) => {
   const [openCategory, setOpenCategory] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
 
+  // which image is open: { galleryId, index } | null
+  const [selected, setSelected] = useState(null);
+
+  // open first category by default
   useEffect(() => {
-    // Open the first category by default
-    if (galleries.length > 0) {
-      setOpenCategory(galleries[0]._id);
-    }
+    if (galleries?.length > 0) setOpenCategory(galleries[0]._id);
   }, [galleries]);
 
   const toggleCategory = (id) => {
-    if (openCategory === id) {
-      setOpenCategory(null);
-    } else {
-      setOpenCategory(id);
-    }
+    setOpenCategory((prev) => (prev === id ? null : id));
   };
 
-  const openImage = (src) => {
-    setSelectedImage(src);
+  const openImage = (galleryId, index) => {
+    setSelected({ galleryId, index });
   };
 
-  const closeImage = () => {
-    setSelectedImage(null);
-  };
+  const closeImage = () => setSelected(null);
+
+  const currentGallery = selected
+    ? galleries.find((g) => g._id === selected.galleryId)
+    : null;
+
+  const pictures = currentGallery?.pictures || [];
+
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '');
+
+  const currentSrc =
+    selected && pictures[selected.index]
+      ? `${baseUrl}/${String(pictures[selected.index]).replace(/^\/?/, '')}`
+      : null;
+
+  const goPrev = useCallback(() => {
+    if (!selected || pictures.length === 0) return;
+    setSelected((prev) => ({
+      galleryId: prev.galleryId,
+      index: (prev.index - 1 + pictures.length) % pictures.length,
+    }));
+  }, [selected, pictures.length]);
+
+  const goNext = useCallback(() => {
+    if (!selected || pictures.length === 0) return;
+    setSelected((prev) => ({
+      galleryId: prev.galleryId,
+      index: (prev.index + 1) % pictures.length,
+    }));
+  }, [selected, pictures.length]);
+
+  // keyboard controls when modal open
+  useEffect(() => {
+    if (!selected) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') closeImage();
+      if (e.key === 'ArrowLeft') goPrev();
+      if (e.key === 'ArrowRight') goNext();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [selected, goPrev, goNext]);
 
   return (
     <div className="max-w-6xl mx-auto mt-10 p-4 relative">
       <h2 className="text-3xl font-bold mb-6 text-center">Gallery Categories</h2>
 
-      {galleries.length === 0 ? (
+      {!galleries?.length ? (
         <div className="text-center">No categories found.</div>
       ) : (
         <div className="space-y-4">
@@ -57,24 +92,24 @@ const Gallery = ({ galleries }) => {
                     className="overflow-hidden px-4 pb-4"
                   >
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      {gallery.pictures.map((pic, idx) => (
-                        <motion.div
-                          key={idx}
-                          whileHover={{ scale: 1.05 }}
-                          className="cursor-pointer"
-                          onClick={() => openImage(`${
-                            process.env.NEXT_PUBLIC_API_URL
-                          }/${pic}`)}
-                        >
-                          <img
-                            src={`${
-                                process.env.NEXT_PUBLIC_API_URL
-                              }/${pic}`}
-                            alt="Gallery pic"
-                            className="w-full h-40 object-cover rounded-md"
-                          />
-                        </motion.div>
-                      ))}
+                      {gallery.pictures.map((pic, idx) => {
+                        const src = `${baseUrl}/${String(pic).replace(/^\/?/, '')}`;
+                        return (
+                          <motion.div
+                            key={idx}
+                            whileHover={{ scale: 1.05 }}
+                            className="cursor-pointer"
+                            onClick={() => openImage(gallery._id, idx)}
+                          >
+                            <img
+                              src={src}
+                              alt="Gallery pic"
+                              className="w-full h-40 object-cover rounded-md"
+                              loading="lazy"
+                            />
+                          </motion.div>
+                        );
+                      })}
                     </div>
                   </motion.div>
                 )}
@@ -84,25 +119,74 @@ const Gallery = ({ galleries }) => {
         </div>
       )}
 
-      {/* Image Popup */}
+      {/* Lightbox / Image Popup with prev/next */}
       <AnimatePresence>
-        {selectedImage && (
+        {selected && currentSrc && (
           <motion.div
-            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeImage}
           >
+            {/* Close button (top-right) */}
+            <button
+              aria-label="Close"
+              className="absolute top-5 right-6 text-white/80 hover:text-white text-3xl leading-none"
+              onClick={(e) => {
+                e.stopPropagation();
+                closeImage();
+              }}
+            >
+              ×
+            </button>
+
+            {/* Prev button */}
+            {pictures.length > 1 && (
+              <button
+                aria-label="Previous"
+                className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white/90 hover:text-white text-4xl select-none"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goPrev();
+                }}
+              >
+                ‹
+              </button>
+            )}
+
+            {/* Image */}
             <motion.img
-              src={selectedImage}
+              src={currentSrc}
               alt="Big Preview"
               className="max-w-3xl max-h-[80vh] rounded-lg shadow-lg"
-              initial={{ scale: 0.5 }}
+              initial={{ scale: 0.6 }}
               animate={{ scale: 1 }}
-              exit={{ scale: 0.5 }}
-              transition={{ duration: 0.5 }}
+              exit={{ scale: 0.6 }}
+              transition={{ duration: 0.35 }}
+              onClick={(e) => e.stopPropagation()}
             />
+
+            {/* Next button */}
+            {pictures.length > 1 && (
+              <button
+                aria-label="Next"
+                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white/90 hover:text-white text-4xl select-none"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goNext();
+                }}
+              >
+                ›
+              </button>
+            )}
+
+            {/* Counter */}
+            {pictures.length > 0 && (
+              <div className="absolute bottom-6 text-white/80 text-sm">
+                {selected.index + 1} / {pictures.length}
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
