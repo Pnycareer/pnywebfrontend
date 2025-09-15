@@ -10,6 +10,8 @@ export const metadata = {
   canonicalUrl: "https://www.pnytrainings.com/faqs",
 };
 
+export const dynamic = 'force-dynamic';
+
 const Page = async () => {
   try {
     const res = await axiosInstance.get("/api/v1/faqs", {

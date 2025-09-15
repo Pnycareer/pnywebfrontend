@@ -75,7 +75,7 @@ const Blogdetails = ({ blog }) => {
   return (
     <>
       {/* Blog Header */}
-      <div className="container mx-auto">
+      <div className="mx-auto">
         {/* Animated Blog Header */}
         <motion.div
           initial={{ opacity: 0, y: -50 }}
