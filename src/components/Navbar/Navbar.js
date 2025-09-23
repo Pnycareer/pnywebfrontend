@@ -5,6 +5,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { Rocket } from "lucide-react";
 
 const navLinks = [
   {
@@ -107,11 +108,17 @@ const Navbar = () => {
           {/* Center: Contact Info */}
           <div className="hidden lg:flex items-center space-x-6">
             <a
-              href="https://pnyc.pk/"
+              href="https://pnycareer.com/"
               target="_blank"
-              className="bg-green-600 text-white px-3 py-1 rounded-md hover:bg-green-700"
+              className="group flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-2 rounded-full shadow-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 animate-pulse"
             >
-              PNY Conference
+              {/* Lucide Icon */}
+              <Rocket className="w-5 h-5 text-yellow-300 group-hover:rotate-12 transition-transform duration-300" />
+
+              {/* Blinking Text */}
+              <span className="font-semibold tracking-wide animate-pulse">
+                Get a Dream Job – Just Click!
+              </span>
             </a>
             {contactInfo.map((item, idx) => (
               <div key={idx} className="flex items-center space-x-2">
@@ -153,11 +160,17 @@ const Navbar = () => {
             {renderLinks(true)}
             <div className="mt-4 space-y-3 text-sm">
               <a
-                href="https://pnyc.pk/"
+                href="https://pnycareer.com/"
                 target="_blank"
-                className="block bg-green-600 w-full py-2 rounded-md text-center hover:bg-green-700"
+                className="group flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-2 rounded-full shadow-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 animate-pulse"
               >
-                PNY Conference
+                {/* Lucide Icon */}
+                <Rocket className="w-5 h-5 text-yellow-300 group-hover:rotate-12 transition-transform duration-300" />
+
+                {/* Blinking Text */}
+                <span className="font-semibold tracking-wide animate-pulse">
+                  Get a Dream Job – Just Click!
+                </span>
               </a>
               {contactInfo.map((item, idx) => (
                 <div key={idx} className="flex items-center space-x-2">
