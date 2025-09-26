@@ -23,7 +23,7 @@ const CourseCard = ({ name, alt, image, urlslug, shortdescription }) => {
     [router, urlslug]
   );
 
-  const fullImage = image?.startsWith("http")
+  const fullImage = image?.startsWith("https")
     ? image
     : `${process.env.NEXT_PUBLIC_API_URL}/${image}`;
 
