@@ -21,6 +21,10 @@ export default function RootLayout({ children }) {
           name="google-site-verification"
           content="V1XnCS_3kKIZY1cTkolGmqLipxnJbx2GB7X4RMxRZkc"
         />
+        <meta
+          name="p:domain_verify"
+          content="2b5e247fa2e5bb0932d73d9c5e785516"
+        />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -58,8 +62,8 @@ export default function RootLayout({ children }) {
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-        
-        <ScrollToTopEffect/>
+
+        <ScrollToTopEffect />
         <Navbar />
         <CoursesNav />
         <Whatsapp />
@@ -77,8 +81,7 @@ export default function RootLayout({ children }) {
               "@type": "CollegeOrUniversity",
               name: "PNY Trainings",
               url: "https://www.pnytrainings.com/",
-              logo:
-                "https://www.pnytrainings.com/assets/uploads//logo/1529168423-school-logo.jpg",
+              logo: "https://www.pnytrainings.com/assets/uploads//logo/1529168423-school-logo.jpg",
               contactPoint: {
                 "@type": "ContactPoint",
                 telephone: "03041111774",
