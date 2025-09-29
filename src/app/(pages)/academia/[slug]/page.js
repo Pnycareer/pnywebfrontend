@@ -27,13 +27,15 @@ async function fetchCourseBySlug(slug) {
     // normalize -> only what we need on the client
     const course = {
       id: raw._id || raw.id || "",
-      name: raw.coursename || raw.title || "",
+      course_Name: raw.coursename || raw.title || "",
       slug: raw.slug || slug,
-      image: raw.course_Image || "",
-      alt: raw.course_Image_Alt || raw.coursename || "Course image",
-      shortHtml: raw.Short_Description || "",
-      descriptionHtml: raw.Course_Description || "",
+      course_Image: raw.course_Image || "",
+      course_Image_Alt: raw.course_Image_Alt || raw.coursename || "Course image",
+      Short_Description: raw.Short_Description || "",
+      Course_Description: raw.Course_Description || "",
+      Brochure:raw.Brochure || "",
       category: raw.coursecategory || "",
+      Instructor:raw.Instructor || "",
       status: raw.status || "", 
     };
 
@@ -47,12 +49,9 @@ async function fetchCourseBySlug(slug) {
 export default async function Page({ params }) {
   const { slug } = await params; // <-- no await here
   const { course, error } = await fetchCourseBySlug(slug);
-
-  console.log(course)
-
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
+   
       <AcademiaDetails course={course} error={error} />
-    </div>
+    
   );
 }

@@ -139,6 +139,7 @@ const Coursedescription = ({ coursedesc }) => {
           )}
 
           {/* Related Courses */}
+          {coursedesc.category !== "academia" && (
           <aside className="sticky top-28 h-fit space-y-4 rounded-2xl border border-gray-200 bg-white/50 p-6 shadow-md backdrop-blur-md">
             <h3 className="mb-6 text-2xl font-bold text-gray-800">
               Related Courses
@@ -216,6 +217,7 @@ const Coursedescription = ({ coursedesc }) => {
               </p>
             )}
           </aside>
+          )}
         </div>
       </div>
     </div>

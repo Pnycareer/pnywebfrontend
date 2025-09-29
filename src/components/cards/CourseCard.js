@@ -15,6 +15,8 @@ const poppins = Poppins({
 const CourseCard = ({ name, alt, image, urlslug, shortdescription }) => {
   const router = useRouter();
 
+
+console.log(image , 'imagetest')
   const handleDetailsClick = useCallback(
     (e) => {
       e?.stopPropagation();
@@ -23,7 +25,7 @@ const CourseCard = ({ name, alt, image, urlslug, shortdescription }) => {
     [router, urlslug]
   );
 
-  const fullImage = image?.startsWith("https")
+  const fullImage = image?.startsWith("http")
     ? image
     : `${process.env.NEXT_PUBLIC_API_URL}/${image}`;
 

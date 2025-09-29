@@ -27,9 +27,10 @@ export default function CourseHero({ course, brochurePath }) {
           </h1>
 
           {course.Short_Description && (
-            <p className="text-white/80 md:text-lg">
-              {course.Short_Description}
-            </p>
+            <div
+              className="text-white/80 md:text-lg"
+              dangerouslySetInnerHTML={{ __html: course.Short_Description }}
+            />
           )}
 
           <div className="text-white font-medium space-y-2 flex gap-4 flex-wrap">
@@ -61,19 +62,21 @@ export default function CourseHero({ course, brochurePath }) {
               />
             )}
 
-            <a
-              href="https://lms.pnytraining.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-red-500 px-6 py-3 rounded-lg shadow-lg hover:bg-red-400 transition text-white"
+            {course.category !== "academia" && (
+              <a
+                href="https://lms.pnytraining.com"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Enroll Now!
-              </motion.button>
-            </a>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-red-500 px-6 py-3 rounded-lg shadow-lg hover:bg-red-400 transition text-white"
+                >
+                  Enroll Now!
+                </motion.button>
+              </a>
+            )}
           </div>
         </motion.div>
 

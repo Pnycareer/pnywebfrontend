@@ -16,6 +16,7 @@ function stripHtml(html) {
 }
 
 export default function AcademiaCourses({ courses = [], error = null }) {
+
   const cleaned = useMemo(
     () =>
       (courses || []).map((c) => ({
@@ -40,6 +41,8 @@ export default function AcademiaCourses({ courses = [], error = null }) {
       </p>
     );
   }
+
+
 
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

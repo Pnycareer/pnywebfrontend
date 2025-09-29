@@ -6,6 +6,7 @@ import Footer from "@/components/Footer/Footer";
 import Whatsapp from "@/components/whatsapp/Whatsapp";
 import Script from "next/script";
 import ScrollToTopEffect from "@/components/ScrollToTop/ScrolltoTopeffect";
+import SpinWheelModal from "@/components/SpinWheel/SpinWheelModal";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -69,6 +70,8 @@ export default function RootLayout({ children }) {
         <Whatsapp />
         {children}
         <Footer />
+
+         <SpinWheelModal autoOpen={true} delayMs={800} frequency="daily" />
 
         {/* JSON-LD needs an id because it's inline */}
         <Script
