@@ -1,5 +1,6 @@
 "use client";
 import CourseCard from "@/components/cards/CourseCard";
+import HeaderSection from "@/components/HeaderSection/Headersection";
 import { useMemo } from "react";
 
 function stripHtml(html) {
@@ -16,7 +17,6 @@ function stripHtml(html) {
 }
 
 export default function AcademiaCourses({ courses = [], error = null }) {
-
   const cleaned = useMemo(
     () =>
       (courses || []).map((c) => ({
@@ -42,20 +42,33 @@ export default function AcademiaCourses({ courses = [], error = null }) {
     );
   }
 
-
-
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {cleaned.map((c) => (
-        <CourseCard
-          key={c.id}
-          name={c.name}
-          alt={c.alt}
-          image={c.image}
-          urlslug={`academia/${c.slug}`}
-          shortdescription={c.shortClean}
-        />
-      ))}
-    </section>
+    <>
+      {/* <HeaderSection
+        pagetitle={courses[0]?.name || "Academia Courses1"}
+        shortdescription={
+          stripHtml(courses[0]?.Short_Description) || "Browse our courses"
+        }
+      /> */}
+      <HeaderSection
+        pagetitle={"Academia Courses"}
+        shortdescription={
+          "Browse our courses"
+        }
+      />
+
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 py-10">
+        {cleaned.map((c) => (
+          <CourseCard
+            key={c.id}
+            name={c.name}
+            alt={c.alt}
+            image={c.image}
+            urlslug={`academia/${c.slug}`}
+            shortdescription={c.shortClean}
+          />
+        ))}
+      </section>
+    </>
   );
 }

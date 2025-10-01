@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import DownloadBrochureForm from "@/components/DownloadBrochureForm/DownloadBrochureForm";
+import { MessageCircle } from "lucide-react"; // lucide-react WhatsApp-ish icon
 
 export default function CourseHero({ course, brochurePath }) {
   if (!course) return null;
@@ -62,7 +63,22 @@ export default function CourseHero({ course, brochurePath }) {
               />
             )}
 
-            {course.category !== "academia" && (
+            {course.category === "academia" ? (
+              <a
+                href="https://wa.me/+923101111774"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-2 bg-green-500 px-6 py-3 rounded-lg shadow-lg hover:bg-green-400 transition text-white"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  Contact Us
+                </motion.button>
+              </a>
+            ) : (
               <a
                 href="https://lms.pnytraining.com"
                 target="_blank"

@@ -37,6 +37,8 @@ async function fetchCourseBySlug(slug) {
       category: raw.coursecategory || "",
       Instructor:raw.Instructor || "",
       status: raw.status || "", 
+      faqs: raw.faqs || "",
+      subjects: raw.subjects || "",
     };
 
     return { course, error: null };

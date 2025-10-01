@@ -29,7 +29,7 @@ const Webbanner = async () => {
   return (
     <div className="web-banner mx-auto">
       <Image 
-        src={`${process.env.NEXT_PUBLIC_API_URL}${banner.imageUrl}`} 
+        src={`http://api.pnytrainings.com${banner.imageUrl}`} 
         loading="eager"
         alt="Web Banner"
         width={1920} 
