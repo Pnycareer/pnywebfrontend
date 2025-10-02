@@ -28,7 +28,7 @@ const AcademiaDetails = ({ course }) => {
       {course.Instructor && (
         <InstructorOverview Instructor={course.Instructor} />
       )}
-      {/* <Coursedescription coursedesc={course} /> */}
+      <Coursedescription coursedesc={course} />
       <CourseAccordion faqs={course.faqs} />
     </>
   );
