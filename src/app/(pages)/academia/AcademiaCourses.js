@@ -51,9 +51,9 @@ export default function AcademiaCourses({ courses = [], error = null }) {
         }
       /> */}
       <HeaderSection
-        pagetitle={"Academia Courses"}
+        pagetitle={"PNY Academia"}
         shortdescription={
-          "Browse our courses"
+          "PNY Academia provides quality education with expert teachers and modern learning methods. Our focus is on student growth, success, and excellence."
         }
       />
 

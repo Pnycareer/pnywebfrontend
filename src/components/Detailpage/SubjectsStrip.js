@@ -64,18 +64,6 @@ const SubjectsList = ({
   return (
     <section className="py-8">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        {/* ===== Introduction ===== */}
-        {shortdesc ? (
-          <div className="mb-8">
-            <h2 className="text-2xl font-semibold tracking-tight">{introductionTitle}</h2>
-            <div
-              className="mt-3 text-sm text-muted-foreground prose prose-sm dark:prose-invert max-w-none"
-              // make sure the HTML is trusted/sanitized upstream
-              dangerouslySetInnerHTML={{ __html: shortdesc }}
-            />
-          </div>
-        ) : null}
-
         {/* ===== Subjects ===== */}
         {list.length ? (
           <>
