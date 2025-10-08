@@ -39,7 +39,6 @@ export const gonePaths = new Set([
   "/core-",
   "/cdn-cgi/l/email-protection",
   "/brochure/undefined",
-  "/blog",
   "/student_login",
   "/web-and-graphics-online-course-for-children-in-pakistan",
   "/ceh-ethical-hacking-",
