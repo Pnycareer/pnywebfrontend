@@ -269,7 +269,7 @@ export default function SpinWheelModal({
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={closeAll} />
 
           {/* Top banner text */}
-          <div className="absolute top-1 left-1/2  text-center -translate-x-1/2 text-white text-lg sm:text-2xl font-bold drop-shadow">
+          <div className="absolute top-3 left-1/2 text-center -translate-x-1/2 text-white text-lg sm:text-2xl font-bold drop-shadow">
             💫 Try Your Luck — Spin the Wheel & Grab Your Exclusive Discount!
           </div>
 
@@ -433,7 +433,7 @@ export default function SpinWheelModal({
 
       {/* Apply form modal */}
       {formModal && (
-        <div className="fixed inset-0 z:[1200] flex items-center justify-center p-3 sm:p-4" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-[1200] flex items-center justify-center p-3 sm:p-4" role="dialog" aria-modal="true">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setFormModal(false)} />
           <div className="relative w-full max-w-[92vw] sm:max-w-lg rounded-2xl bg-white text-black shadow-[0_40px_120px_rgba(0,0,0,0.45)] p-4 sm:p-6">
             <button
