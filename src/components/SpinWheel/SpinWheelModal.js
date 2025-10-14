@@ -44,12 +44,11 @@ export default function SpinWheelModal({
   /* ------- wheel config ------- */
   const sectors = useMemo(
     () => [
-      { label: "10%" }, { label: "20%" }, { label: "30%" }, { label: "40%" },
-      { label: "50%" }, { label: "60%" }, { label: "70%" }, { label: "80%" },
+      { label: "10%" }, { label: "15%" }, { label: "20%" }, { label: "30%" },
+      { label: "40%" }, { label: "50%" }, { label: "60%" }, { label: "70%" },
     ],
     []
   );
-  const FORCE_WIN_INDEX = 0; // keep it landing on 10%
 
   const colors = useMemo(() => {
     const baseH = 25, step = 360 / sectors.length;
@@ -60,6 +59,8 @@ export default function SpinWheelModal({
 
   /* ------- popup + body lock ------- */
   const [open, setOpen] = useState(false);
+  const [selectModal, setSelectModal] = useState(false);
+  const [formModal, setFormModal] = useState(false);
   useEffect(() => {
     if (!autoOpen) return;
     const t = setTimeout(() => {
@@ -78,15 +79,27 @@ export default function SpinWheelModal({
       document.documentElement.style.overflow = "";
     }
     return () => { document.documentElement.style.overflow = ""; };
-  }, [open]);
+  }, [open, selectModal, formModal]);
 
   /* ------- wheel state ------- */
   const wheelRef = useRef(null);
   const [angle, setAngle] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState(null);
-  const [selectModal, setSelectModal] = useState(false);
-  const [formModal, setFormModal] = useState(false);
+
+  /* ------- responsive size ------- */
+  const [size, setSize] = useState(420);
+  useEffect(() => {
+    function computeSize() {
+      const vw = typeof window !== "undefined" ? window.innerWidth : 1024;
+      const base = Math.min(vw * 0.9, 560); // cap on desktop
+      return Math.max(260, Math.round(base)); // floor on small phones
+    }
+    const apply = () => setSize(computeSize());
+    apply();
+    window.addEventListener("resize", apply);
+    return () => window.removeEventListener("resize", apply);
+  }, []);
 
   /* ------- courses state ------- */
   const [courses, setCourses] = useState([]);
@@ -165,17 +178,23 @@ export default function SpinWheelModal({
     setForm({ name: "", email: "", contact: "" });
     setSelectModal(false); setFormModal(false);
 
-    const winnerIndex = FORCE_WIN_INDEX === null ? Math.floor(Math.random() * N) : FORCE_WIN_INDEX;
+    // Only allow 10%, 15%, 20%
+    const allowed = sectors
+      .map((s, i) => ({ label: s.label, index: i }))
+      .filter(s => ["10%", "15%", "20%"].includes(s.label));
+    const winner = allowed[Math.floor(Math.random() * allowed.length)];
+    const winnerIndex = winner.index;
+
     const targetCenterDeg = winnerIndex * SLICE + HALF_SLICE;
     const current = ((angle % 360) + 360) % 360;
-    const spins = (6 + (FORCE_WIN_INDEX === null ? Math.floor(Math.random() * 2) : 1)) * 360;
+    const spins = (6 + Math.floor(Math.random() * 2)) * 360;
     const delta = ((360 - targetCenterDeg - current + 360) % 360) + spins;
     const finalAngle = angle + delta;
 
     const el = wheelRef.current;
     if (!el) return;
     el.style.transition = "transform 3.3s cubic-bezier(0.12, 0.6, 0, 1)";
-    el.offsetHeight;
+    el.offsetHeight; // force reflow
     el.style.transform = `rotate(${finalAngle}deg)`;
 
     const onEnd = () => {
@@ -189,6 +208,11 @@ export default function SpinWheelModal({
       setTimeout(() => setSelectModal(true), 60);
     };
     el.addEventListener("transitionend", onEnd, { once: true });
+
+    // Fallback for some mobile browsers where transitionend might not fire
+    setTimeout(() => {
+      if (spinning) onEnd();
+    }, 3600);
   }
 
   /* ------- continue to form ------- */
@@ -228,7 +252,11 @@ export default function SpinWheelModal({
   }
 
   /* ------- sizes ------- */
-  const size = 420, R = size / 2, labelR = R * 0.66, cx = R, cy = R;
+  const R = size / 2, labelR = R * 0.66, cx = R, cy = R;
+  const hubR = Math.max(50, size * 0.135);
+  const labelFont = Math.max(14, Math.round(size * 0.043));
+  const pointerHalfW = Math.max(10, Math.round(size * 0.033));
+  const pointerH = Math.max(18, Math.round(size * 0.062));
 
   // don't render anything if closed
   if (!open && !selectModal && !formModal) return null;
@@ -237,9 +265,15 @@ export default function SpinWheelModal({
     <>
       {/* Main overlay holding the wheel */}
       {open && (
-        <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center p-3 sm:p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={closeAll} />
-          <div className="relative w-full max-w-3xl">
+
+          {/* Top banner text */}
+          <div className="absolute top-1 left-1/2  text-center -translate-x-1/2 text-white text-lg sm:text-2xl font-bold drop-shadow">
+            💫 Try Your Luck — Spin the Wheel & Grab Your Exclusive Discount!
+          </div>
+
+          <div className="relative w-full max-w-[92vw] sm:max-w-3xl">
             {/* Global close (kills everything) */}
             <button
               onClick={closeAll}
@@ -257,7 +291,7 @@ export default function SpinWheelModal({
                 onClick={spin}
                 disabled={spinning}
                 className={`absolute z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-                  rounded-full px-5 py-3 text-sm font-semibold
+                  rounded-full px-5 py-3 text-sm sm:text-base font-semibold
                   bg-white text-black shadow-[0_10px_30px_rgba(255,255,255,0.08)]
                   ${spinning ? "opacity-60 cursor-not-allowed" : "hover:scale-[1.02] active:scale-[0.98]"}
                   transition-transform duration-150`}
@@ -300,7 +334,7 @@ export default function SpinWheelModal({
                       <text
                         key={`label-${i}`} x={pos.x} y={pos.y}
                         textAnchor="middle" dominantBaseline="middle"
-                        fontSize="18" fontWeight="700" fill="#0b0b10"
+                        fontSize={labelFont} fontWeight="700" fill="#0b0b10"
                         style={{ paintOrder: "stroke" }}
                         stroke="rgba(255,255,255,0.9)" strokeWidth="1"
                       >
@@ -308,7 +342,7 @@ export default function SpinWheelModal({
                       </text>
                     );
                   })}
-                  <circle cx={cx} cy={cy} r={58} fill="#ffffff" />
+                  <circle cx={cx} cy={cy} r={hubR} fill="#ffffff" />
                 </svg>
               </div>
 
@@ -317,9 +351,9 @@ export default function SpinWheelModal({
                 <div
                   className="w-0 h-0"
                   style={{
-                    borderLeft: "14px solid transparent",
-                    borderRight: "14px solid transparent",
-                    borderTop: "26px solid #fff",
+                    borderLeft: `${pointerHalfW}px solid transparent`,
+                    borderRight: `${pointerHalfW}px solid transparent`,
+                    borderTop: `${pointerH}px solid #fff`,
                     filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.35))",
                   }}
                 />
@@ -331,9 +365,9 @@ export default function SpinWheelModal({
 
       {/* Course select modal (on top, still closes all on ✕) */}
       {selectModal && (
-        <div className="fixed inset-0 z-[1100] flex items-center justify-center p-4" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-[1100] flex items-center justify-center p-3 sm:p-4" role="dialog" aria-modal="true">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSelectModal(false)} />
-          <div className="relative w-full max-w-2xl rounded-2xl bg-white text-black shadow-[0_40px_120px_rgba(0,0,0,0.45)] p-6">
+          <div className="relative w-full max-w-[92vw] sm:max-w-2xl rounded-2xl bg-white text-black shadow-[0_40px_120px_rgba(0,0,0,0.45)] p-4 sm:p-6">
             <button
               onClick={closeAll}
               className="absolute right-3 top-3 rounded-md px-2 py-1 text-sm bg-black/5 hover:bg-black/10"
@@ -342,7 +376,7 @@ export default function SpinWheelModal({
               ✕
             </button>
             <div className="mb-4">
-              <h2 className="text-xl font-bold">🎉 Congratulations!</h2>
+              <h2 className="text-lg sm:text-xl font-bold">🎉 Congratulations!</h2>
               <p className="mt-1 text-sm text-black/70">You unlocked a <b>{discountPct}%</b> discount. Pick a course.</p>
             </div>
             <input
@@ -374,12 +408,12 @@ export default function SpinWheelModal({
                       checked={selected}
                       onChange={() => setSelectedCourse(c)}
                     />
-                    <div className="flex-1 font-semibold">{c.course_Name || "Untitled Course"}</div>
+                    <div className="flex-1 font-semibold text-sm sm:text-base">{c.course_Name || "Untitled Course"}</div>
                   </label>
                 );
               })}
             </div>
-            <div className="mt-5 flex items-center justify-end gap-3">
+            <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-3">
               <button onClick={() => setSelectModal(false)} className="px-4 py-2 rounded-lg bg-black/5 hover:bg-black/10">
                 Not now
               </button>
@@ -399,9 +433,9 @@ export default function SpinWheelModal({
 
       {/* Apply form modal */}
       {formModal && (
-        <div className="fixed inset-0 z-[1200] flex items-center justify-center p-4" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z:[1200] flex items-center justify-center p-3 sm:p-4" role="dialog" aria-modal="true">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setFormModal(false)} />
-          <div className="relative w-full max-w-lg rounded-2xl bg-white text-black shadow-[0_40px_120px_rgba(0,0,0,0.45)] p-6">
+          <div className="relative w-full max-w-[92vw] sm:max-w-lg rounded-2xl bg-white text-black shadow-[0_40px_120px_rgba(0,0,0,0.45)] p-4 sm:p-6">
             <button
               onClick={closeAll}
               className="absolute right-3 top-3 rounded-md px-2 py-1 text-sm bg-black/5 hover:bg-black/10"
@@ -410,7 +444,7 @@ export default function SpinWheelModal({
               ✕
             </button>
 
-            <h2 className="text-xl font-bold">Apply your {discountPct}% discount</h2>
+            <h2 className="text-lg sm:text-xl font-bold">Apply your {discountPct}% discount</h2>
             <p className="text-sm text-black/70 mt-1">
               Course: <b>{selectedCourse?.course_Name}</b>
             </p>
@@ -444,7 +478,7 @@ export default function SpinWheelModal({
               </div>
             )}
 
-            <div className="mt-5 flex items-center justify-end gap-3">
+            <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-3">
               <button onClick={() => setFormModal(false)} className="px-4 py-2 rounded-lg bg-black/5 hover:bg-black/10">
                 Close
               </button>
