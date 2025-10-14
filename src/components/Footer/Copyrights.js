@@ -7,6 +7,7 @@ import {
   FaLinkedin,
   FaYoutube,
   FaInstagram,
+  FaPinterest 
 } from "react-icons/fa";
 
 const socialLinks = [
@@ -38,6 +39,12 @@ const socialLinks = [
     icon: <FaInstagram />,
     href: "https://www.instagram.com/pny.trainings/",
     color: "hover:text-pink-500",
+    label: "Instagram",
+  },
+  {
+    icon: <FaPinterest />,
+    href: "https://www.pinterest.com/pnytrainingsofficial/",
+    color: "hover:text-red-500",
     label: "Instagram",
   },
 ];
