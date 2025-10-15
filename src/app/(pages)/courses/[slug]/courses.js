@@ -61,27 +61,42 @@ const Courses = ({ slug, subcategory, instructors }) => {
       </section>
 
       {/* Meet Your Instructors Section */}
-      <section className="w-full  py-10 bg-gradient-to-r from-[#1B263B] via-[#3B4A58] to-[#004d40] text-white text-center relative overflow-hidden">
-        <div className="absolute -top-16 right-0 h-80 w-80 bg-blue-400/20 blur-3xl rounded-full -z-10" />
-        <div className="absolute bottom-0 left-0 h-72 w-72 bg-pink-400/20 blur-3xl rounded-full -z-10" />
+      <section className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-indigo-900 to-slate-950 py-16 text-white">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-white/20 to-transparent"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-16 top-10 h-64 w-64 rounded-full bg-blue-500/30 blur-3xl"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-0 left-20 h-72 w-72 rounded-full bg-sky-400/25 blur-3xl"
+        />
 
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight">
-            Meet Your Instructors
+        <div className="relative mx-auto flex w-11/12 max-w-6xl flex-col items-center text-center">
+          <div className="inline-flex items-center gap-3 rounded-full border border-blue-300/70 bg-white/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-blue-100/80 shadow-lg shadow-blue-500/20 backdrop-blur">
+            <span className="h-2 w-2 rounded-full bg-blue-300" />
+            Faculty spotlight
+          </div>
+
+          <h2 className="mt-6 text-3xl font-semibold tracking-tight sm:text-4xl">
+            Meet your instructors
           </h2>
 
           <motion.div
-            className="h-1 w-20 mt-2 mb-6 mx-auto rounded-full bg-gradient-to-r from-indigo-300 via-white/50 to-pink-300 shadow-sm"
+            className="mt-4 h-1 w-24 rounded-full bg-gradient-to-r from-blue-300 via-sky-200 to-indigo-300 shadow shadow-blue-200/30"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+            transition={{ duration: 0.9, delay: 0.3, ease: "easeOut" }}
             style={{ transformOrigin: "left" }}
           />
 
-          <p className="text-base md:text-lg max-w-3xl mx-auto text-gray-100">
-            Learn from industry experts with years of experience and a passion
-            for teaching. Our instructors are dedicated to helping you succeed
-            in your learning journey.
+          <p className="mt-5 max-w-3xl text-sm leading-relaxed text-blue-100/90 sm:text-base">
+            Learn from practitioners who have launched products across fintech,
+            design, data, and growth. Every instructor stays embedded with
+            student squads to deliver feedback that accelerates real outcomes.
           </p>
         </div>
       </section>
