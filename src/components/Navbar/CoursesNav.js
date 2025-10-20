@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useRef, useMemo } from "react";
 import { AiOutlineMenu, AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
@@ -8,7 +8,8 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import pnylogo from "@/assets/logo/Pnylogo.png";
 import axiosInstance from "@/utils/axiosInstance";
-import { useRouter, usePathname } from "next/navigation"; // 👈 add usePathname
+import { useRouter, usePathname } from "next/navigation"; // ðŸ‘ˆ add usePathname
+import { Button } from "@headlessui/react";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -25,7 +26,7 @@ const CoursesNav = () => {
   const [isLoading, setIsLoading] = useState(false);
   const searchRef = useRef(null);
   const router = useRouter();
-  const pathname = usePathname(); // 👈 current route
+  const pathname = usePathname(); // ðŸ‘ˆ current route
 
   // Close search bar when clicking outside
   useEffect(() => {
@@ -73,10 +74,10 @@ const CoursesNav = () => {
     return courses.filter((c) => (c?.course_Name || "").toLowerCase().includes(q));
   }, [searchQuery, courses]);
 
-  // 👇 handle clicks so same-route clicks also scroll to top
+  // ðŸ‘‡ handle clicks so same-route clicks also scroll to top
   const handleNavClick = (href) => (e) => {
     if (pathname === href) {
-      // same page — prevent a no-op push and just scroll
+      // same page â€” prevent a no-op push and just scroll
       e.preventDefault();
       window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
       setMenuOpen(false);
@@ -103,6 +104,21 @@ const CoursesNav = () => {
 
           <CoursesDropdown />
 
+          <Link
+            href='/academia'
+            onClick={handleNavClick("/academia")}
+            scroll
+            className="hidden md:inline-flex"
+          >
+            <motion.span
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.97 }}
+              className="px-5 py-2 md:px-6 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold shadow-lg backdrop-blur-md transition duration-200 hover:from-blue-600 hover:to-indigo-700"
+            >
+              PNY Academia
+            </motion.span>
+          </Link>
+
           <button
             className="text-xl text-gray-600 hover:text-yellow-400"
             onClick={() => setSearchOpen((v) => !v)}
@@ -118,7 +134,7 @@ const CoursesNav = () => {
             <Link
               key={link.href}
               href={link.href}
-              onClick={handleNavClick(link.href)} // 👈 here
+              onClick={handleNavClick(link.href)} // ðŸ‘ˆ here
               scroll
             >
               <motion.li
@@ -156,7 +172,7 @@ const CoursesNav = () => {
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={handleNavClick(link.href)} // 👈 same fix on mobile
+                onClick={handleNavClick(link.href)} // ðŸ‘ˆ same fix on mobile
                 scroll
               >
                 <motion.li
@@ -167,6 +183,19 @@ const CoursesNav = () => {
                 </motion.li>
               </Link>
             ))}
+
+            <Link
+              href="/academia"
+              onClick={handleNavClick("/academia")}
+              scroll
+            >
+              <motion.li
+                whileTap={{ scale: 0.95 }}
+                className="text-white text-center text-base font-semibold bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl py-3 shadow-lg backdrop-blur-md hover:from-blue-600 hover:to-indigo-700 transition duration-200"
+              >
+                PNY Academia
+              </motion.li>
+            </Link>
           </motion.ul>
         )}
       </AnimatePresence>
@@ -194,7 +223,7 @@ const CoursesNav = () => {
               {searchQuery && (
                 <div className="absolute top-full mt-2 w-full max-h-60 overflow-y-auto bg-white border rounded-lg shadow-lg z-10">
                   {isLoading ? (
-                    <div className="p-4 text-sm text-gray-500">Loading…</div>
+                    <div className="p-4 text-sm text-gray-500">Loadingâ€¦</div>
                   ) : filteredCourses.length > 0 ? (
                     <ul className="space-y-2 p-4">
                       {filteredCourses.map((course) => (
@@ -226,3 +255,4 @@ const CoursesNav = () => {
 };
 
 export default CoursesNav;
+

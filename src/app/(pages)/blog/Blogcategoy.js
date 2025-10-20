@@ -63,7 +63,7 @@ const BlogCategory = ({ blogsData }) => {
         ${
           selectedCategory === category
             ? "bg-blue-600 text-white shadow-md"
-            : "bg-white/10 text-white hover:bg-white/20"
+            : "bg-black text-white hover:bg-blue-800"
         }`}
             >
               {category.charAt(0).toUpperCase() +
