@@ -44,18 +44,16 @@ export default function AcademiaCourses({ courses = [], error = null }) {
 
   return (
     <>
-      {/* <HeaderSection
-        pagetitle={courses[0]?.name || "Academia Courses1"}
-        shortdescription={
-          stripHtml(courses[0]?.Short_Description) || "Browse our courses"
-        }
-      /> */}
       <HeaderSection
         pagetitle={"PNY Academia"}
         shortdescription={
           "PNY Academia provides quality education with expert teachers and modern learning methods. Our focus is on student growth, success, and excellence."
         }
       />
+      {/* <HeaderSection
+        image="/academia.jpg"
+        fullScreen={false}
+      /> */}
 
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 py-10">
         {cleaned.map((c) => (

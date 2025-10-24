@@ -1,13 +1,17 @@
-import React from 'react'
-import SuccessStories from './SuccessStories'
+import HeaderSection from "@/components/HeaderSection/Headersection";
+import SuccessStories from "./SuccessStories";
 
-
-const page = () => {
+export default function Page() {
   return (
-   <>
-   <SuccessStories/>
-   </>
-  )
-}
+    <>
+      <HeaderSection
+        image="https://www.sittechno.org/userfiles/image/success1.jpg"
+        fullScreen={false}
+      />
 
-export default page
+      <section className="mx-auto w-11/12 py-10">
+        <SuccessStories />
+      </section>
+    </>
+  );
+}

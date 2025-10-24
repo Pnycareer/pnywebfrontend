@@ -89,28 +89,31 @@ const BenefitsSection = ({ className = "" }) => {
   return (
     <section
       aria-labelledby="benefits-heading"
-      className={`relative isolate overflow-hidden py-10 px-6 md:px-12 lg:px-20 ${className}`}
+      className={`relative isolate overflow-hidden bg-gradient-to-br from-sky-50 via-white to-emerald-50 py-12 px-6 md:px-12 lg:px-20 ${className}`}
     >
       {/* Next-level gradient system */}
       <div
-        className="pointer-events-none absolute -top-40 -left-40 h-[600px] w-[600px] -z-10 rounded-full opacity-50 blur-3xl"
+        className="pointer-events-none absolute -top-40 -left-40 h-[600px] w-[600px] -z-10 rounded-full opacity-60 blur-3xl"
         style={{
-          background: "radial-gradient(closest-side, rgba(59,130,246,0.35), rgba(99,102,241,0.25), rgba(147,51,234,0.15), rgba(168,85,247,0.08), transparent)",
-          mixBlendMode: "soft-light",
+          background:
+            "radial-gradient(closest-side, rgba(14,165,233,0.28), rgba(56,189,248,0.22), rgba(45,212,191,0.18), rgba(16,185,129,0.12), transparent)",
+          mixBlendMode: "screen",
         }}
       />
       <div
-        className="pointer-events-none absolute -bottom-40 -right-40 h-[700px] w-[700px] -z-10 rounded-full opacity-45 blur-3xl"
+        className="pointer-events-none absolute -bottom-44 -right-40 h-[700px] w-[700px] -z-10 rounded-full opacity-55 blur-3xl"
         style={{
-          background: "radial-gradient(closest-side, rgba(16,185,129,0.30), rgba(59,130,246,0.20), rgba(244,63,94,0.12), rgba(236,72,153,0.08), transparent)",
-          mixBlendMode: "soft-light",
+          background:
+            "radial-gradient(closest-side, rgba(125,211,252,0.26), rgba(56,189,248,0.18), rgba(34,197,94,0.14), rgba(74,222,128,0.1), transparent)",
+          mixBlendMode: "screen",
         }}
       />
       <div
-        className="pointer-events-none absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 -z-10 rounded-full opacity-30 blur-3xl"
+        className="pointer-events-none absolute top-1/2 left-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 -z-10 rounded-full opacity-40 blur-3xl"
         style={{
-          background: "radial-gradient(closest-side, rgba(168,85,247,0.25), rgba(236,72,153,0.15), rgba(244,63,94,0.10), transparent)",
-          mixBlendMode: "soft-light",
+          background:
+            "radial-gradient(closest-side, rgba(59,130,246,0.18), rgba(45,212,191,0.14), rgba(14,165,233,0.1), transparent)",
+          mixBlendMode: "screen",
         }}
       />
 

@@ -27,34 +27,6 @@ const Coursedescription = ({ coursedesc }) => {
     return relatedCourses.sort(() => Math.random() - 0.5).slice(0, 4);
   }, [relatedCourses]);
 
-  // Memoize the fetch function to prevent unnecessary re-creation
-  // const fetchRelatedCourses = useCallback(async () => {
-  //   // if (!coursedesc?.category_Name) return;
-
-  //   setIsLoading(true);
-  //   setError(null);
-
-  //   try {
-  //     const response = await axios.get(
-  //       `/courses/getoncategory/${coursedesc.category_Name}`
-  //     );
-
-  //     const { courses } = response.data;
-
-  //     if (Array.isArray(courses)) {
-  //       setRelatedCourses(courses);
-  //     } else {
-  //       setRelatedCourses([]);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching related courses:", error);
-  //     setError("Failed to load related courses");
-  //     setRelatedCourses([]);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // }, [coursedesc?.category_Name]);
-
   const fetchRelatedCourses = useCallback(async () => {
     setIsLoading(true);
     setError(null);
@@ -62,7 +34,7 @@ const Coursedescription = ({ coursedesc }) => {
     try {
       let categoryName = coursedesc?.category_Name;
 
-      // if category is academia → pick a random one from the pool
+      // if category is academia pick a random one from the pool
       if ((coursedesc?.category || "").toLowerCase() === "academia") {
         const pool = [
           "diploma",
@@ -82,9 +54,7 @@ const Coursedescription = ({ coursedesc }) => {
         return;
       }
 
-      const response = await axios.get(
-        `/courses/getoncategory/${categoryName}`
-      );
+      const response = await axios.get(`/courses/getoncategory/${categoryName}`);
       const { courses } = response.data;
 
       if (Array.isArray(courses)) {
@@ -137,43 +107,73 @@ const Coursedescription = ({ coursedesc }) => {
   // Early return for invalid props
   if (!coursedesc) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex min-h-screen items-center justify-center">
         <p className="text-gray-500">No course description available</p>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-blue-100 to-[#acb8d1] p-6">
-      <div className="grid grid-cols-12 gap-6">
-        {/* Course Description Container */}
-        <div className="col-span-12 md:col-span-8">
-          <div className="rounded-2xl overflow-hidden">
+    <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-sky-50 via-white to-emerald-50 p-6 shadow-xl shadow-slate-200/60 sm:p-10">
+      <div
+        className="pointer-events-none absolute -top-40 -left-40 h-[600px] w-[600px] -z-10 rounded-full opacity-60 blur-3xl"
+        aria-hidden="true"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgba(14,165,233,0.28), rgba(56,189,248,0.22), rgba(45,212,191,0.18), rgba(16,185,129,0.12), transparent)",
+          mixBlendMode: "screen",
+        }}
+      />
+      <div
+        className="pointer-events-none absolute -bottom-44 -right-40 h-[700px] w-[700px] -z-10 rounded-full opacity-55 blur-3xl"
+        aria-hidden="true"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgba(125,211,252,0.26), rgba(56,189,248,0.18), rgba(34,197,94,0.14), rgba(74,222,128,0.1), transparent)",
+          mixBlendMode: "screen",
+        }}
+      />
+      <div
+        className="pointer-events-none absolute top-1/2 left-1/2 h-[520px] w-[520px] -z-10 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40 blur-3xl"
+        aria-hidden="true"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgba(59,130,246,0.18), rgba(45,212,191,0.14), rgba(14,165,233,0.1), transparent)",
+          mixBlendMode: "screen",
+        }}
+      />
+
+      <div className="relative mx-auto grid max-w-7xl grid-cols-12 gap-6 md:items-start">
+        <div className="col-span-12 md:col-span-8 md:max-h-[calc(100vh-9rem)] md:overflow-y-auto md:pr-3 lg:max-h-[calc(100vh-10rem)] lg:pr-6">
+          <div className="rounded-3xl border border-white/30 bg-white/85 p-6 shadow-lg backdrop-blur-sm sm:p-8">
             {updatedHtml ? (
               <RichTextRenderer html={updatedHtml} />
             ) : (
-              <div className="bg-white p-6 rounded-2xl">
-                <p className="text-gray-500">No course description available</p>
+              <div className="rounded-2xl border border-dashed border-slate-200 bg-white/70 p-6 text-center text-sm text-slate-500">
+                No course description available
               </div>
             )}
           </div>
         </div>
 
-        {/* Sidebar */}
         <div className="col-span-12 md:col-span-4">
-          {/* Table of Contents */}
-          {coursedesc.showtoc && headings.length > 0 && (
-            <div className="bg-white p-6 rounded-2xl shadow-lg mb-6 border border-gray-200">
-              <h3 className="text-xl font-bold mb-5 text-blue-800">
-                Table of Contents
-              </h3>
+          {coursedesc.showtoc && headings.length > 0 ? (
+            <div className="mb-6 rounded-3xl border border-white/40 bg-white/85 p-6 shadow-lg backdrop-blur-sm">
+              <div className="mb-5 flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sky-500/10 text-sky-600">
+                  #
+                </span>
+                <h3 className="text-xl font-semibold text-slate-900">
+                  Table of Contents
+                </h3>
+              </div>
               <nav aria-label="Table of contents">
-                <ul className="list-disc pl-6 space-y-3 text-sm text-gray-800">
+                <ul className="space-y-3 text-sm text-slate-700">
                   {headings.map((heading) => (
                     <li key={heading.id}>
                       <button
                         onClick={() => handleHeadingClick(heading.id)}
-                        className="text-left hover:text-blue-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded px-2 py-1"
+                        className="w-full rounded-xl bg-slate-50/60 px-3 py-2 text-left transition-colors duration-200 hover:bg-sky-50 hover:text-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-offset-2 focus:ring-offset-white"
                         aria-label={`Jump to section: ${heading.text}`}
                       >
                         {heading.text}
@@ -183,32 +183,38 @@ const Coursedescription = ({ coursedesc }) => {
                 </ul>
               </nav>
             </div>
-          )}
+          ) : null}
 
-          {/* Related Courses */}
-
-          <aside className="sticky top-28 h-fit space-y-4 rounded-2xl border border-gray-200 bg-white/50 p-6 shadow-md backdrop-blur-md">
-            <h3 className="mb-6 text-2xl font-bold text-gray-800">
-              {(coursedesc?.category || "").toLowerCase() === "academia"
-                ? "Trending in Other Categories"
-                : "Related Courses"}
-            </h3>
+          <aside className="sticky top-20 h-fit space-y-4 rounded-3xl border border-white/40 bg-white/80 p-6 shadow-xl backdrop-blur-md">
+            <div className="flex items-center justify-between gap-3">
+              <h3 className="text-lg font-semibold text-slate-900">
+                {(coursedesc?.category || "").toLowerCase() === "academia"
+                  ? "Trending in Other Categories"
+                  : "Related Courses"}
+              </h3>
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sky-500/10 text-sm font-medium text-sky-600">
+                {displayedRelatedCourses.length}
+              </span>
+            </div>
+            <p className="text-xs text-slate-500">
+              Curated picks to keep your learning momentum strong.
+            </p>
 
             {isLoading ? (
               <div className="space-y-4">
                 {[...Array(4)].map((_, index) => (
                   <div key={index} className="animate-pulse">
-                    <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                    <div className="h-3 bg-gray-200 rounded w-3/4"></div>
+                    <div className="mb-2 h-4 rounded bg-slate-200/80" />
+                    <div className="h-3 w-3/4 rounded bg-slate-200/70" />
                   </div>
                 ))}
               </div>
             ) : error ? (
-              <div className="text-center py-4">
-                <p className="text-sm text-red-500 mb-2">{error}</p>
+              <div className="py-4 text-center">
+                <p className="mb-2 text-sm text-red-500">{error}</p>
                 <button
                   onClick={fetchRelatedCourses}
-                  className="text-sm text-blue-500 hover:underline"
+                  className="text-sm font-medium text-sky-600 hover:underline"
                 >
                   Try again
                 </button>
@@ -218,7 +224,7 @@ const Coursedescription = ({ coursedesc }) => {
                 {displayedRelatedCourses.map((course) => (
                   <article
                     key={course._id}
-                    className="group cursor-pointer rounded-xl border border-white/30 bg-white/20 p-4 shadow-lg backdrop-blur-md backdrop-saturate-150 transition-all duration-300 hover:shadow-xl hover:border-white/50 hover:bg-white/30 focus-within:ring-2 focus-within:ring-blue-500/50 focus-within:ring-offset-2 focus-within:ring-offset-transparent"
+                    className="group cursor-pointer rounded-2xl border border-white/30 bg-white/40 p-4 shadow-lg backdrop-blur-md backdrop-saturate-150 transition-all duration-300 hover:-translate-y-1 hover:border-sky-200 hover:bg-white/60 hover:shadow-xl focus-within:ring-2 focus-within:ring-sky-400/60 focus-within:ring-offset-2 focus-within:ring-offset-white"
                     onClick={() => handleCourseClick(course.url_Slug)}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
@@ -230,10 +236,10 @@ const Coursedescription = ({ coursedesc }) => {
                     role="button"
                     aria-label={`View details for ${course.course_Name}`}
                   >
-                    <div className="flex items-start space-x-3">
-                      <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500/90 to-blue-600/90 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500/90 to-emerald-500/90 text-white shadow-md">
                         <svg
-                          className="w-5 h-5 text-white"
+                          className="h-5 w-5"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -246,21 +252,21 @@ const Coursedescription = ({ coursedesc }) => {
                           />
                         </svg>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-sm font-semibold text-gray-800 group-hover:text-blue-700 transition-colors duration-200 line-clamp-2 leading-tight">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="line-clamp-2 text-sm font-semibold text-slate-900 transition-colors duration-200 group-hover:text-sky-600">
                           {course.course_Name}
                         </h3>
-                        {course?.Short_Description && (
-                          <p className="mt-2 text-xs text-gray-600 line-clamp-2 leading-relaxed">
+                        {course?.Short_Description ? (
+                          <p className="mt-2 line-clamp-2 text-xs text-slate-600">
                             {course.Short_Description.slice(0, 80)}
                             {course.Short_Description.length > 80 && "..."}
                           </p>
-                        )}
+                        ) : null}
                         <div className="mt-3 flex items-center justify-between">
-                          <span className="inline-flex items-center text-xs font-medium text-blue-600 group-hover:text-blue-700 transition-colors duration-200">
+                          <span className="inline-flex items-center text-xs font-medium text-sky-600 transition-colors duration-200 group-hover:text-sky-700">
                             View Course
                             <svg
-                              className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform duration-200"
+                              className="ml-1 h-3 w-3 transition-transform duration-200 group-hover:translate-x-1"
                               fill="none"
                               stroke="currentColor"
                               viewBox="0 0 24 24"
@@ -273,7 +279,7 @@ const Coursedescription = ({ coursedesc }) => {
                               />
                             </svg>
                           </span>
-                          <div className="w-2 h-2 bg-blue-500/80 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 backdrop-blur-sm"></div>
+                          <div className="h-2 w-2 rounded-full bg-sky-500/80 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
                         </div>
                       </div>
                     </div>
@@ -281,14 +287,14 @@ const Coursedescription = ({ coursedesc }) => {
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-gray-500 text-center py-4">
+              <p className="py-4 text-center text-sm text-slate-500">
                 No related courses found.
               </p>
             )}
           </aside>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
