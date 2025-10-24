@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 const Gallery = ({ galleries }) => {
   const [openCategory, setOpenCategory] = useState(null);
@@ -101,12 +102,16 @@ const Gallery = ({ galleries }) => {
                             className="cursor-pointer"
                             onClick={() => openImage(gallery._id, idx)}
                           >
-                            <img
-                              src={src}
-                              alt="Gallery pic"
-                              className="w-full h-40 object-cover rounded-md"
-                              loading="lazy"
-                            />
+                            <div className="relative h-40 w-full">
+                              <Image
+                                src={src}
+                                alt="Gallery pic"
+                                fill
+                                unoptimized
+                                className="rounded-md object-cover"
+                                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 20vw"
+                              />
+                            </div>
                           </motion.div>
                         );
                       })}
@@ -156,16 +161,27 @@ const Gallery = ({ galleries }) => {
             )}
 
             {/* Image */}
-            <motion.img
-              src={currentSrc}
-              alt="Big Preview"
-              className="max-w-3xl max-h-[80vh] rounded-lg shadow-lg"
+            <motion.div
+              className="relative w-[90vw] max-w-3xl"
+              style={{ height: "80vh" }}
               initial={{ scale: 0.6 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.6 }}
               transition={{ duration: 0.35 }}
               onClick={(e) => e.stopPropagation()}
-            />
+            >
+              <div className="relative h-full w-full">
+                <Image
+                  src={currentSrc}
+                  alt="Big Preview"
+                  fill
+                  unoptimized
+                  className="rounded-lg object-contain"
+                  sizes="(max-width: 768px) 90vw, 60vw"
+                  priority
+                />
+              </div>
+            </motion.div>
 
             {/* Next button */}
             {pictures.length > 1 && (

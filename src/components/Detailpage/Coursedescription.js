@@ -144,7 +144,7 @@ const Coursedescription = ({ coursedesc }) => {
       />
 
       <div className="relative mx-auto grid max-w-7xl grid-cols-12 gap-6 md:items-start">
-        <div className="col-span-12 md:col-span-8 md:max-h-[calc(100vh-9rem)] md:overflow-y-auto md:pr-3 lg:max-h-[calc(100vh-10rem)] lg:pr-6">
+        <div className="col-span-12 md:col-span-8 md:max-h-[calc(100vh-9rem)] md:overflow-y-auto md:pr-3 lg:max-h-[calc(120vh-10rem)] lg:pr-6">
           <div className="rounded-3xl border border-white/30 bg-white/85 p-6 shadow-lg backdrop-blur-sm sm:p-8">
             {updatedHtml ? (
               <RichTextRenderer html={updatedHtml} />

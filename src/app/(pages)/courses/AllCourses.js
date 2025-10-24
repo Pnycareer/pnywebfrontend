@@ -103,7 +103,10 @@ function LoadMoreTrigger({ onTrigger }) {
 
 /* ---------- main component ---------- */
 const AllCourses = ({ categories }) => {
-  const safeCategories = Array.isArray(categories) ? categories : [];
+  const safeCategories = useMemo(
+    () => (Array.isArray(categories) ? categories : []),
+    [categories]
+  );
 
   // debounce search
   const [rawQuery, setRawQuery] = useState("");

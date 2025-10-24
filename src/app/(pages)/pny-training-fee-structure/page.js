@@ -3,6 +3,8 @@
 
 import FeeStructure from "./Feestruchure";
 
+export const dynamic = "force-dynamic";
+
 const cities = ["Lahore", "Rawalpindi", "Multan"];
 const durations = [
   { label: "1 months", value: "1", type: "month" },

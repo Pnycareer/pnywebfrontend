@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import HeaderSection from "@/components/HeaderSection/Headersection";
 
 const Fastbootcamp = ({ bootcampCourses }) => {
@@ -42,15 +43,18 @@ const Fastbootcamp = ({ bootcampCourses }) => {
                   <Link
                     href={`/${course.url_Slug}`}
                     key={course._id}
-                    className="bg-white rounded-xl shadow-md overflow-hidden transition transform hover:-translate-y-1 hover:shadow-lg"
+                    className="overflow-hidden rounded-xl bg-white shadow-md transition transform hover:-translate-y-1 hover:shadow-lg"
                   >
-                    <img
-                      src={`${
-                        process.env.NEXT_PUBLIC_API_URL
-                      }/${course.course_Image.replace(/\\/g, "/")}`}
-                      alt={course.course_Name}
-                      className="w-full h-52 object-cover rounded-t-xl"
-                    />
+                    <div className="relative h-52 w-full">
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_API_URL}/${course.course_Image.replace(/\\/g, "/")}`}
+                        alt={course.course_Name}
+                        fill
+                        unoptimized
+                        className="rounded-t-xl object-cover"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      />
+                    </div>
                     <div className="p-5">
                       <h3 className="text-xl font-semibold mb-2 text-gray-800">
                         {course.course_Name}

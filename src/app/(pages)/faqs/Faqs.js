@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import HeaderSection from "@/components/HeaderSection/Headersection";
@@ -8,7 +8,10 @@ import CourseAccordion from "@/components/CoursesAccordian/CoursesAccordion";
 
 
 export default function Faqs({ data = [] }) {
-  const safeData = Array.isArray(data) ? data : [];
+  const safeData = useMemo(
+    () => (Array.isArray(data) ? data : []),
+    [data]
+  );
   const [activeCategory, setActiveCategory] = useState(safeData[0] || null);
   const faqRef = useRef(null);
 

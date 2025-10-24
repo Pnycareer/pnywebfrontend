@@ -66,7 +66,7 @@ export const gonePrefixes = [
 // query-specific rules (only 410 when query contains these)
 export const goneQueryRules = [
   { path: "/", includes: ["ref=steemhunt"] },
-  { path: "/blog", includes: ["category=design"] },
+  { path: "/blog", includes: ["category=abc"] },
   // if you only want the _rsc one gone (and not the whole page), uncomment:
   // { path: "/mastery-packaging--label-design-bootcamp", includes: ["_rsc="] },
 ]
