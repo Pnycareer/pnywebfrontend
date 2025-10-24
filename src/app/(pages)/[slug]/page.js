@@ -7,16 +7,10 @@ import axios from "@/utils/axiosInstance";
 export default async function Page({ params }) {
   const { slug } = await params;
 
-
-  console.log(slug)
-
   let course;
 
   try {
-    const response = await axios.get(
-      `/courses/getonslug/${slug}`,
-      { headers: { "Cache-Control": "no-cache" } }
-    );
+    const response = await axios.get(`/courses/getonslug/${slug}`);
 
     course = response.data;
 
