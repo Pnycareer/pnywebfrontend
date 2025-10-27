@@ -58,7 +58,7 @@ const CourseCard = ({ name, alt, image, urlslug, shortdescription }) => {
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority={false}
-            className="object-cover transition duration-700 group-hover:scale-105"
+            className="object-top transition duration-700 group-hover:scale-105"
             unoptimized
           />
           <div className="absolute inset-0 bg-gradient-to-t from-white/70 via-white/10 to-transparent" />

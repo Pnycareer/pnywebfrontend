@@ -130,7 +130,7 @@ const InstructorCard = ({ name, photo, otherInfo }) => {
               <h4 className="text-lg font-semibold text-slate-900">
                 {displayName}
               </h4>
-              <p className="max-h-[160px] overflow-y-auto pr-1 text-sm leading-relaxed text-slate-600">
+              <p className="max-h-[300px] overflow-y-auto pr-1 text-sm leading-relaxed text-slate-600">
                 {otherInfo || "No additional information available."}
               </p>
             </div>
