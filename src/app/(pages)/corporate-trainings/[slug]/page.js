@@ -2,11 +2,9 @@
 import axiosInstance from "@/utils/axiosInstance";
 import CorporateTrainingsDetails from "./CorporateTrainingsDetails";
 
-
 export const dynamic = "force-dynamic"; // avoid caching the route
 
 async function fetchCourseBySlug(slug) {
-
   try {
     const res = await axiosInstance.get(`/api/academia/courses/${slug}`, {
       headers: {
@@ -33,12 +31,16 @@ async function fetchCourseBySlug(slug) {
       course_Image_Alt: raw.course_Image_Alt || raw.coursename || "Course image",
       Short_Description: raw.Short_Description || "",
       Course_Description: raw.Course_Description || "",
-      Brochure:raw.Brochure || "",
+      Brochure: raw.Brochure || "",
       category: raw.coursecategory || "",
-      Instructor:raw.Instructor || "",
-      status: raw.status || "", 
-      faqs: raw.faqs || "",
-      subjects: raw.subjects || "",
+      Instructor: raw.Instructor || "",
+      status: raw.status || "",
+      // make arrays by default (avoid crashing UI if API returns null/undefined)
+      faqs: Array.isArray(raw.faqs) ? raw.faqs : [],
+      subjects: Array.isArray(raw.subjects) ? raw.subjects : [],
+      // NEW
+      Audience: raw.Audience || "",
+      software: raw.software || "",
     };
 
     return { course, error: null };
@@ -49,11 +51,7 @@ async function fetchCourseBySlug(slug) {
 }
 
 export default async function Page({ params }) {
-  const { slug } = await params; // <-- no await here
+  const { slug } = params; // no await
   const { course, error } = await fetchCourseBySlug(slug);
-  return (
-   
-      <CorporateTrainingsDetails course={course} error={error} />
-    
-  );
+  return <CorporateTrainingsDetails course={course} error={error} />;
 }

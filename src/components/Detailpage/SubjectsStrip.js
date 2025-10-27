@@ -47,8 +47,11 @@ const SubjectsList = ({
   introductionTitle = "Introduction",
   subjects = [],
   columns = { base: 1, md: 2, lg: 3 },
+  // NEW: pass course/category to flip the label
+  category = "",
 }) => {
   const list = Array.from(new Set((subjects || []).filter(Boolean)));
+  const isCorporate = String(category).toLowerCase() === "corporate trainings";
 
   // nothing to show
   if (!shortdesc && !list.length) return null;
@@ -114,11 +117,13 @@ const SubjectsList = ({
                   ) : null}
                 </div>
               </div>
+
+              {/* 👇 this pill flips text based on category */}
               <div className="inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-xs font-medium text-slate-500 shadow-sm backdrop-blur">
                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-sky-100 text-sky-600">
                   {list.length}
                 </span>
-                Subjects in this module
+                {isCorporate ? "Key Topics in this training" : "Subjects in this module"}
               </div>
             </header>
 
