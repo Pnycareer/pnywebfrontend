@@ -1,6 +1,5 @@
-// app/academia/page.js
 import axiosInstance from "@/utils/axiosInstance";
-import AcademiaCourses from "./AcademiaCourses";
+import CorporateTraining from "./CorporateTraining";
 
 export const dynamic = "force-dynamic"; // disable route-level caching
 
@@ -20,14 +19,13 @@ async function fetchCourses() {
     }
 
     const json = res.data;
-    // normalize: handle { data: {...} } OR { data: [...] } OR array root
     let raw = json?.data ?? json ?? [];
     const arr = Array.isArray(raw) ? raw : [raw];
 
     const courses = arr
       .filter(Boolean)
       .filter((c) => c.viewOnWeb !== false)
-      .filter((c) => (c.coursecategory || "").toLowerCase() === "academia") // ✅ only academia
+      .filter((c) => (c.coursecategory || "").toLowerCase() === "corporate trainings") // ✅ only corporate trainings
       .map((c) => ({
         id: c._id || c.id || Math.random().toString(36).slice(2),
         name: c.coursename || c.title || "",
@@ -46,13 +44,8 @@ async function fetchCourses() {
   }
 }
 
-
 export default async function Page() {
   const { courses, error } = await fetchCourses();
 
-  return (
-    
-      <AcademiaCourses courses={courses} error={error} />
-    
-  );
+  return <CorporateTraining courses={courses} error={error} />;
 }
