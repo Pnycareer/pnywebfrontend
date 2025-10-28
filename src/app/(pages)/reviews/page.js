@@ -7,7 +7,8 @@ export default function Page() {
   return (
     <>
       <HeaderSection
-        image="https://www.sittechno.org/userfiles/image/success1.jpg"
+        pagetitle="Student Reviews & Success Stories"
+        shortdescription="Real voices, real journeys — see how students from different courses like Web Development, Graphic Design, Digital Marketing, and more transformed their skills into real-world success with PNY Trainings. Authentic feedback, honest experiences, and inspiring growth."
         fullScreen={false}
       />
 

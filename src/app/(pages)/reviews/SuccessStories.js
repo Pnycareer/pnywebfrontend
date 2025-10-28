@@ -5,54 +5,54 @@ import { Sparkles } from "lucide-react";
 // minimal reviews data
 const REVIEWS = [
   {
-    name: "Maya Rahim",
+    name: "Sania Arif",
     avatar: "https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png",
-    course: "Graphic Design Bootcamp",
+    course: "Digital Marketing Course",
     rating: 5,
     review:
-      "The projects were super practical. Built a portfolio that actually got replies. 10/10 recommend.",
+      "A well-structured and engaging learning experience. The instructors at PNY Trainings Arfa Karim Tower Branch are knowledgeable and supportive, making complex topics easy to grasp. The course material is practical and up-to-date, with a good balance of theory and hands-on training. The institute provides a professional yet welcoming environment, ensuring students feel motivated throughout. Highly recommended for anyone looking to enhance their skills.",
   },
   {
-    name: "Zoya Kamal",
+    name: "Ahsan Ali",
     avatar: "https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png",
-    course: "UI/UX Bootcamp",
-    rating: 4,
-    review:
-      "Clean curriculum, great mentors. Could use more design critiques, but I still leveled up fast.",
-  },
-  {
-    name: "Ibrahim Saeed",
-    avatar: "https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png",
-    course: "Digital Marketing Bootcamp",
+    course: "SEO Course",
     rating: 5,
     review:
-      "Clear frameworks → immediate wins. Launched a campaign and saw results in week one.",
+      "PNY’s SEO course was incredibly detailed and practical, providing in-depth knowledge of on-page, off-page, and technical SEO. It significantly improved my SEO expertise.",
   },
   {
-    name: "Noor Aftab",
+    name: "Umair Mahmood",
     avatar: "https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png",
-    course: "Full-Stack Bootcamp",
+    course: "Video Editing Course",
     rating: 5,
     review:
-      "Full MERN stack clicked for me here. The way they explained auth + deployment? chef’s kiss.",
+      "Video Editing Course completed from PNY Trainings. Overall experience was the best — highly recommended! Instructor and management are professional, and the course outline is advanced.",
   },
   {
-    name: "Ayesha Tariq",
+    name: "Shamshad Ali",
     avatar: "https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png",
-    course: "Product Design",
-    rating: 4,
-    review:
-      "Solid structure. Figma to real product flow felt natural. Landed interviews in 3 weeks.",
-  },
-  {
-    name: "Hassan Malik",
-    avatar: "https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png",
-    course: "SEO Bootcamp",
+    course: "Web Development Course",
     rating: 5,
     review:
-      "No fluff. Technical SEO + content strategy combo finally made sense. Rankings moved.",
+      "I’ve successfully completed my Web Development certification from PNY Trainings. The course was well-structured, and the instructors were highly supportive and knowledgeable. The learning environment was motivating and helped me improve my practical skills.",
   },
-];
+  {
+    name: "Shoaib Ghulam",
+    avatar: "https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png",
+    course: "Graphic Designing Course",
+    rating: 5,
+    review:
+      "Such an informative training of graphic designing — I learned a lot of technical ways of good designing. Highly recommended for graphic designing courses!",
+  },
+  {
+    name: "Arslan Ahmad",
+    avatar: "https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png",
+    course: "English Language Course",
+    rating: 5,
+    review:
+      "I completed the English course at PNY Trainings, and the environment was truly amazing. Special thanks to the management and my teacher — one of the best institutes I’ve ever experienced. I truly admire and appreciate them.",
+  },
+]
 
 // small star renderer (no TS, no libs)
 function Stars({ rating = 0 }) {
@@ -100,7 +100,7 @@ export default function SuccessStories() {
         <div>
           <h2 className="text-2xl font-semibold text-slate-900 sm:text-3xl">Student Reviews</h2>
           <p className="text-sm text-slate-600 sm:text-base">
-            Real talk from alumni — no fluff, just outcomes.
+            Real talk from alumni — 
           </p>
         </div>
       </div>

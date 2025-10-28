@@ -1,36 +1,29 @@
-import React from "react";
-import BlogCategory from "./Blogcategoy"; // ✅ double-check spelling
-import axios from "@/utils/axiosInstance"; // ✅ uses your custom axios instance
+// app/(wherever)/page.js
+import HeaderSection from "@/components/HeaderSection/Headersection";
 import Metadata from "@/components/Meta/Metadata";
+import BlogCategory from "./Blogcategoy"; // keep this filename as your project uses
 
-const Page = async () => {
-  let blogsData = [];
-
-  try {
-    const res = await axios.get("/api/blogs", {
-      headers: { "Cache-Control": "no-store" }, // disables caching
-    });
-
-    blogsData = res.data;
-  } catch (error) {
-    console.error("Error fetching blogs:", error);
-    // Optionally you could redirect to a fallback page, show a custom error component, etc.
-  }
-
-
-  
-
+export default function Page() {
   return (
     <>
       <Metadata
         title="PNY Trainings Blog – Insights, Tips & Tutorials"
-        description="Explore the PNY Trainings blog for helpful tutorials, technology insights, marketing tips, and design ideas to boost your learning and career growth.
-"
+        description="Explore the PNY Trainings blog for helpful tutorials, technology insights, marketing tips, and design ideas to boost your learning and career growth."
         canonicalUrl="https://www.pnytrainings.com/blog"
       />
-      <BlogCategory blogsData={blogsData} />
+
+      {/* Optional hero/banner (image handled by HeaderSection) */}
+      <HeaderSection
+        pagetitle="Blogs and insights"
+        shortdescription="Get knowledge with the latest blog insights."
+        image="https://www.sittechno.org/userfiles/image/success1.jpg"
+        fullScreen={false}
+      />
+
+      {/* Client-side listing with pagination */}
+      <section className="mx-auto w-11/12 py-10">
+        <BlogCategory />
+      </section>
     </>
   );
-};
-
-export default Page;
+}
