@@ -62,7 +62,7 @@ export default function CorporateTraining({ courses = [], error = null }) {
             name={c.name}
             alt={c.alt}
             image={c.image}
-            urlslug={`corporate-trainings/${c.slug}`}
+            urlslug={`corporate/${c.slug}`}
             shortdescription={c.shortClean}
           />
         ))}

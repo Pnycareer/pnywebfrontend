@@ -51,7 +51,7 @@ async function fetchCourseBySlug(slug) {
 }
 
 export default async function Page({ params }) {
-  const { slug } = params; // no await
+  const { slug } = await params; // no await
   const { course, error } = await fetchCourseBySlug(slug);
   return <CorporateTrainingsDetails course={course} error={error} />;
 }

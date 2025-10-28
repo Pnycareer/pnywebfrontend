@@ -1,29 +1,17 @@
 import { notFound } from "next/navigation";
 import Detailpage from "./Detailpage";
 import Metadata from "@/components/Meta/Metadata";
-import CourseFeature from "@/components/Detailpage/Module";
 import axios from "@/utils/axiosInstance";
 
 export default async function Page({ params }) {
   const { slug } = await params;
 
-  let course;
-
-  try {
-    const response = await axios.get(`/courses/getonslug/${slug}`);
-
-    course = response.data;
-
-    if (!course || typeof course !== "object") {
-      notFound();
-    }
-  } catch (error) {
-    console.error("Error fetching course:", error);
+  const res = await axios.get(`/courses/getonslug/${encodeURIComponent(slug)}`);
+  if (res.status === 404 || !res.data || typeof res.data !== "object") {
     notFound();
   }
 
-
- 
+  const course = res.data;
 
   const metadata = {
     title: course.Meta_Title || "Course Not Found",
@@ -48,7 +36,6 @@ export default async function Page({ params }) {
           }}
         />
       )}
-      {/* <CourseFeature Modules={course.courseModule} /> */}
     </>
   );
 }
