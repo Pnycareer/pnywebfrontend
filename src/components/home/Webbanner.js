@@ -35,7 +35,6 @@ const Webbanner = async () => {
         width={1920} 
         height={600}
         priority
-        unoptimized={true}
         className="w-full h-auto object-cover rounded-lg shadow-md"
       />
     </div>

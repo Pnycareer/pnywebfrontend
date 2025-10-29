@@ -1,47 +1,28 @@
-"use client";
-
-import { useState, useEffect, memo } from "react";
 import Branches from "./Branches";
 import CityCourses from "./Citycourses";
 import Copyrights from "./Copyrights";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/logo/Pnylogo.png";
-import axios from "@/utils/axiosInstance";
 
-const Footer = () => {
-  const [categories, setCategories] = useState([]);
-  const [randomCourses, setRandomCourses] = useState([]);
+function formatCityLabel(slug) {
+  return slug
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await axios.get("/api/v1/categories");
-        const visible = res.data.filter((cat) => cat.viewonweb);
-        setCategories(visible);
-      } catch (err) {
-        console.error("Category fetch error:", err);
-      }
-    };
+const CITY_SLUGS = [
+  "lahore",
+  "rawalpindi",
+  "karachi",
+  "faisalabad",
+  "gujranwala",
+  "multan",
+  "sialkot",
+  "azad-kashmir",
+];
 
-    const fetchCourses = async () => {
-      try {
-        const res = await axios.get("/courses/get-course");
-        const courseList = res.data?.data?.flatMap((cat) =>
-          cat.courses.filter((c) => c.View_On_Web)
-        );
-        setRandomCourses(
-          courseList.sort(() => 0.5 - Math.random()).slice(0, 5)
-        );
-      } catch (err) {
-        console.error("Courses fetch error:", err);
-      }
-    };
-
-    fetchCategories();
-    fetchCourses();
-  }, []);
-
+function Footer({ categories = [], courses = [] }) {
   return (
     <>
       <Branches />
@@ -49,7 +30,6 @@ const Footer = () => {
 
       <footer className="bg-gray-100 text-gray-800 py-10 px-5 md:px-20">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-          {/* Head Office */}
           <div>
             <Image
               src={logo}
@@ -71,7 +51,6 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="text-lg font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
@@ -106,74 +85,59 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Courses Offered */}
           <div>
             <h3 className="text-lg font-bold mb-4">Courses Offered</h3>
             <ul className="space-y-2 text-sm">
-              {randomCourses.length > 0 ? (
-                randomCourses.map((course) => (
-                  <li key={course._id}>
+              {courses.length > 0 ? (
+                courses.map((course) => (
+                  <li key={course.id}>
                     <Link
-                      href={`/${course.url_Slug}`}
+                      href={`/${course.slug}`}
                       prefetch={false}
                       className="hover:underline"
                     >
-                      {course.course_Name}
+                      {course.name}
                     </Link>
                   </li>
                 ))
               ) : (
-                <li>Loading courses...</li>
+                <li>No courses available at the moment.</li>
               )}
             </ul>
           </div>
 
-          {/* Categories */}
           <div>
             <h3 className="text-lg font-bold mb-4">Categories</h3>
             <ul className="space-y-2 text-sm">
               {categories.length > 0 ? (
                 categories.slice(0, 8).map((cat) => (
-                  <li key={cat._id}>
+                  <li key={cat.id}>
                     <Link
-                      href={`/courses/${cat.url_Slug}`}
+                      href={`/courses/${cat.slug}`}
                       prefetch={false}
                       className="hover:underline"
                     >
-                      {cat.Category_Name}
+                      {cat.name}
                     </Link>
                   </li>
                 ))
               ) : (
-                <li>Loading categories...</li>
+                <li>No categories available yet.</li>
               )}
             </ul>
           </div>
 
-          {/* Short Courses by City */}
           <div>
             <h3 className="text-lg font-bold mb-4">Short Courses</h3>
             <ul className="space-y-2 text-sm">
-              {[
-                "lahore",
-                "rawalpindi",
-                "karachi",
-                "faisalabad",
-                "gujranwala",
-                "multan",
-                "sialkot",
-                "azad-kashmir",
-              ].map((city) => (
+              {CITY_SLUGS.map((city) => (
                 <li key={city}>
                   <Link
                     href={`/short-courses-in-${city}`}
                     prefetch={false}
                     className="hover:underline"
                   >
-                    Short courses in{" "}
-                    {city
-                      .replace(/-/g, " ")
-                      .replace(/\b\w/g, (c) => c.toUpperCase())}
+                    Short courses in {formatCityLabel(city)}
                   </Link>
                 </li>
               ))}
@@ -181,12 +145,10 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Additional Info Sections */}
-
         <Copyrights />
       </footer>
     </>
   );
-};
+}
 
-export default memo(Footer);
+export default Footer;

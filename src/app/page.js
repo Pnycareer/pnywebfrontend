@@ -1,13 +1,11 @@
 import Home from "@/app/(pages)/home/Home";
 import Metadata from "@/components/Meta/Metadata";
 
-export const dynamic = "force-dynamic";
-
 // Fetch SEO metadata
 const getHomeMetadata = async () => {
   try {
     const res = await fetch("https://api.pnytrainings.com/api/v1/meta/home", {
-      cache: "no-store",
+      next: { revalidate: 600 },
     });
 
     if (!res.ok) throw new Error("Failed to fetch metadata");

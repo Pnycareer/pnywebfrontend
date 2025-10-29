@@ -37,6 +37,7 @@ function markOpened(freq, key) {
 
 export default function SpinWheelModal({
   autoOpen = true,
+  deferUntilInteraction = false,
   delayMs = 600,
   frequency = "daily", // "daily" | "session" | "always"
   storageKey = "pny_spin_seen_at",
@@ -61,16 +62,56 @@ export default function SpinWheelModal({
   const [open, setOpen] = useState(false);
   const [selectModal, setSelectModal] = useState(false);
   const [formModal, setFormModal] = useState(false);
+  const [interactionReady, setInteractionReady] = useState(!deferUntilInteraction);
+
   useEffect(() => {
-    if (!autoOpen) return;
-    const t = setTimeout(() => {
+    if (!deferUntilInteraction) return;
+
+    let unlocked = false;
+    const markReady = () => {
+      if (unlocked) return;
+      unlocked = true;
+      setInteractionReady(true);
+    };
+
+    const options = { passive: true, once: true };
+    const events = ["pointerdown", "keydown", "scroll"];
+    events.forEach((event) => window.addEventListener(event, markReady, options));
+
+    const fallbackTimeout = window.setTimeout(markReady, 12000);
+    let idleCallbackId = null;
+    if (typeof window.requestIdleCallback === "function") {
+      idleCallbackId = window.requestIdleCallback(() => markReady(), { timeout: 8000 });
+    }
+
+    return () => {
+      events.forEach((event) => window.removeEventListener(event, markReady, options));
+      window.clearTimeout(fallbackTimeout);
+      if (idleCallbackId !== null && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleCallbackId);
+      }
+    };
+  }, [deferUntilInteraction]);
+
+  const shouldAutoOpen = interactionReady && (autoOpen || deferUntilInteraction);
+
+  useEffect(() => {
+    if (!shouldAutoOpen) return;
+
+    let cancelled = false;
+    const timer = window.setTimeout(() => {
+      if (cancelled) return;
       if (shouldOpenPopup(frequency, storageKey)) {
         setOpen(true);
         markOpened(frequency, storageKey);
       }
     }, Math.max(0, delayMs));
-    return () => clearTimeout(t);
-  }, [autoOpen, delayMs, frequency, storageKey]);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
+  }, [shouldAutoOpen, delayMs, frequency, storageKey]);
 
   useEffect(() => {
     if (open || selectModal || formModal) {

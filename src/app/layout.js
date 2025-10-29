@@ -6,11 +6,112 @@ import Footer from "@/components/Footer/Footer";
 import Whatsapp from "@/components/whatsapp/Whatsapp";
 import Script from "next/script";
 import ScrollToTopEffect from "@/components/ScrollToTop/ScrolltoTopeffect";
-import SpinWheelModal from "@/components/SpinWheel/SpinWheelModal";
+import SpinWheelModalTrigger from "@/components/SpinWheel/SpinWheelModalTrigger";
+const API_BASE_URL = (process.env.NEXT_PUBLIC_API_URL ?? "https://api.pnytrainings.com").replace(/\/$/, "");
+const PUBLIC_ACCESS_TOKEN = process.env.NEXT_PUBLIC_PUBLIC_ACCESS_TOKEN ?? "";
+const FOOTER_REVALIDATE_SECONDS = 600;
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
-export default function RootLayout({ children }) {
+function getCommonHeaders() {
+  const headers = {
+    Accept: "application/json",
+  };
+
+  if (PUBLIC_ACCESS_TOKEN) {
+    Object.assign(headers, { Authorization: `Bearer ${PUBLIC_ACCESS_TOKEN}` });
+  }
+
+  return headers;
+}
+
+function pickRandomItems(items, count) {
+  if (items.length <= count) {
+    return items;
+  }
+
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+
+  return copy.slice(0, count);
+}
+
+async function fetchFooterData() {
+  if (!API_BASE_URL) {
+    return { categories: [], courses: [] };
+  }
+
+  const requestInit = {
+    headers: getCommonHeaders(),
+    next: { revalidate: FOOTER_REVALIDATE_SECONDS },
+  };
+
+  const categoriesPromise = fetch(`${API_BASE_URL}/api/v1/categories`, requestInit)
+    .then((res) => (res.ok ? res.json() : null))
+    .catch(() => null);
+
+  const coursesPromise = fetch(`${API_BASE_URL}/courses/get-course`, requestInit)
+    .then((res) => (res.ok ? res.json() : null))
+    .catch(() => null);
+
+  const [categoriesPayload, coursesPayload] = await Promise.all([
+    categoriesPromise,
+    coursesPromise,
+  ]);
+
+  const categories = Array.isArray(categoriesPayload)
+    ? categoriesPayload
+        .filter((category) => category?.viewonweb)
+        .map((category) => ({
+          id:
+            category?._id ??
+            category?.id ??
+            category?.url_Slug ??
+            category?.Category_Name ??
+            "",
+          name: category?.Category_Name ?? category?.name ?? "Untitled Category",
+          slug: category?.url_Slug ?? category?.slug ?? "",
+        }))
+        .filter((category) => category.id && category.slug && category.name)
+    : [];
+
+  const courseGroups = Array.isArray(coursesPayload?.data)
+    ? coursesPayload.data
+    : Array.isArray(coursesPayload)
+    ? coursesPayload
+    : [];
+
+  const courses = courseGroups
+    .flatMap((group) => (Array.isArray(group?.courses) ? group.courses : []))
+    .filter((course) => course?.View_On_Web !== false)
+    .map((course) => ({
+      id:
+        course?._id ??
+        course?.id ??
+        course?.url_Slug ??
+        course?.course_Name ??
+        "",
+      name:
+        course?.course_Name ??
+        course?.coursename ??
+        course?.title ??
+        "Untitled Course",
+      slug: course?.url_Slug ?? course?.slug ?? "",
+    }))
+    .filter((course) => course.id && course.slug && course.name);
+
+  return {
+    categories,
+    courses: pickRandomItems(courses, 5),
+  };
+}
+
+export default async function RootLayout({ children }) {
+  const footerData = await fetchFooterData();
+
   return (
     <html lang="en">
       <head>
@@ -25,13 +126,6 @@ export default function RootLayout({ children }) {
         <meta
           name="p:domain_verify"
           content="2b5e247fa2e5bb0932d73d9c5e785516"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-          integrity="sha512-..."
-          crossOrigin="anonymous"
-          referrerPolicy="no-referrer"
         />
         <link rel="icon" href="/favicon.ico" />
 
@@ -69,9 +163,14 @@ export default function RootLayout({ children }) {
         <CoursesNav />
         <Whatsapp />
         {children}
-        <Footer />
+        <Footer categories={footerData.categories} courses={footerData.courses} />
 
-         <SpinWheelModal autoOpen={true} delayMs={800} frequency="daily" />
+        <SpinWheelModalTrigger
+          autoOpen={false}
+          deferUntilInteraction
+          delayMs={800}
+          frequency="daily"
+        />
 
         {/* JSON-LD needs an id because it's inline */}
         <Script

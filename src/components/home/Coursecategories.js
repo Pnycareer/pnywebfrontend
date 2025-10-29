@@ -60,7 +60,6 @@ export default function Coursecategories() {
                     src={card.img}
                     alt={card.title}
                     fill
-                    unoptimized
                     className="object-cover rounded-t-[20px] rounded-b-none transition duration-300 group-hover:scale-[1.02]"
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />

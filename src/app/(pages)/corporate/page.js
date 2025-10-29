@@ -1,8 +1,6 @@
 import axiosInstance from "@/utils/axiosInstance";
 import CorporateTraining from "./CorporateTraining";
 
-export const dynamic = "force-dynamic"; // disable route-level caching
-
 async function fetchCourses() {
   try {
     const res = await axiosInstance.get("/api/academia/courses", {
