@@ -3,6 +3,15 @@ import HeaderSection from "@/components/HeaderSection/Headersection";
 import SuccessStories from "./SuccessStories";
 import VideoReviews from "./VideoReviews";
 
+export const metadata = {
+  title: "PNY Trainings Reviews & Student Success Stories",
+  description:
+    "See student reviews and inspiring success stories from PNY Trainings. Learn how our hands-on courses in Digital Marketing, Web Development, and more transformed careers.",
+  alternates: {
+    canonical: "https://www.pnytrainings.com/reviews", // <-- add your canonical URL here
+  },
+};
+
 export default function Page() {
   return (
     <>

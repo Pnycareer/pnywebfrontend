@@ -84,6 +84,7 @@ const Footer = () => {
                   external: true,
                 },
                 { name: "Gallery", link: "/gallery" },
+                { name: "Student Reviews", link: "/reviews" },
                 { name: "Terms & Conditions", link: "/terms-conditions" },
                 { name: "Privacy Policy", link: "/privacy-policy" },
                 {

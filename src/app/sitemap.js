@@ -62,6 +62,7 @@ export default async function sitemap() {
       { url: `${baseUrl}/about`, priority: 0.9 },
       { url: `${baseUrl}/contact`, priority: 0.9 },
       { url: `${baseUrl}/blog`, priority: 0.9 },
+      { url: `${baseUrl}/reviews`, priority: 0.9 },
     ].map(({ url, priority }) => ({
       url,
       lastModified: new Date(),

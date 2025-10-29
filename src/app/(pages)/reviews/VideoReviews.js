@@ -35,6 +35,12 @@ const SEED_VIDEOS = [
     channel: "PNY Trainings",
     date: "Oct 2025",
   },
+  {
+    id: "kf9w3KTyW-M",
+    title: "Student Reviews - Graphic Designing Course — Arham Imran",
+    channel: "PNY Trainings",
+    date: "Oct 2025",
+  },
 ];
 
 export default function VideoReviews() {

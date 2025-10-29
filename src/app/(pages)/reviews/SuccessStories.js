@@ -10,7 +10,7 @@ const REVIEWS = [
     course: "Digital Marketing Course",
     rating: 5,
     review:
-      "A well-structured and engaging learning experience. The instructors at PNY Trainings Arfa Karim Tower Branch are knowledgeable and supportive, making complex topics easy to grasp. The course material is practical and up-to-date, with a good balance of theory and hands-on training. The institute provides a professional yet welcoming environment, ensuring students feel motivated throughout. Highly recommended for anyone looking to enhance their skills.",
+      "Excellent learning experience at PNY Trainings Arfa Karim Tower! Skilled instructors, practical content, and a motivating environment perfect for anyone looking to upgrade their skills. Highly recommended!",
   },
   {
     name: "Ahsan Ali",

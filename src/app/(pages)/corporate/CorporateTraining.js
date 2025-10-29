@@ -45,7 +45,7 @@ export default function CorporateTraining({ courses = [], error = null }) {
   return (
     <>
       <HeaderSection
-        pagetitle={"PNY Academia"}
+        pagetitle={"PNY Corporate Trainings"}
         shortdescription={
           "PNY Academia provides quality education with expert teachers and modern learning methods. Our focus is on student growth, success, and excellence."
         }
