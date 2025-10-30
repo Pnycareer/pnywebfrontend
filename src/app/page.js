@@ -4,7 +4,7 @@ import Metadata from "@/components/Meta/Metadata"
 // ✅ Static Metadata
 const staticMeta = {
   title: "Pakistan No.1 & Best IT Training Institute in Arfa Tower Lahore",
-  description: "PNY Trainings is Pakistan’s No.1 IT Trainings institute, offering 100+ certified courses in digital skills. Learn online or on-campus with expert trainers, hands-on projects, internships, and career support to achieve your professional goals",
+  description: "Pakistan’s No.1 IT institute in Arfa Tower Lahore. Learn 100+ certified AI and digital skills courses with expert trainers and career support.",
   url: "https://www.pnytrainings.com",
   canonicalUrl: "https://www.pnytrainings.com",
   siteName: "PNY Trainings",
