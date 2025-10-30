@@ -1,58 +1,32 @@
-import Home from "@/app/(pages)/home/Home";
-import Metadata from "@/components/Meta/Metadata";
+import Home from "@/app/(pages)/home/Home"
+import Metadata from "@/components/Meta/Metadata"
 
-// Fetch SEO metadata
-const getHomeMetadata = async () => {
-  try {
-    const res = await fetch("https://api.pnytrainings.com/api/v1/meta/home", {
-      next: { revalidate: 600 },
-    });
+// ✅ Static Metadata
+const staticMeta = {
+  title: "Pakistan No.1 & Best IT Training Institute in Arfa Tower Lahore",
+  description: "PNY Trainings is Pakistan’s No.1 IT Trainings institute, offering 100+ certified courses in digital skills. Learn online or on-campus with expert trainers, hands-on projects, internships, and career support to achieve your professional goals",
+  url: "https://www.pnytrainings.com",
+  canonicalUrl: "https://www.pnytrainings.com",
+  siteName: "PNY Trainings",
+}
 
-    if (!res.ok) throw new Error("Failed to fetch metadata");
-
-    const { metas } = await res.json();
-    const meta = Array.isArray(metas) && metas.length > 0 ? metas[0] : {};
-
-    return {
-      title: meta.meta_title || "Default Title",
-      description: meta.meta_description || "Default Description",
-      url: "https://www.pnytrainings.com",
-      canonicalUrl: "https://www.pnytrainings.com",
-    };
-  } catch (err) {
-    console.error("SEO metadata fetch error:", err);
-    return {
-      title: "Default Title",
-      description: "Default Description",
-      image: null,
-      url: "https://www.pnytrainings.com/",
-      canonicalUrl: "https://www.pnytrainings.com/",
-    };
-  }
-};
-
-// ✅ Next.js metadata function (still supported if you want automatic tags)
+// ✅ Next.js metadata function (optional)
 export async function generateMetadata() {
-  return await getHomeMetadata();
+  return staticMeta
 }
 
 // ✅ Page Component
-export default async function Homepage() {
-  const meta = await getHomeMetadata();
-
+export default function Homepage() {
   return (
     <>
-      {/* Inject your reusable Metadata component */}
       <Metadata
-        title={meta.title}
-        description={meta.description}
-        url={meta.url}
-        canonicalUrl={meta.canonicalUrl}
-        siteName="Pnytrainings"
+        title={staticMeta.title}
+        description={staticMeta.description}
+        url={staticMeta.url}
+        canonicalUrl={staticMeta.canonicalUrl}
+        siteName={staticMeta.siteName}
       />
-
-      {/* Actual page content */}
       <Home />
     </>
-  );
+  )
 }
