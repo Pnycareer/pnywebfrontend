@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic"; // disable route-level caching
 
 async function fetchCourses() {
   try {
-    const res = await axiosInstance.get("/api/academia/courses/category/academia", {
+    const res = await axiosInstance.get("/api/academia/courses", {
       headers: {
         Accept: "application/json",
         "Cache-Control": "no-store", // force no cache at request level
@@ -56,3 +56,5 @@ export default async function Page() {
     
   );
 }
+
+
