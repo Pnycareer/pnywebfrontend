@@ -105,6 +105,20 @@ const CoursesNav = () => {
           <CoursesDropdown />
 
           <Link
+            href='/corporate'
+            onClick={handleNavClick("/corporate")}
+            scroll
+            className="hidden md:inline-flex"
+          >
+            <motion.span
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.97 }}
+              className="px-5 py-2 md:px-6 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold shadow-lg backdrop-blur-md transition duration-200 hover:from-blue-600 hover:to-indigo-700"
+            >
+              Corporate Trainings
+            </motion.span>
+          </Link>
+          <Link
             href='/academia'
             onClick={handleNavClick("/academia")}
             scroll

@@ -1,7 +1,13 @@
 'use client'
 import React from 'react'
+import { usePathname } from 'next/navigation'
 
 const AcademiaInstructor = () => {
+  const pathname = usePathname()
+
+  const isAcademia = pathname.includes('/academia')
+  const isCorporate = pathname.includes('/corporate')
+
   return (
     <div className="w-full flex items-center justify-center p-6 bg-transparent">
       <div className="w-full">
@@ -18,34 +24,27 @@ const AcademiaInstructor = () => {
             </div>
 
             <div className="flex-1">
-              <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900">
-                Instructors at PNY Academia
-              </h1>
-              <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                At PNY Academia, we take pride in our team of highly qualified and experienced teachers who specialize in their respective subjects. Our teachers bring not only academic excellence but also practical knowledge, ensuring that students gain a deep understanding of concepts with real-world relevance. Dedicated to providing quality education, our faculty members are passionate about guiding students towards academic success and personal growth. Through their expertise and commitment, we aim to create a learning environment that inspires, motivates, the potential of every student.
-              </p>
+              {isAcademia && (
+                <>
+                  <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900">
+                    Instructors at PNY Academia
+                  </h1>
+                  <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+                    At PNY Academia, we take pride in our team of highly qualified and experienced teachers who specialize in their respective subjects. Our teachers bring not only academic excellence but also practical knowledge, ensuring that students gain a deep understanding of concepts with real-world relevance. Dedicated to providing quality education, our faculty members are passionate about guiding students towards academic success and personal growth. Through their expertise and commitment, we aim to create a learning environment that inspires, motivates, and unlocks the potential of every student.
+                  </p>
+                </>
+              )}
 
-              {/* Badges */}
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs text-gray-700">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-4 w-4">
-                    <path strokeWidth="1.5" d="M12 2l2.4 6.9L22 9.2l-5 4.8 1.3 7-6.3-3.6L5.7 21l1.3-7-5-4.8 7.6-1.3L12 2z" />
-                  </svg>
-                  Expert Faculty
-                </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs text-gray-700">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-4 w-4">
-                    <path strokeWidth="1.5" d="M4 6h16M4 12h10M4 18h16" />
-                  </svg>
-                  Real‑world Focus
-                </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs text-gray-700">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-4 w-4">
-                    <path strokeWidth="1.5" d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8" />
-                  </svg>
-                  Growth Mindset
-                </span>
-              </div>
+              {isCorporate && (
+                <>
+                  <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900">
+                    PNY Corporate Instructors
+                  </h1>
+                  <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+                    At PNY Corporate, our instructors are experienced professionals with strong industry backgrounds. They blend practical expertise with strategic insight to deliver impactful, real-world training. Focused on professional growth, our trainers equip learners with the skills and confidence needed to excel in today’s corporate environment.
+                  </p>
+                </>
+              )}
             </div>
           </div>
 
@@ -65,7 +64,7 @@ const AcademiaInstructor = () => {
                 ),
               },
               {
-                title: 'Hands‑on Learning',
+                title: 'Hands-on Learning',
                 icon: (
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-5 w-5 text-gray-700">
                     <path strokeWidth="1.5" d="M12 2l8 4-8 4-8-4 8-4zm0 8l8 4-8 4-8-4 8-4z" />
@@ -100,9 +99,9 @@ const AcademiaInstructor = () => {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-4 w-4">
                 <path strokeWidth="1.5" d="M12 6l-8 4 8 4 8-4-8-4zm-6 8l6 3 6-3" />
               </svg>
-              <span>PNY Academia • Quality Education</span>
+              <span>PNY {isAcademia ? 'Academia' : 'Corporate'} • Quality Education</span>
             </div>
-            <div className="text-[10px] text-gray-400">© {new Date().getFullYear()} PNY Academia</div>
+            <div className="text-[10px] text-gray-400">© {new Date().getFullYear()} PNY</div>
           </div>
         </div>
       </div>
