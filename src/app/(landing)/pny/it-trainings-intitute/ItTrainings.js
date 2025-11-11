@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { GraduationCap, Lightbulb, BookOpen, Rocket } from "lucide-react";
 import CoursesShowcase from "./CoursesShowcase";
+import Achievements from "./CountsAchievments";
+import Form from "./Form";
 
 const featureCards = [
   {
@@ -320,6 +322,8 @@ const ItTrainings = () => {
       <HeroSection />
       <FeatureHighlights />
       <CoursesShowcase />
+      <Achievements/>
+      <Form/>
     </main>
   );
 };

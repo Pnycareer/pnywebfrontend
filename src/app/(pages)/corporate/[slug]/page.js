@@ -1,6 +1,7 @@
-// app/academia/[slug]/page.js
+// app/corporate-trainings/[slug]/page.js
 import axiosInstance from "@/utils/axiosInstance";
 import CorporateTrainingsDetails from "./CorporateTrainingsDetails";
+import Metadata from "@/components/Meta/Metadata";
 
 export const dynamic = "force-dynamic"; // avoid caching the route
 
@@ -22,7 +23,6 @@ async function fetchCourseBySlug(slug) {
     const raw = res?.data?.data ?? res?.data ?? null;
     if (!raw) return { course: null, error: "Course not found" };
 
-    // normalize -> only what we need on the client
     const course = {
       id: raw._id || raw.id || "",
       course_Name: raw.coursename || raw.title || "",
@@ -35,12 +35,16 @@ async function fetchCourseBySlug(slug) {
       category: raw.coursecategory || "",
       Instructor: raw.Instructor || "",
       status: raw.status || "",
-      // make arrays by default (avoid crashing UI if API returns null/undefined)
       faqs: Array.isArray(raw.faqs) ? raw.faqs : [],
       subjects: Array.isArray(raw.subjects) ? raw.subjects : [],
-      // NEW
       Audience: raw.Audience || "",
       software: raw.software || "",
+      // ✅ SEO data from backend
+      Meta_Title: raw.Meta_Title || raw.coursename || "Corporate Training",
+      Meta_Description:
+        raw.Meta_Description ||
+        raw.Short_Description ||
+        "Upgrade your skills with our expert-led corporate training programs designed for business growth.",
     };
 
     return { course, error: null };
@@ -51,7 +55,22 @@ async function fetchCourseBySlug(slug) {
 }
 
 export default async function Page({ params }) {
-  const { slug } = await params; // no await
+  const { slug } = params;
   const { course, error } = await fetchCourseBySlug(slug);
-  return <CorporateTrainingsDetails course={course} error={error} />;
+
+  return (
+    <>
+      {/* ✅ Dynamic SEO metadata from backend */}
+      <Metadata
+        title={course?.Meta_Title}
+        description={course?.Meta_Description}
+        image={course?.course_Image}
+        url={`${process.env.NEXT_PUBLIC_SITE_URL}/corporate-trainings/${slug}`}
+        canonicalUrl={`${process.env.NEXT_PUBLIC_SITE_URL}/corporate-trainings/${slug}`}
+        siteName="PNY Trainings"
+      />
+
+      <CorporateTrainingsDetails course={course} error={error} />
+    </>
+  );
 }

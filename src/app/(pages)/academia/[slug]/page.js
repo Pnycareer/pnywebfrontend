@@ -1,12 +1,11 @@
 // app/academia/[slug]/page.js
 import axiosInstance from "@/utils/axiosInstance";
 import AcademiaDetails from "./AcademiaDetails";
-
+import Metadata from "@/components/Meta/Metadata";
 
 export const dynamic = "force-dynamic"; // avoid caching the route
 
 async function fetchCourseBySlug(slug) {
-
   try {
     const res = await axiosInstance.get(`/api/academia/courses/${slug}`, {
       headers: {
@@ -33,12 +32,17 @@ async function fetchCourseBySlug(slug) {
       course_Image_Alt: raw.course_Image_Alt || raw.coursename || "Course image",
       Short_Description: raw.Short_Description || "",
       Course_Description: raw.Course_Description || "",
-      Brochure:raw.Brochure || "",
+      Brochure: raw.Brochure || "",
       category: raw.coursecategory || "",
-      Instructor:raw.Instructor || "",
-      status: raw.status || "", 
+      Instructor: raw.Instructor || "",
+      status: raw.status || "",
       faqs: raw.faqs || "",
       subjects: raw.subjects || "",
+      Meta_Title: raw.Meta_Title || raw.coursename || "Academia Course",
+      Meta_Description:
+        raw.Meta_Description ||
+        raw.Short_Description ||
+        "Explore detailed course information, syllabus, and instructor insights.",
     };
 
     return { course, error: null };
@@ -49,11 +53,22 @@ async function fetchCourseBySlug(slug) {
 }
 
 export default async function Page({ params }) {
-  const { slug } = await params; // <-- no await here
+  const { slug } = await params;
   const { course, error } = await fetchCourseBySlug(slug);
+
   return (
-   
+    <>
+      {/* ✅ Inject SEO meta data from backend */}
+      <Metadata
+        title={course?.Meta_Title}
+        description={course?.Meta_Description}
+        image={course?.course_Image}
+        url={`${process.env.NEXT_PUBLIC_SITE_URL}/academia/${slug}`}
+        canonicalUrl={`${process.env.NEXT_PUBLIC_SITE_URL}/academia/${slug}`}
+        siteName="PNY Trainings"
+      />
+
       <AcademiaDetails course={course} error={error} />
-    
+    </>
   );
 }

@@ -1,5 +1,15 @@
+// app/corporate-training/page.js
 import axiosInstance from "@/utils/axiosInstance";
 import CorporateTraining from "./CorporateTraining";
+
+export const dynamic = "force-dynamic"; // disable route-level caching
+
+// ✅ Static Meta Data (SEO)
+export const metadata = {
+  title: "Corporate Trainings",
+  description:
+    "Boost your team's performance with PNY’s expert-led corporate training programs. Explore tailored courses for organizations to enhance productivity and leadership.",
+};
 
 async function fetchCourses() {
   try {
@@ -23,7 +33,9 @@ async function fetchCourses() {
     const courses = arr
       .filter(Boolean)
       .filter((c) => c.viewOnWeb !== false)
-      .filter((c) => (c.coursecategory || "").toLowerCase() === "corporate trainings") // ✅ only corporate trainings
+      .filter(
+        (c) => (c.coursecategory || "").toLowerCase() === "corporate trainings"
+      ) // ✅ only corporate trainings
       .map((c) => ({
         id: c._id || c.id || Math.random().toString(36).slice(2),
         name: c.coursename || c.title || "",
@@ -44,6 +56,5 @@ async function fetchCourses() {
 
 export default async function Page() {
   const { courses, error } = await fetchCourses();
-
   return <CorporateTraining courses={courses} error={error} />;
 }

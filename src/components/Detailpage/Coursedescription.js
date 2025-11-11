@@ -6,25 +6,31 @@ import axios from "@/utils/axiosInstance";
 import { generateHeadingsAndHTML } from "@/utils/htmlHeadingsParser";
 import RichTextRenderer from "../RichTextRenderer/RichTextRenderer";
 
-// PropTypes for better development experience
 const Coursedescription = ({ coursedesc }) => {
   const [relatedCourses, setRelatedCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const router = useRouter();
 
-  // Memoize the parsed HTML and headings to avoid recalculation
+  const categoryRaw = (coursedesc?.category || coursedesc?.category_Name || "")
+    .toLowerCase()
+    .trim();
+  const isAcademia = categoryRaw === "academia";
+  const isCorporate = categoryRaw === "corporate trainings";
+
+  // parse html
   const { html: updatedHtml, headings } = useMemo(() => {
-    if (!coursedesc?.Course_Description) {
-      return { html: "", headings: [] };
-    }
+    if (!coursedesc?.Course_Description) return { html: "", headings: [] };
     return generateHeadingsAndHTML(coursedesc.Course_Description);
   }, [coursedesc?.Course_Description]);
 
-  // Memoize related courses to avoid unnecessary re-renders
+  // shuffle helper
+  const shuffleArray = (arr) => [...arr].sort(() => Math.random() - 0.5);
+
+  // always random 4
   const displayedRelatedCourses = useMemo(() => {
     if (!relatedCourses.length) return [];
-    return relatedCourses.sort(() => Math.random() - 0.5).slice(0, 4);
+    return shuffleArray(relatedCourses).slice(0, 4);
   }, [relatedCourses]);
 
   const fetchRelatedCourses = useCallback(async () => {
@@ -32,10 +38,30 @@ const Coursedescription = ({ coursedesc }) => {
     setError(null);
 
     try {
+      if (isCorporate) {
+        const url = `http://localhost:8080/api/academia/courses/getoncategory/${encodeURIComponent(
+          "corporate trainings"
+        )}`;
+        const response = await fetch(url, { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        const normalized = Array.isArray(data?.courses)
+          ? data.courses.map((c) => ({
+              _id: c._id,
+              course_Name: c.coursename || c.course_Name || "",
+              url_Slug: c.slug || c.url_Slug || "",
+              Short_Description: c.Short_Description || "",
+              course_Image: c.course_Image,
+            }))
+          : [];
+        setRelatedCourses(normalized);
+        return;
+      }
+
+      // === academia ===
       let categoryName = coursedesc?.category_Name;
 
-      // if category is academia pick a random one from the pool
-      if ((coursedesc?.category || "").toLowerCase() === "academia") {
+      if (isAcademia) {
         const pool = [
           "diploma",
           "development",
@@ -50,32 +76,25 @@ const Coursedescription = ({ coursedesc }) => {
 
       if (!categoryName) {
         setRelatedCourses([]);
-        setIsLoading(false);
         return;
       }
 
-      const response = await axios.get(`/courses/getoncategory/${categoryName}`);
-      const { courses } = response.data;
-
-      if (Array.isArray(courses)) {
-        setRelatedCourses(courses);
-      } else {
-        setRelatedCourses([]);
-      }
-    } catch (error) {
-      console.error("Error fetching related courses:", error);
+      const res = await axios.get(`/courses/getoncategory/${categoryName}`);
+      const { courses } = res.data || {};
+      setRelatedCourses(Array.isArray(courses) ? courses : []);
+    } catch (err) {
+      console.error("Error fetching related courses:", err);
       setError("Failed to load related courses");
       setRelatedCourses([]);
     } finally {
       setIsLoading(false);
     }
-  }, [coursedesc?.category, coursedesc?.category_Name]);
+  }, [isCorporate, isAcademia, coursedesc?.category_Name]);
 
   useEffect(() => {
     fetchRelatedCourses();
   }, [fetchRelatedCourses]);
 
-  // Memoize the course click handler
   const handleCourseClick = useCallback(
     (slug) => {
       if (!slug) return;
@@ -84,27 +103,18 @@ const Coursedescription = ({ coursedesc }) => {
     [router]
   );
 
-  // Memoize the heading click handler
   const handleHeadingClick = useCallback((headingId) => {
     const targetElement = document.getElementById(headingId);
-
     if (!targetElement) return;
 
-    // Remove previous highlights
     document.querySelectorAll("h1, h2, h3").forEach((heading) => {
       heading.classList.remove("text-red-600", "underline");
     });
 
-    // Scroll to target and apply highlight
-    targetElement.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-
+    targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
     targetElement.classList.add("text-red-600", "underline");
   }, []);
 
-  // Early return for invalid props
   if (!coursedesc) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -188,7 +198,7 @@ const Coursedescription = ({ coursedesc }) => {
           <aside className="sticky top-20 h-fit space-y-4 rounded-3xl border border-white/40 bg-white/80 p-6 shadow-xl backdrop-blur-md">
             <div className="flex items-center justify-between gap-3">
               <h3 className="text-lg font-semibold text-slate-900">
-                {(coursedesc?.category || "").toLowerCase() === "academia"
+                {isAcademia
                   ? "Trending in Other Categories"
                   : "Related Courses"}
               </h3>
@@ -226,12 +236,6 @@ const Coursedescription = ({ coursedesc }) => {
                     key={course._id}
                     className="group cursor-pointer rounded-2xl border border-white/30 bg-white/40 p-4 shadow-lg backdrop-blur-md backdrop-saturate-150 transition-all duration-300 hover:-translate-y-1 hover:border-sky-200 hover:bg-white/60 hover:shadow-xl focus-within:ring-2 focus-within:ring-sky-400/60 focus-within:ring-offset-2 focus-within:ring-offset-white"
                     onClick={() => handleCourseClick(course.url_Slug)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        handleCourseClick(course.url_Slug);
-                      }
-                    }}
                     tabIndex={0}
                     role="button"
                     aria-label={`View details for ${course.course_Name}`}
@@ -258,8 +262,8 @@ const Coursedescription = ({ coursedesc }) => {
                         </h3>
                         {course?.Short_Description ? (
                           <p className="mt-2 line-clamp-2 text-xs text-slate-600">
-                            {course.Short_Description.slice(0, 80)}
-                            {course.Short_Description.length > 80 && "..."}
+                            {course.Short_Description.replace(/<[^>]*>/g, "").slice(0, 80)}
+                            {course.Short_Description.replace(/<[^>]*>/g, "").length > 80 && "..."}
                           </p>
                         ) : null}
                         <div className="mt-3 flex items-center justify-between">
@@ -279,7 +283,6 @@ const Coursedescription = ({ coursedesc }) => {
                               />
                             </svg>
                           </span>
-                          <div className="h-2 w-2 rounded-full bg-sky-500/80 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
                         </div>
                       </div>
                     </div>

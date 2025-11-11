@@ -4,6 +4,13 @@ import AcademiaCourses from "./AcademiaCourses";
 
 export const dynamic = "force-dynamic"; // disable route-level caching
 
+// ✅ Add meta data for SEO
+export const metadata = {
+  title: "Academia Courses",
+  description:
+    "Explore our latest Academia courses designed for deep learning, research, and academic excellence. Discover high-quality content curated by experts.",
+};
+
 async function fetchCourses() {
   try {
     const res = await axiosInstance.get("/api/academia/courses", {
@@ -20,14 +27,13 @@ async function fetchCourses() {
     }
 
     const json = res.data;
-    // normalize: handle { data: {...} } OR { data: [...] } OR array root
     let raw = json?.data ?? json ?? [];
     const arr = Array.isArray(raw) ? raw : [raw];
 
     const courses = arr
       .filter(Boolean)
       .filter((c) => c.viewOnWeb !== false)
-      .filter((c) => (c.coursecategory || "").toLowerCase() === "academia") // ✅ only academia
+      .filter((c) => (c.coursecategory || "").toLowerCase() === "academia")
       .map((c) => ({
         id: c._id || c.id || Math.random().toString(36).slice(2),
         name: c.coursename || c.title || "",
@@ -46,15 +52,8 @@ async function fetchCourses() {
   }
 }
 
-
 export default async function Page() {
   const { courses, error } = await fetchCourses();
 
-  return (
-    
-      <AcademiaCourses courses={courses} error={error} />
-    
-  );
+  return <AcademiaCourses courses={courses} error={error} />;
 }
-
-
