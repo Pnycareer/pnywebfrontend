@@ -33,63 +33,66 @@ const Coursedescription = ({ coursedesc }) => {
     return shuffleArray(relatedCourses).slice(0, 4);
   }, [relatedCourses]);
 
-  const fetchRelatedCourses = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
+const fetchRelatedCourses = useCallback(async () => {
+  setIsLoading(true);
+  setError(null);
 
-    try {
-      if (isCorporate) {
-        const url = `http://localhost:8080/api/academia/courses/getoncategory/${encodeURIComponent(
-          "corporate trainings"
-        )}`;
-        const response = await fetch(url, { cache: "no-store" });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data = await response.json();
-        const normalized = Array.isArray(data?.courses)
-          ? data.courses.map((c) => ({
-              _id: c._id,
-              course_Name: c.coursename || c.course_Name || "",
-              url_Slug: c.slug || c.url_Slug || "",
-              Short_Description: c.Short_Description || "",
-              course_Image: c.course_Image,
-            }))
-          : [];
-        setRelatedCourses(normalized);
-        return;
-      }
+  try {
+    if (isCorporate) {
+      // === corporate trainings ===
+      const url = `/api/academia/courses/getoncategory/${encodeURIComponent(
+        "corporate trainings"
+      )}`;
+      const response = await axios.get(url);
+      const data = response.data;
 
-      // === academia ===
-      let categoryName = coursedesc?.category_Name;
+      const normalized = Array.isArray(data?.courses)
+        ? data.courses.map((c) => ({
+            _id: c._id,
+            course_Name: c.coursename || c.course_Name || "",
+            url_Slug: c.slug || c.url_Slug || "",
+            Short_Description: c.Short_Description || "",
+            course_Image: c.course_Image,
+          }))
+        : [];
 
-      if (isAcademia) {
-        const pool = [
-          "diploma",
-          "development",
-          "marketing",
-          "multimedia",
-          "designing",
-          "business",
-          "it-and-software",
-        ];
-        categoryName = pool[Math.floor(Math.random() * pool.length)];
-      }
-
-      if (!categoryName) {
-        setRelatedCourses([]);
-        return;
-      }
-
-      const res = await axios.get(`/courses/getoncategory/${categoryName}`);
-      const { courses } = res.data || {};
-      setRelatedCourses(Array.isArray(courses) ? courses : []);
-    } catch (err) {
-      console.error("Error fetching related courses:", err);
-      setError("Failed to load related courses");
-      setRelatedCourses([]);
-    } finally {
-      setIsLoading(false);
+      setRelatedCourses(normalized);
+      return;
     }
-  }, [isCorporate, isAcademia, coursedesc?.category_Name]);
+
+    // === academia ===
+    let categoryName = coursedesc?.category_Name;
+
+    if (isAcademia) {
+      const pool = [
+        "diploma",
+        "development",
+        "marketing",
+        "multimedia",
+        "designing",
+        "business",
+        "it-and-software",
+      ];
+      categoryName = pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    if (!categoryName) {
+      setRelatedCourses([]);
+      return;
+    }
+
+    const res = await axios.get(`/courses/getoncategory/${categoryName}`);
+    const { courses } = res.data || {};
+    setRelatedCourses(Array.isArray(courses) ? courses : []);
+  } catch (err) {
+    console.error("Error fetching related courses:", err);
+    setError("Failed to load related courses");
+    setRelatedCourses([]);
+  } finally {
+    setIsLoading(false);
+  }
+}, [isCorporate, isAcademia, coursedesc?.category_Name]);
+
 
   useEffect(() => {
     fetchRelatedCourses();
