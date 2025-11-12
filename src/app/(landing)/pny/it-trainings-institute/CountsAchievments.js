@@ -3,31 +3,75 @@
 import React from "react";
 import { Users, GraduationCap, Award, BookOpen } from "lucide-react";
 
-/* --- count-up hook --- */
-function useCountUp(target = 0, duration = 1200) {
-  const [value, setValue] = React.useState(0);
+/* --- in-view hook (fires when element enters viewport) --- */
+function useInView(options = { threshold: 0.3, root: null, rootMargin: "0px" }) {
+  const ref = React.useRef(null);
+  const [inView, setInView] = React.useState(false);
+
   React.useEffect(() => {
-    let raf, start;
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // guard for SSR and older browsers
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      // if no observer, just mark visible so the animation still happens
+      setInView(true);
+      return;
+    }
+    const el = ref.current;
+    if (!el) return;
+
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setInView(true);
+    }, options);
+
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [options.threshold, options.root, options.rootMargin]);
+
+  return { ref, inView };
+}
+
+/* --- count-up hook that starts once when "start" flips true --- */
+function useCountUp(target = 0, duration = 1200, start = false) {
+  const [value, setValue] = React.useState(0);
+  const startedRef = React.useRef(false);
+  const rafRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const prefersReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!start || startedRef.current) return;
+
+    startedRef.current = true;
+
     if (prefersReduced || duration <= 0) {
       setValue(target);
       return;
     }
-    const step = (ts) => {
-      if (!start) start = ts;
-      const p = Math.min((ts - start) / duration, 1);
+
+    let startTs = null;
+    const tick = (ts) => {
+      if (startTs == null) startTs = ts;
+      const p = Math.min((ts - startTs) / duration, 1);
       setValue(Math.floor(p * target));
-      if (p < 1) raf = requestAnimationFrame(step);
+      if (p < 1) {
+        rafRef.current = requestAnimationFrame(tick);
+      }
     };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [target, duration]);
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [start, target, duration]);
+
   return value;
 }
 
 /* --- single stat item --- */
-const Stat = ({ Icon, value, label }) => {
-  const count = useCountUp(value, 1200);
+const Stat = ({ Icon, value, label, start }) => {
+  const count = useCountUp(value, 1200, start);
   return (
     <div className="flex flex-col items-center text-center">
       <div className="flex h-16 w-16 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-400 shadow-sm shadow-slate-200">
@@ -50,9 +94,12 @@ const stats = [
 
 /* --- main section --- */
 const Achievements = () => {
+  // observe the whole section; trigger when ~30% visible
+  const { ref, inView } = useInView({ threshold: 0.3 });
+
   return (
-    <section className="bg-gradient-to-b from-white via-white to-slate-50">
-      <div className="mx-auto max-w-6xl px-6 py-20">
+    <section ref={ref} className="bg-gradient-to-b from-white via-white to-slate-50">
+      <div className="mx-auto max-w-6xl px-6 py-14">
         <div className="mb-16 text-center">
           <div className="inline-flex items-center gap-3">
             <span className="h-10 w-1 rounded bg-emerald-500" aria-hidden />
@@ -71,7 +118,7 @@ const Achievements = () => {
           <div className="flex flex-col items-center gap-8 lg:flex-row lg:justify-between">
             {stats.map((stat, index) => (
               <React.Fragment key={stat.label}>
-                <Stat {...stat} />
+                <Stat {...stat} start={inView} />
                 {index < stats.length - 1 && (
                   <div className="flex w-full items-center justify-center" aria-hidden>
                     <span className="hidden h-16 w-px rounded-full bg-slate-200 lg:block" />

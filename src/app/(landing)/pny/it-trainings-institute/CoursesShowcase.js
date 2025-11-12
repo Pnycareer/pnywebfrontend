@@ -55,13 +55,7 @@ const CourseCard = ({ course }) => (
         className="object-cover transition duration-500 group-hover:scale-105"
         priority={course.id === 1}
       />
-      {course.badge ? (
-        <span
-          className={`absolute left-4 top-4 inline-flex items-center rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-wide text-white shadow-lg shadow-black/10 ${course.badgeColor}`}
-        >
-          {course.badge}
-        </span>
-      ) : null}
+     
     </div>
     <div className="flex flex-1 flex-col px-6 pb-8 pt-6">
       <h3 className="text-xl font-semibold text-slate-900">{course.title}</h3>
@@ -86,7 +80,7 @@ const CoursesShowcase = () => {
   };
 
   return (
-    <section className="relative bg-[linear-gradient(135deg,#f5f9fc_0%,#ffffff_55%,#eef5ff_100%)] py-20">
+    <section className="relative bg-[linear-gradient(135deg,#f5f9fc_0%,#ffffff_55%,#eef5ff_100%)]">
       <div className="absolute inset-0 -z-10 opacity-70">
         <Image
           src="https://htmldemo.net/glaxdu/glaxdu/assets/img/bg/shape-bg.png"

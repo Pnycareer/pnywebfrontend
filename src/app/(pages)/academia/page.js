@@ -9,6 +9,9 @@ export const metadata = {
   title: "Academia Courses",
   description:
     "Explore our latest Academia courses designed for deep learning, research, and academic excellence. Discover high-quality content curated by experts.",
+  alternates: {
+    canonical: "https://www.pnytrainings.com/academia",
+  },
 };
 
 async function fetchCourses() {

@@ -66,7 +66,7 @@ export default async function Page({ params }) {
         description={course?.Meta_Description}
         image={course?.course_Image}
         url={`${process.env.NEXT_PUBLIC_SITE_URL}/corporate-trainings/${slug}`}
-        canonicalUrl={`${process.env.NEXT_PUBLIC_SITE_URL}/corporate-trainings/${slug}`}
+        canonicalUrl={`${process.env.NEXT_PUBLIC_SITE_URL}/corporate/${slug}`}
         siteName="PNY Trainings"
       />
 

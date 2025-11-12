@@ -9,6 +9,9 @@ export const metadata = {
   title: "Corporate Trainings",
   description:
     "Boost your team's performance with PNY’s expert-led corporate training programs. Explore tailored courses for organizations to enhance productivity and leadership.",
+  alternates: {
+    canonical: "https://www.pnytrainings.com/corporate",
+  },
 };
 
 async function fetchCourses() {
