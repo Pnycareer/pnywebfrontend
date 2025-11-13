@@ -1,17 +1,23 @@
-import { notFound } from "next/navigation"
-import Detailpage from "./Detailpage"
-import Metadata from "@/components/Meta/Metadata"
-import axios from "@/utils/axiosInstance"
+import { notFound } from "next/navigation";
+import Detailpage from "./Detailpage";
+import Metadata from "@/components/Meta/Metadata";
+import axios from "@/utils/axiosInstance";
 
 export default async function Page({ params }) {
-  const { slug } = await params
+  const { slug } = params;
 
-  const res = await axios.get(`/courses/getonslug/${encodeURIComponent(slug)}`)
-  if (res.status === 404 || !res.data || typeof res.data !== "object") {
-    notFound()
+  let res;
+  try {
+    res = await axios.get(`/courses/getonslug/${encodeURIComponent(slug)}`);
+  } catch (err) {
+    notFound();
   }
 
-  const course = res.data
+  if (!res || res.status === 404 || !res.data || typeof res.data !== "object") {
+    notFound();
+  }
+
+  const course = res.data;
 
   const metadata = {
     title: course.Meta_Title || "Course Not Found",
@@ -19,25 +25,25 @@ export default async function Page({ params }) {
     url: `${process.env.NEXT_PUBLIC_SITE_URL}/${slug}`,
     image: course.course_Image,
     canonicalUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/${slug}`,
-  }
+  };
 
   return (
     <>
       <Metadata {...metadata} />
       <Detailpage course={course} />
 
-      {/* Schema injection */}
-      {course.schema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html:
-              typeof course.schema === "string"
-                ? course.schema
-                : JSON.stringify(course.schema)
-          }}
-        />
-      )}
+      {/* 🔥 Render every schema in the array */}
+      {Array.isArray(course.schema) &&
+        course.schema.map((schemaItem, index) => (
+          <script
+            key={index}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: schemaItem, // backend already returns JSON string
+            }}
+          />
+        ))
+      }
     </>
-  )
+  );
 }
