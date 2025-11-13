@@ -33,17 +33,17 @@ export default async function Page({ params }) {
       <Detailpage course={course} />
 
       {/* 🔥 Render every schema in the array */}
-      {Array.isArray(course.schema) &&
-        course.schema.map((schemaItem, index) => (
+      {/* Render all JSON-LD schemas */}
+      {Array.isArray(course.schemas) &&
+        course.schemas.map((schemaItem, index) => (
           <script
             key={index}
             type="application/ld+json"
             dangerouslySetInnerHTML={{
-              __html: schemaItem, // backend already returns JSON string
+              __html: JSON.stringify(schemaItem), // 👈 convert object → valid JSON
             }}
           />
-        ))
-      }
+        ))}
     </>
   );
 }
