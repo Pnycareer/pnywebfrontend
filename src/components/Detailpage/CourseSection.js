@@ -15,6 +15,11 @@ export default function CourseHero({ course, brochurePath }) {
   if (!course) return null;
 
   const videoId = course.video_Id;
+  const courseImageSrc = course?.course_Image
+    ? `${process.env.NEXT_PUBLIC_API_URL}/${course.course_Image
+        .replace(/\\/g, "/")
+        .replace(/^\/+/, "")}`
+    : null;
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
@@ -45,7 +50,7 @@ export default function CourseHero({ course, brochurePath }) {
             </span>
           </div>
 
-          <h1 className="text-3xl font-extrabold leading-tight md:text-4xl lg:text-5xl">
+          <h1 className="text-2xl font-extrabold leading-tight md:text-3xl lg:text-4xl">
             {course.course_Name}
           </h1>
 
@@ -161,7 +166,7 @@ export default function CourseHero({ course, brochurePath }) {
           transition={{ duration: 0.7 }}
           className="relative w-full lg:w-1/2"
         >
-          <div className="relative w-full overflow-hidden rounded-3xl border border-white/10 bg-black/40 shadow-2xl shadow-slate-900/80 backdrop-blur">
+          <div className="relative w-full h-92 overflow-hidden rounded-xl border border-white/10 bg-black/40 shadow-2xl shadow-slate-900/80 backdrop-blur">
             {videoId ? (
               <div className="relative aspect-video">
                 <iframe
@@ -175,15 +180,18 @@ export default function CourseHero({ course, brochurePath }) {
               </div>
             ) : (
               <div className="relative aspect-video">
-                <Image
-                  unoptimized
-                  src={`${
-                    process.env.NEXT_PUBLIC_API_URL
-                  }/${course.course_Image.replace(/\\/g, "/")}`}
-                  alt={course.course_Name}
-                  fill
-                  className="object-cover"
-                />
+                {courseImageSrc ? (
+                  <Image
+                    src={courseImageSrc}
+                    alt={course.course_Name}
+                    fill
+                    className="object-fit"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-slate-900/60 text-xs uppercase tracking-[0.2em] text-slate-400">
+                    Image coming soon
+                  </div>
+                )}
               </div>
             )}
 
