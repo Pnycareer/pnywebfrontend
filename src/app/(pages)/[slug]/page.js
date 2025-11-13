@@ -4,7 +4,7 @@ import Metadata from "@/components/Meta/Metadata";
 import axios from "@/utils/axiosInstance";
 
 export default async function Page({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   let res;
   try {
@@ -27,6 +27,8 @@ export default async function Page({ params }) {
     canonicalUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/${slug}`,
   };
 
+
+
   return (
     <>
       <Metadata {...metadata} />
@@ -40,7 +42,10 @@ export default async function Page({ params }) {
             key={index}
             type="application/ld+json"
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify(schemaItem), // 👈 convert object → valid JSON
+              __html:
+                typeof schemaItem === "string"
+                  ? schemaItem // already JSON text
+                  : JSON.stringify(schemaItem), // fallback if it's an object
             }}
           />
         ))}
