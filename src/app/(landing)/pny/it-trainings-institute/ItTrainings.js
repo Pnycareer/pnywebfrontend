@@ -71,7 +71,7 @@ const FeatureHighlights = () => (
 
 const HeroSection = () => (
   <section
-    className="relative overflow-hidden text-white bg-slate-950 md:bg-[url('/landing/landing.jpg')] bg-cover bg-center bg-no-repeat min-h-[320px] sm:min-h-[420px] md:min-h-[500px] lg:min-h-[560px] pb-16 md:pb-24 lg:pb-52"
+    className="relative overflow-hidden text-white bg-slate-950 md:bg-[url('/landing/banner.png')] bg-cover bg-center bg-no-repeat min-h-[320px] sm:min-h-[420px] md:min-h-[500px] lg:min-h-[560px] pb-16 md:pb-24 lg:pb-72"
   >
     <div className="absolute inset-0 bg-slate-950/40" aria-hidden="true" />
     <div className="relative mx-auto flex max-w-6xl flex-col gap-10 px-6 pt-28 md:flex-row md:items-center md:justify-between">
@@ -94,14 +94,14 @@ const HeroSection = () => (
           >
             About Us
           </Link> */}
-          <Link
+          {/* <Link
             href="https://wa.me/923001234567" // replace with your actual WhatsApp number in international format
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-full border border-white/60 bg-white/15 px-8 py-3 text-sm font-semibold uppercase tracking-wider text-white transition hover:bg-white hover:text-emerald-600"
           >
             Contact Us
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

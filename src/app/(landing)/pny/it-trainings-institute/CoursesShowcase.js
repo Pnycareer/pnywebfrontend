@@ -9,7 +9,7 @@ const COURSES = [
     id: 1,
     badge: "Admission Going On",
     badgeColor: "bg-emerald-500",
-    image: "https://htmldemo.net/glaxdu/glaxdu/assets/img/course/course-5.jpg",
+    image: "/landing/web-development.webp",
     title: "Certified Full Stack Web Development with Advanced AI (6 Months)",
     description:
       "Advance your web development career with our Full-Stack Web Developer Master’s Program. Master front-end and back-end development skills and become an expert in the MEAN Stack.",
@@ -18,7 +18,7 @@ const COURSES = [
     id: 2,
     badge: "Creative Track",
     badgeColor: "bg-sky-500",
-    image: "https://htmldemo.net/glaxdu/glaxdu/assets/img/course/course-1.jpg",
+    image: "/landing/graphic.webp",
     title:
       "Become A Full Stack Graphic Designer (Basic to Intermediate Level) With AI",
     description:
@@ -28,7 +28,7 @@ const COURSES = [
     id: 3,
     badge: "Skill Booster",
     badgeColor: "bg-amber-500",
-    image: "https://htmldemo.net/glaxdu/glaxdu/assets/img/course/course-3.jpg",
+    image: "/landing/didital.webp",
     title:
       "Certified Digital Media Marketing Skills with AI Enhanced Course (6 Months)",
     description:
@@ -38,7 +38,7 @@ const COURSES = [
     id: 4,
     badge: "Post Graduation Course",
     badgeColor: "bg-emerald-500",
-    image: "https://htmldemo.net/glaxdu/glaxdu/assets/img/course/course-2.jpg",
+    image: "/landing/agentic-ai.webp",
     title: "Agentic AI 1-Year Diploma",
     description:
       "Hands-on training in advanced AI tools and automation systems. Learn to build intelligent workflows, use generative AI, and integrate automation into real-world projects to boost productivity and innovation.",
