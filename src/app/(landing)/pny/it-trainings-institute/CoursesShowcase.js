@@ -13,6 +13,7 @@ const COURSES = [
     title: "Certified Full Stack Web Development with Advanced AI (6 Months)",
     description:
       "Advance your web development career with our Full-Stack Web Developer Master’s Program. Master front-end and back-end development skills and become an expert in the MEAN Stack.",
+    pdfUrl: "/pdf/course-web-development.pdf", // 👈 set your real pdf path
   },
   {
     id: 2,
@@ -23,6 +24,7 @@ const COURSES = [
       "Become A Full Stack Graphic Designer (Basic to Intermediate Level) With AI",
     description:
       "Learn Adobe Photoshop, CorelDRAW, InDesign, Illustrator, Figma, Premiere Pro, and After Effects to build professional graphic design and video editing skills.",
+    pdfUrl: "/pdf/course-graphic-design.pdf",
   },
   {
     id: 3,
@@ -33,6 +35,7 @@ const COURSES = [
       "Certified Digital Media Marketing Skills with AI Enhanced Course (6 Months)",
     description:
       "Master SEO, social media marketing, PPC, content strategy, and all essential digital marketing skills to boost your career in the fast-growing digital media industry.",
+    pdfUrl: "/pdf/course-digital-marketing.pdf",
   },
   {
     id: 4,
@@ -42,10 +45,11 @@ const COURSES = [
     title: "Agentic AI 1-Year Diploma",
     description:
       "Hands-on training in advanced AI tools and automation systems. Learn to build intelligent workflows, use generative AI, and integrate automation into real-world projects to boost productivity and innovation.",
+    pdfUrl: "/pdf/course-agentic-ai.pdf",
   },
 ];
 
-const CourseCard = ({ course }) => (
+const CourseCard = ({ course, onEnroll }) => (
   <article className="group flex h-full w-full flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white/80 shadow-[0_18px_45px_rgba(15,23,42,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,23,42,0.16)]">
     <div className="relative h-64 w-full overflow-hidden">
       <Image
@@ -58,7 +62,7 @@ const CourseCard = ({ course }) => (
         priority={course.id === 1}
       />
     </div>
-    <div className="flex flex-1 flex-col px-6 pb-8 pt-6">
+    <div className="flex flex-1 flex-col px-6 pb-6 pt-6">
       <span
         className={`inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-semibold text-white ${course.badgeColor}`}
       >
@@ -70,6 +74,27 @@ const CourseCard = ({ course }) => (
       <p className="mt-2 text-sm leading-relaxed text-slate-600">
         {course.description}
       </p>
+
+      {/* Buttons */}
+      <div className="mt-5 flex flex-col items-center gap-3 sm:flex-row sm:items-start">
+        <button
+          type="button"
+          onClick={onEnroll}
+          className="inline-flex items-center justify-center rounded-full bg-emerald-600 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-emerald-500"
+        >
+          Enroll Now
+        </button>
+
+        {course.pdfUrl && (
+          <a
+            href={course.pdfUrl}
+            download
+            className="inline-flex items-center justify-center rounded-full border border-emerald-600 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 transition hover:bg-emerald-50"
+          >
+            Download PDF
+          </a>
+        )}
+      </div>
     </div>
   </article>
 );
@@ -87,6 +112,12 @@ const CoursesShowcase = () => {
       left: direction === "next" ? scrollAmount : -scrollAmount,
       behavior: "smooth",
     });
+  };
+
+  const scrollToEnrollForm = () => {
+    const formSection = document.getElementById("enroll-form");
+    if (!formSection) return;
+    formSection.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
@@ -122,7 +153,11 @@ const CoursesShowcase = () => {
           {/* Mobile: vertical list, no horizontal scroll */}
           <div className="space-y-6 md:hidden">
             {COURSES.map((course) => (
-              <CourseCard key={course.id} course={course} />
+              <CourseCard
+                key={course.id}
+                course={course}
+                onEnroll={scrollToEnrollForm}
+              />
             ))}
           </div>
 
@@ -149,7 +184,7 @@ const CoursesShowcase = () => {
                     key={course.id}
                     className="snap-start shrink-0 basis-[55%] lg:basis-[calc((100%_-_4.5rem)/4)] xl:basis-[calc((100%_-_4.5rem)/4)]"
                   >
-                    <CourseCard course={course} />
+                    <CourseCard course={course} onEnroll={scrollToEnrollForm} />
                   </div>
                 ))}
               </div>

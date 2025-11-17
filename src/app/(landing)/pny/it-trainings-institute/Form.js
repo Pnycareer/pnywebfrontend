@@ -158,7 +158,7 @@ const Form = () => {
 
   return (
     <>
-      <section className="relative isolate overflow-hidden">
+      <section className="relative isolate overflow-hidden" id="enroll-form">
         {/* Background */}
         <div className="absolute inset-0 -z-10">
           <div
