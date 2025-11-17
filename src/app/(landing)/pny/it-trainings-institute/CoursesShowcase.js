@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -76,30 +76,17 @@ const CourseCard = ({ course }) => (
 
 const CoursesShowcase = () => {
   const scrollRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
   const showArrows = COURSES.length > 4;
 
   const handleScroll = (direction) => {
     const container = scrollRef.current;
     if (!container) return;
+
     const scrollAmount = container.clientWidth * 0.85;
     container.scrollBy({
       left: direction === "next" ? scrollAmount : -scrollAmount,
       behavior: "smooth",
     });
-  };
-
-  const handleScrollPosition = () => {
-    const container = scrollRef.current;
-    if (!container) return;
-
-    const cardWidth = container.clientWidth || 1;
-    const index = Math.round(container.scrollLeft / cardWidth);
-    const clampedIndex = Math.max(0, Math.min(index, COURSES.length - 1));
-
-    if (clampedIndex !== activeIndex) {
-      setActiveIndex(clampedIndex);
-    }
   };
 
   return (
@@ -114,6 +101,7 @@ const CoursesShowcase = () => {
           aria-hidden="true"
         />
       </div>
+
       <div className="mx-auto px-6">
         <div className="text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.35em] text-emerald-500">
@@ -125,66 +113,60 @@ const CoursesShowcase = () => {
           <p className="mx-auto mt-4 max-w-2xl text-base text-slate-600">
             Build in-demand digital skills with our expert-led courses. Whether
             you want to become a developer, designer, marketer, or AI
-            specialist, our programs help you learn, grow, and achieve
-            your career goals.
+            specialist, our programs help you learn, grow, and achieve your
+            career goals.
           </p>
         </div>
 
-        <div className="relative mt-12">
-          <div className="flex items-center gap-4">
-            {showArrows && (
-              <button
-                type="button"
-                aria-label="Scroll courses backward"
-                onClick={() => handleScroll("prev")}
-                className="hidden rounded-full bg-white p-3 text-emerald-600 shadow-lg shadow-emerald-900/10 transition hover:bg-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 md:inline-flex"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-            )}
-
-            <div
-              ref={scrollRef}
-              onScroll={handleScrollPosition}
-              className="flex flex-1 snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-1 pb-4 md:px-8 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-            >
-              {COURSES.map((course) => (
-                <div
-                  key={course.id}
-                  className="snap-start shrink-0 basis-full sm:basis-[75%] md:basis-[55%] lg:basis-[calc((100%_-_4.5rem)/4)] xl:basis-[calc((100%_-_4.5rem)/4)]"
-                >
-                  <CourseCard course={course} />
-                </div>
-              ))}
-            </div>
-
-            {showArrows && (
-              <button
-                type="button"
-                aria-label="Scroll courses forward"
-                onClick={() => handleScroll("next")}
-                className="hidden rounded-full bg-white p-3 text-emerald-600 shadow-lg shadow-emerald-900/10 transition hover:bg-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 md:inline-flex"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
-            )}
-          </div>
-        </div>
-
-        {COURSES.length > 1 && (
-          <div className="mt-4 flex items-center justify-center gap-2 md:hidden">
-            {COURSES.map((_, index) => (
-              <span
-                key={index}
-                className={`h-2 rounded-full transition-all ${
-                  index === activeIndex
-                    ? "w-6 bg-emerald-600"
-                    : "w-2 bg-slate-300"
-                }`}
-              />
+        <div className="mt-12">
+          {/* Mobile: vertical list, no horizontal scroll */}
+          <div className="space-y-6 md:hidden">
+            {COURSES.map((course) => (
+              <CourseCard key={course.id} course={course} />
             ))}
           </div>
-        )}
+
+          {/* Tablet / Desktop: horizontal scroll with arrows */}
+          <div className="relative hidden md:block">
+            <div className="flex items-center gap-4">
+              {showArrows && (
+                <button
+                  type="button"
+                  aria-label="Scroll courses backward"
+                  onClick={() => handleScroll("prev")}
+                  className="rounded-full bg-white p-3 text-emerald-600 shadow-lg shadow-emerald-900/10 transition hover:bg-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+              )}
+
+              <div
+                ref={scrollRef}
+                className="flex flex-1 snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-1 pb-4 md:px-8 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              >
+                {COURSES.map((course) => (
+                  <div
+                    key={course.id}
+                    className="snap-start shrink-0 basis-[55%] lg:basis-[calc((100%_-_4.5rem)/4)] xl:basis-[calc((100%_-_4.5rem)/4)]"
+                  >
+                    <CourseCard course={course} />
+                  </div>
+                ))}
+              </div>
+
+              {showArrows && (
+                <button
+                  type="button"
+                  aria-label="Scroll courses forward"
+                  onClick={() => handleScroll("next")}
+                  className="rounded-full bg-white p-3 text-emerald-600 shadow-lg shadow-emerald-900/10 transition hover:bg-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
