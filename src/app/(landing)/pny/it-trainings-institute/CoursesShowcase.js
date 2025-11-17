@@ -76,7 +76,7 @@ const CourseCard = ({ course, onEnroll }) => (
       </p>
 
       {/* Buttons */}
-      <div className="mt-5 flex flex-col items-center gap-3 sm:flex-row sm:items-start">
+      <div className="mt-5 flex flex-col items-center gap-1 sm:flex-row sm:items-start">
         <button
           type="button"
           onClick={onEnroll}
@@ -89,7 +89,7 @@ const CourseCard = ({ course, onEnroll }) => (
           <a
             href={course.pdfUrl}
             download
-            className="inline-flex items-center justify-center rounded-full border border-emerald-600 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 transition hover:bg-emerald-50"
+            className="inline-flex items-center justify-center rounded-full border border-emerald-600 px-5 py-2 text-xs font-semibold uppercase  text-emerald-700 transition hover:bg-emerald-50"
           >
             Download PDF
           </a>

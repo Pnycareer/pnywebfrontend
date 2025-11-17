@@ -113,7 +113,10 @@ const PromoCountdown = () => {
 
   return (
     <div className="mt-8 w-full max-w-2xl rounded-2xl bg-white/10 p-6 text-white backdrop-blur">
-      <p className="text-lg font-semibold uppercase tracking-[0.25em] text-emerald-200 animate-pulse">
+      <p
+        className="text-lg font-extrabold uppercase tracking-[0.25em] text-yellow-300 animate-pulse"
+        style={{ animationDuration: "0.7s" }}
+      >
         Hurry! 30% OFF - Offer Ends Soon!
       </p>
       <p className="mt-2 text-sm text-white/80">
