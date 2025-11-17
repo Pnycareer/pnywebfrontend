@@ -10,7 +10,7 @@ import { GraduationCap, Lightbulb, BookOpen, Rocket } from "lucide-react";
 import CoursesShowcase from "./CoursesShowcase";
 import Achievements from "./CountsAchievments";
 import Form from "./Form";
-import PnyLogo from "@/assets/logo/Pnylogo.png";
+
 
 const featureCards = [
   {
@@ -172,9 +172,12 @@ const HeroSection = () => (
       <div className="w-full max-w-2xl text-center md:basis-1/2 md:text-left">
         <div className="flex justify-center md:justify-start">
           <Image
-            src={PnyLogo}
+            src='/Pnylogo.png'
+            unoptimized ={true}
+            width={100}
+            height={100}
             alt="PNY Trainings logo"
-            className="h-24 w-auto object-contain relative bottom-10"
+            className="h-32 w-auto object-contain relative bottom-10"
             priority
           />
         </div>
