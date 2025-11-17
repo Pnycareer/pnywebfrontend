@@ -116,6 +116,24 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // simple required-field validation (message is optional)
+    const isEmpty = (v) => !v || !String(v).trim();
+
+    if (
+      isEmpty(firstName) ||
+      isEmpty(lastName) ||
+      isEmpty(phone) ||
+      isEmpty(email) ||
+      isEmpty(cityQuery) ||
+      isEmpty(course)
+    ) {
+      showToast(
+        "error",
+        "All fields except message are required. Please fill out the form."
+      );
+      return;
+    }
+
     if (isSubmitting) return;
     setIsSubmitting(true);
 
@@ -320,10 +338,10 @@ const Form = () => {
                 </select>
               </div>
 
-              {/* Message */}
+              {/* Message (optional) */}
               <textarea
                 rows={4}
-                placeholder="Message"
+                placeholder="Message (optional)"
                 className={`${inputStyles} resize-none`}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}

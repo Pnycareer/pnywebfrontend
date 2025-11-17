@@ -13,7 +13,7 @@ const COURSES = [
     title: "Certified Full Stack Web Development with Advanced AI (6 Months)",
     description:
       "Advance your web development career with our Full-Stack Web Developer Master’s Program. Master front-end and back-end development skills and become an expert in the MEAN Stack.",
-    pdfUrl: "/pdf/course-web-development.pdf", // 👈 set your real pdf path
+    pdfUrl: "/pdf/web.pdf", // 👈 set your real pdf path
   },
   {
     id: 2,
@@ -24,7 +24,7 @@ const COURSES = [
       "Become A Full Stack Graphic Designer (Basic to Intermediate Level) With AI",
     description:
       "Learn Adobe Photoshop, CorelDRAW, InDesign, Illustrator, Figma, Premiere Pro, and After Effects to build professional graphic design and video editing skills.",
-    pdfUrl: "/pdf/course-graphic-design.pdf",
+    pdfUrl: "/pdf/graphics.pdf",
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ const COURSES = [
       "Certified Digital Media Marketing Skills with AI Enhanced Course (6 Months)",
     description:
       "Master SEO, social media marketing, PPC, content strategy, and all essential digital marketing skills to boost your career in the fast-growing digital media industry.",
-    pdfUrl: "/pdf/course-digital-marketing.pdf",
+    pdfUrl: "/pdf/digital.pdf",
   },
   {
     id: 4,
@@ -45,7 +45,7 @@ const COURSES = [
     title: "Agentic AI 1-Year Diploma",
     description:
       "Hands-on training in advanced AI tools and automation systems. Learn to build intelligent workflows, use generative AI, and integrate automation into real-world projects to boost productivity and innovation.",
-    pdfUrl: "/pdf/course-agentic-ai.pdf",
+    pdfUrl: "/pdf/agentic.pdf",
   },
 ];
 
