@@ -13,6 +13,7 @@ const COURSES = [
     description:
       "Advance your web development career with our Full-Stack Web Developer Master’s Program. Master front-end and back-end development skills and become an expert in the MEAN Stack.",
     pdfUrl: "/pdf/web.pdf",
+    videoUrl: "https://www.youtube.com/embed/4XDSNkCkLjQ",
   },
   {
     id: 2,
@@ -24,6 +25,7 @@ const COURSES = [
     description:
       "Learn Adobe Photoshop, CorelDRAW, InDesign, Illustrator, Figma, Premiere Pro, and After Effects to build professional graphic design and video editing skills.",
     pdfUrl: "/pdf/graphics.pdf",
+    videoUrl: "https://www.youtube.com/embed/BB_0LN7jZag",
   },
   {
     id: 3,
@@ -35,6 +37,7 @@ const COURSES = [
     description:
       "Master SEO, social media marketing, PPC, content strategy, and all essential digital marketing skills to boost your career in the fast-growing digital media industry.",
     pdfUrl: "/pdf/digital.pdf",
+    videoUrl: "https://www.youtube.com/embed/h6ITRUbhu2U",
   },
   {
     id: 4,
@@ -45,6 +48,7 @@ const COURSES = [
     description:
       "Hands-on training in advanced AI tools and automation systems. Learn to build intelligent workflows, use generative AI, and integrate automation into real-world projects to boost productivity and innovation.",
     pdfUrl: "/pdf/agentic.pdf",
+    videoUrl: "https://www.youtube.com/embed/rlqXNJJbksU",
   },
 ];
 
@@ -78,6 +82,21 @@ const CourseCard = ({ course, onEnroll }) => (
       <p className="mt-2 text-sm leading-relaxed text-slate-600">
         {course.description}
       </p>
+
+      {course.videoUrl && (
+        <div className="mt-4 overflow-hidden rounded-2xl border border-slate-100 bg-gradient-to-br from-slate-50 via-white to-indigo-50 shadow-[0_12px_30px_rgba(15,23,42,0.08)]">
+          <div className="relative aspect-[9/16] sm:aspect-[4/5] lg:aspect-[9/16]">
+            <iframe
+              src={course.videoUrl}
+              title={`${course.title} video overview`}
+              className="absolute inset-0 h-full w-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      )}
 
       {/* Buttons */}
       <div className="mt-5 flex flex-col gap-1 sm:flex-row sm:items-center">

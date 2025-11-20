@@ -131,10 +131,7 @@ export default function CourseHero({ course, brochurePath }) {
                 <motion.button
                   whileHover={{ scale: 1.04, y: -1 }}
                   whileTap={{ scale: 0.97, y: 0 }}
-                  className="flex items-center gap-2 rounded-xl bg-slate-800/80 
-             border border-white/10 px-6 py-3 text-sm font-semibold 
-             text-white hover:bg-slate-700/80 transition-all duration-200 
-             shadow-sm shadow-black/20 backdrop-blur"
+                  className="group relative flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-500/30 transition-all duration-200 hover:-translate-y-[1px] hover:shadow-cyan-400/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/70 backdrop-blur-lg"
                 >
                   <PlayCircle className="h-4 w-4 opacity-80" />
                   Enroll Now

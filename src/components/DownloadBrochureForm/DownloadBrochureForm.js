@@ -34,10 +34,10 @@ const DownloadBrochureForm = ({ brochureUrl , courseName  }) => {
     <div className="relative">
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-white/10 border border-white/20 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-white/20 transition flex items-center gap-2"
+        className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 px-6 py-3 text-sm font-semibold text-slate-900 shadow-lg shadow-orange-500/30 transition duration-200 hover:-translate-y-[1px] hover:shadow-orange-400/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-200"
       >
-        <FiDownload />
-        Download Brochure
+        <FiDownload className="text-slate-900" />
+        Download Course Outline
       </button>
 
       <AnimatePresence>
@@ -52,9 +52,26 @@ const DownloadBrochureForm = ({ brochureUrl , courseName  }) => {
               initial={{ y: 50 }}
               animate={{ y: 0 }}
               exit={{ y: 50 }}
-              className="bg-white text-black rounded-xl p-8 w-full max-w-md space-y-4 shadow-xl"
+              className="bg-white text-black rounded-2xl p-8 w-full max-w-md space-y-5 shadow-2xl shadow-slate-900/15"
             >
-              <h2 className="text-2xl font-bold">Download Brochure</h2>
+              <div className="overflow-hidden rounded-xl border border-slate-200 bg-gradient-to-r from-sky-50 via-white to-indigo-50 p-4 shadow-inner">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white/80 text-indigo-600 shadow-sm">
+                    <FiDownload className="h-5 w-5" />
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-indigo-500">
+                      Limited offer
+                    </p>
+                    <h2 className="text-2xl font-bold leading-tight text-slate-900">
+                      Fill the form & get 30% OFF - limited seats!
+                    </h2>
+                    <p className="text-sm text-slate-600">
+                      Share your details to instantly receive the full course outline.
+                    </p>
+                  </div>
+                </div>
+              </div>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <input
                   type="text"
